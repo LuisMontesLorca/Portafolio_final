@@ -1,0 +1,11 @@
+{% extends './layout.html' %}
+
+        {% block body %}
+
+        <h1>Comunas</h1>
+        <ul>
+            {% for comuna in comunas %}
+                <li>{{ comuna.id_comuna }} - {{ comuna.comuna }}</li>
+            {% endfor %}
+        </ul>
+        {% endblock %}

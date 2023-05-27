@@ -1,0 +1,59 @@
+{% extends './layout.html' %}
+
+        {% block body %}
+
+        <section id="contact">
+            <div class="inner">
+                
+                <section>
+                    <form method="post" action="#">
+                        <div class="fields">
+                            <div class="field half">
+                                <label for="name">Nombre</label>
+                                <input type="text" name="name" id="name" />
+                            </div>
+                            <div class="field half">
+                                <label for="email">Email</label>
+                                <input type="text" name="email" id="email" />
+                            </div>
+                            <div class="field">
+                                <label for="message">Mensaje</label>
+                                <textarea name="message" placeholder= "Escríbenos tus comentarios"id="message" rows="6"></textarea>
+                            </div>
+                        </div>
+                        <ul class="actions">
+                            <li><input type="submit" value="Enviar mensaje" class="primary" /></li>
+                            <li><input type="reset" value="Limpiar" /></li>
+                        </ul>
+                    </form>
+                </section>
+                <section class="split">
+                    <section>
+                        <div class="contact-method">
+                            <span class="icon solid alt fa-envelope"></span>
+                            <h3>Email</h3>
+                            <a href="#">soccerevolution@gmail.com</a>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="contact-method">
+                            <span class="icon solid alt fa-phone"></span>
+                            <h3>Teléfono</h3>
+                            <span>(22) 8567646</span>
+                        </div>
+                    </section>
+                    <section>
+                        <div class="contact-method">
+                            <span class="icon solid alt fa-home"></span>
+                            <h3>Dirección</h3>
+                            <span>Av. Ferrocarril 123, Santiago,<br />
+                            Región Metropolitana, Chile.<br />
+                            </span>
+                        </div>
+                    </section>
+                </section>
+            </div>
+        </section>
+  
+
+     {% endblock %}

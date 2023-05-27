@@ -1,0 +1,55 @@
+{% extends './layout.html' %}
+
+        {% block body %}
+                    <div class=" box">
+                    <h3>Formulario de registro</h3>
+
+                    <form method="POST" action="/registro">
+                        <div class="row gtr-uniform">
+                            <div class="col-6 col-12-xsmall">
+                                <input type="text" name="nombre_usuario" id="nombre_usuario" value="" placeholder="Nombres" />
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                <input type="text" name="apellido_usuario" id="apellido_usuario" value="" placeholder="Apellidos" />
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                <input type="email" name="correo_usuario" id="correo_usuario" value="" placeholder="Email" />
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                <input type="text" name="password_usuario" id="password_usuario" value="" placeholder="Teléfono" />
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                <input type="text" name="telefono_usuario" id="telefono_usuario" value="" placeholder="Fecha de nacimiento" />
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                <input type="text" name="direccion_usuario" id="direccion_usuario" value="" placeholder="Dirección" />
+                            </div>
+                                <!-- SELECT REGION Y COMUNA
+
+                                <div class="col-6 col-12-xsmall">
+                                    <select name="region" id="region">
+                                        <option value="">Región</option>
+                                        <option value="1">Manufacturing</option>
+                                        <option value="1">Shipping</option>
+                                        <option value="1">Administration</option>
+                                        <option value="1">Human Resources</option>
+                                    </select>
+                                </div>
+                                <div class="col-6 col-12-xsmall">
+                                    <select name="comuna" id="comuna">
+                                        <option value="">Comuna</option>
+                                        <option value="1">Manufacturing</option>
+                                        <option value="1">Shipping</option>
+                                        <option value="1">Administration</option>
+                                        <option value="1">Human Resources</option>
+                                    </select>
+                                </div>--> 
+                            <div class="col-6 col-12-xsmall">
+                                <input type="submit" class="button primary"value="Registrarse"></input>
+                            </div>
+                        </div>
+                    </form>
+                    </div>
+                            <!-- Break -->
+                            
+                    {% endblock %}
