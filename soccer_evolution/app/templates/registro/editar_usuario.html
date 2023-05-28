@@ -1,0 +1,56 @@
+{% extends './layout.html' %}
+
+        {% block body %}
+                    <div class=" box">
+                    <h3>Editar usuario</h3>
+                   {% for usuario in usuarios %}
+                    <form method="POST" action="/editar/{{ usuario.id_usuario }}">
+                        <div class="row gtr-uniform">
+                            <div class="col-6 col-12-xsmall">
+                                <input type="text" name="nombre_usuario" id="nombre_usuario" value="{{ usuario.nombre_usuario }}" placeholder="Nombres" />
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                <input type="text" name="apellido_usuario" id="apellido_usuario" value="{{ usuario.apellido_usuario }}" placeholder="Apellidos" />
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                <input type="email" name="correo_usuario" id="correo_usuario" value="{{ usuario.correo_usuario }}" placeholder="Email" />
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                <input type="text" name="password_usuario" id="password_usuario" value="{{ usuario.password_usuario }}" placeholder="Teléfono" />
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                <input type="text" name="telefono_usuario" id="telefono_usuario" value="{{ usuario.telefono_usuario }}" placeholder="Fecha de nacimiento" />
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                <input type="text" name="direccion_usuario" id="direccion_usuario" value="{{ usuario.direccion_usuario }}" placeholder="Dirección" />
+                            </div>
+                                <!-- SELECT REGION Y COMUNA
+
+                                <div class="col-6 col-12-xsmall">
+                                    <select name="region" id="region">
+                                        <option value="">Región</option>
+                                        <option value="1">Manufacturing</option>
+                                        <option value="1">Shipping</option>
+                                        <option value="1">Administration</option>
+                                        <option value="1">Human Resources</option>
+                                    </select>
+                                </div>
+                                <div class="col-6 col-12-xsmall">
+                                    <select name="comuna" id="comuna">
+                                        <option value="">Comuna</option>
+                                        <option value="1">Manufacturing</option>
+                                        <option value="1">Shipping</option>
+                                        <option value="1">Administration</option>
+                                        <option value="1">Human Resources</option>
+                                    </select>
+                                </div>--> 
+                            <div class="col-6 col-12-xsmall">
+                                <input type="submit" class="button primary"value="Guardar"></input>
+                            </div>
+                        </div>
+                    </form>
+                    {% endfor %}
+                    </div>
+                            <!-- Break -->
+                            
+                    {% endblock %}

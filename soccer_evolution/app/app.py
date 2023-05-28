@@ -152,10 +152,39 @@ def logout():
     session.pop('username', None)
     return redirect('/')
 
-
 ######FIN LOGIN#######
 
+######LISTA USUARIO#######
 
+@app.route('/lista_usuarios')
+def lista_usuarios ():
+    usuarios = usuario_dao['select_all']()
+    return render_template('registro/lista_usuarios.html', usuarios=usuarios)
+
+######FIN LISTA USUARIO#######
+
+######EDITAR USUARIO#######
+
+@app.route('/editar_usuarios/<int:id>', methods=['GET', 'POST'])
+def editar_usuarios (id):
+    if request.method == 'POST':
+        nombre_usuario = request.form['nombre_usuario']
+        apellido_usuario = request.form['apellido_usuario']
+        correo_usuario = request.form['correo_usuario']
+        password_usuario = request.form['password_usuario']
+        telefono_usuario = request.form['telefono_usuario']
+        direccion_usuario = request.form['direccion_usuario']
+        usuarios = { 'nombre_usuario': nombre_usuario, 'apellido_usuario': apellido_usuario, 
+                'correo_usuario': correo_usuario, 'password_usuario': password_usuario, 
+                'telefono_usuario': telefono_usuario, 'direccion_usuario': direccion_usuario }
+        update_usuarios = usuario_dao['update'](usuarios)
+        print('Usuario actualizado correctamente')
+        return render_template('registro/editar_usuarios.html', usuario=update_usuarios)
+    else:
+        usuarios = usuario_dao['select_by_id'](id)
+        return render_template('registro/editar_usuario.html', usuarios=usuarios)
+
+######FIN EDITAR USUARIO#######
 
 @app.route('/comunas')
 def listar_comunas ():

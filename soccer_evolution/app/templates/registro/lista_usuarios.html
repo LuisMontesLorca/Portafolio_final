@@ -1,0 +1,57 @@
+{% extends './layout.html' %}
+
+        {% block body %}
+
+				<!-- Main -->
+					<div id="main" class="alt">
+
+						<!-- One -->
+							<section id="one">
+								<div class="inner">
+									<header class="major">
+										<h1>Usuarios </h1>
+									</header>
+									<span class="image main"><img src="images/pic11.jpg" alt="" /></span>
+
+													<h3>Usuarios registrado</h3>
+													<div class="table-wrapper">
+														<table>
+															<thead>
+																<tr>
+																	<th>Nombre</th>
+																	<th>Apellido</th>
+																	<th>Correo</th>
+                                                                    <th>Contraseña</th>
+                                                                    <th>Teléfono</th>
+                                                                    <th>Dirección</th>
+                                                                    <th></th>
+																</tr>
+															</thead>
+															<tbody>
+                                                                {% for usuario in usuarios %}
+																<tr>
+																	<td>{{ usuario.nombre_usuario }}</td>
+																	<td>{{ usuario.apellido_usuario }}</td>
+																	<td>{{ usuario.correo_usuario }}</td>
+                                                                    <td>{{ usuario.password_usuario }}</td>
+																	<td>{{ usuario.telefono_usuario }}</td>
+																	<td>{{ usuario.direccion_usuario }}</td>
+                                                                    <td><a href ="{{ url_for('editar_usuarios', id=usuario.id_usuario) }}" data-toggle="tooltip" data-placement="top" data-original-title="Editar" ><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
+																</tr>
+                                                                {% endfor %}
+															</tbody>
+															<tfoot>
+														
+															</tfoot>
+														</table>
+													</div>
+								</div>
+							</section>
+                            <div id= "contenedor-button">
+                                <div id= "button-div">    <a href="#" class="button primary">Continuar</a></div>
+                            </div>
+					</div>
+
+	
+	
+					{% endblock %}
