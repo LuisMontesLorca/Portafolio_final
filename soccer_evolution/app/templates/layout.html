@@ -29,13 +29,12 @@
                 <nav id="menu">
                     <ul class=" links list-group">
                         <li class="list-group"><a href="{{ url_for('index') }}">Inicio</a></li>
-                        
-						
-                        <li class="list-group"><a href="generic.html">¿Quienes somos?</a></li>
+						<li class="list-group"><a href="{{ url_for('canchas') }}">Canchas</a></li>
                         <li class="list-group"><a href="{{ url_for('contacto') }}">Contacto</a></li>
-
+						<li class="list-group"><a href="generic.html">¿Quienes somos?</a></li>
+					 <!--	DROPDOWN
 						<li class="list-group dropdown">
-							<div class="dropdown"> 
+							 <div class="dropdown"> 
 								<button class="dropbtn">Canchas</button>
 								<div class="dropdown-content">
 									<a href="{{ url_for('cancha_futbol') }}">Futbol</a>
@@ -43,7 +42,7 @@
 									<a href="{{ url_for('cancha_tenis') }}">Tenis</a>
 								</div>
 							</div>
-						</li>
+						</li>-->
                     </ul>
                     <ul class="actions stacked">
                         <li><a href="{{ url_for('login') }}" class="button primary fit">Iniciar sesion</a></li>

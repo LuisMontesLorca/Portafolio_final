@@ -1,3 +1,4 @@
+
 from flask import Flask, render_template, jsonify, request, redirect, session
 
 # IMPORT MYSQL LIB CONNECTION
@@ -37,7 +38,9 @@ def cancha_basket ():
 def cancha_tenis ():
     return render_template('canchas/cancha_tenis.html')
 
-
+@app.route('/canchas')
+def canchas ():
+    return render_template('canchas/canchas.html')
 
 @app.route('/contacto')
 def contacto ():
@@ -100,12 +103,11 @@ def registro():
         usuario = { 'nombre_usuario': nombre_usuario, 'apellido_usuario': apellido_usuario, 
                     'correo_usuario': correo_usuario, 'password_usuario': password_usuario, 
                     'telefono_usuario': telefono_usuario, 'direccion_usuario': direccion_usuario }
-        print('new_usuario: ', usuario)
         new_usuario = usuario_dao['insert'](usuario)
         print('new_usuario: ', new_usuario)
 
-        session['username'] = nombre_usuario  # Inicia sesión automáticamente después del registro
-        return redirect('/dashboard')  # Redirige al usuario al panel de control después del registro
+        session['nombre_usuario'] = nombre_usuario  # Inicia sesión automáticamente después del registro
+        return redirect('/index')  # Redirige al usuario al panel de control después del registro
 
     return render_template('Registro/registro.html')
 
@@ -118,12 +120,18 @@ def registro():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+        username_login = request.form['correo_login']
+        password_login = request.form['contraseña_login']
 
+        usuario = usuario_dao['select_all']()
+        for row in usuario:
+            correo = row['correo_usuario']
+            password = row['password_usuario']
+        
         # Verifica las credenciales (aquí puedes implementar tu lógica de autenticación)
-        if username == 'admin' and password == 'admin123':
-            session['username'] = username
+        if  password_login == password and username_login == correo:
+            
+            session['nombre_usuario'] = username_login
             return redirect('/dashboard')
         else:
             return 'Credenciales inválidas'

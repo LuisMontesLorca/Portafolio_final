@@ -8,18 +8,20 @@
 					<h2 id="content">Inicio de sesion</h2>
 										<p>Para un arriendo seguro por favor, inicia sesion con tus credenciales: </p>
 										
-                    <form method="post" action="#">
+                    <form method="POST" action="/login">
                         <div class="row gtr-uniform">
                             <div class="col-6 col-12-xsmall">
-                                <input type="text" name="demo-email" id="demo-email" value="" placeholder="Email" />
+                                <input type="email" name="correo_login" id="correo_login" value="" placeholder="Correo" />
                             </div>
                             <div class="col-6 col-12-xsmall">
-                                <input type="text" name="demo-contraseña" id="demo-contraseña" value="" placeholder="Contraseña" />
+                                <input type="text" name="contraseña_login" id="contraseña_login" value="" placeholder="Contraseña" />
                             </div>
-
-                                <div class="col-6 col-12-xsmall"><a href="#" class="button primary  ">Inicia sesion</a></div>
-                                <div class="col-6 col-12-xsmall"></div>
-                                <div class="col-6 col-12-xsmall"><a href="{{ url_for('registro') }}"  class="button secondary  ">Registrarse  </a></div>
+                            <div class="col-6 col-12-xsmall">
+                                <button type="submit" value="Registrarse" class="button primary  ">Inicia sesion</button>
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                <button href="{{ url_for('registro') }}"  class="button secondary  ">Registrarse  </button>
+                            </div>
                             
                             </div>
                     </form>
