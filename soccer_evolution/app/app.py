@@ -42,6 +42,10 @@ def cancha_tenis ():
 def canchas ():
     return render_template('canchas/canchas.html')
 
+@app.route('/campeonatos')
+def campeonatos ():
+    return render_template('canchas/campeonatos.html')
+
 @app.route('/contacto')
 def contacto ():
     return render_template('contacto.html')
