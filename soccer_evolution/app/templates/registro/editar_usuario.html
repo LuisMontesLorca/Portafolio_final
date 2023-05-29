@@ -3,26 +3,29 @@
         {% block body %}
                     <div class=" box">
                     <h3>Editar usuario</h3>
-                   {% for usuario in usuarios %}
-                    <form method="POST" action="/editar/{{ usuario.id_usuario }}">
+                   
+                    <form method="POST" action="/editar_usuarios/">
+                       
                         <div class="row gtr-uniform">
+                            {% for usuario in usuarios %}
+                            <input type="hidden" name="id_usuario" id="id_usuario" value="{{ usuario.id_usuario }}">
                             <div class="col-6 col-12-xsmall">
-                                <input type="text" name="nombre_usuario" id="nombre_usuario" value="{{ usuario.nombre_usuario }}" placeholder="Nombres" />
+                                <input type="text" name="nombre_usuario" id="nombre_usuario" value="" placeholder="Nombres" />
                             </div>
                             <div class="col-6 col-12-xsmall">
-                                <input type="text" name="apellido_usuario" id="apellido_usuario" value="{{ usuario.apellido_usuario }}" placeholder="Apellidos" />
+                                <input type="text" name="apellido_usuario" id="apellido_usuario" value="" placeholder="Apellidos" />
                             </div>
                             <div class="col-6 col-12-xsmall">
-                                <input type="email" name="correo_usuario" id="correo_usuario" value="{{ usuario.correo_usuario }}" placeholder="Email" />
+                                <input type="email" name="correo_usuario" id="correo_usuario" value="" placeholder="Email" />
                             </div>
                             <div class="col-6 col-12-xsmall">
-                                <input type="text" name="password_usuario" id="password_usuario" value="{{ usuario.password_usuario }}" placeholder="Teléfono" />
+                                <input type="text" name="password_usuario" id="password_usuario" value="" placeholder="Teléfono" />
                             </div>
                             <div class="col-6 col-12-xsmall">
-                                <input type="text" name="telefono_usuario" id="telefono_usuario" value="{{ usuario.telefono_usuario }}" placeholder="Fecha de nacimiento" />
+                                <input type="text" name="telefono_usuario" id="telefono_usuario" value="" placeholder="Fecha de nacimiento" />
                             </div>
                             <div class="col-6 col-12-xsmall">
-                                <input type="text" name="direccion_usuario" id="direccion_usuario" value="{{ usuario.direccion_usuario }}" placeholder="Dirección" />
+                                <input type="text" name="direccion_usuario" id="direccion_usuario" value="" placeholder="Dirección" />
                             </div>
                                 <!-- SELECT REGION Y COMUNA
 
@@ -47,9 +50,10 @@
                             <div class="col-6 col-12-xsmall">
                                 <input type="submit" class="button primary"value="Guardar"></input>
                             </div>
+                            {% endfor %} 
                         </div>
                     </form>
-                    {% endfor %}
+                 
                     </div>
                             <!-- Break -->
                             

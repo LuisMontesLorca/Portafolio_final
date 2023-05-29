@@ -1,5 +1,5 @@
 
-from flask import Flask, render_template, jsonify, request, redirect, session
+from flask import Flask, render_template, jsonify, request, redirect, session, url_for
 
 # IMPORT MYSQL LIB CONNECTION
 from flask_mysqldb import MySQL
@@ -174,15 +174,18 @@ def editar_usuarios (id):
         password_usuario = request.form['password_usuario']
         telefono_usuario = request.form['telefono_usuario']
         direccion_usuario = request.form['direccion_usuario']
-        usuarios = { 'nombre_usuario': nombre_usuario, 'apellido_usuario': apellido_usuario, 
+        usuario = { 'nombre_usuario': nombre_usuario, 'apellido_usuario': apellido_usuario, 
                 'correo_usuario': correo_usuario, 'password_usuario': password_usuario, 
                 'telefono_usuario': telefono_usuario, 'direccion_usuario': direccion_usuario }
-        update_usuarios = usuario_dao['update'](usuarios)
-        print('Usuario actualizado correctamente')
-        return render_template('registro/editar_usuarios.html', usuario=update_usuarios)
+        usuario_actualizado = usuario_dao['update'](usuario)
+        print('Usuario actualizado correctamente', usuario_actualizado)
+        return redirect(url_for('lista_usuarios'))
     else:
-        usuarios = usuario_dao['select_by_id'](id)
-        return render_template('registro/editar_usuario.html', usuarios=usuarios)
+        usuario_2 = usuario_dao['select_by_id'](id)
+        if usuario_2:
+            return render_template('registro/editar_usuario.html', usuarios=usuario_2)
+        else:
+            return "Usuario no encontrado"
 
 ######FIN EDITAR USUARIO#######
 

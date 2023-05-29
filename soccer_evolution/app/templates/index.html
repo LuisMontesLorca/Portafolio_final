@@ -24,7 +24,7 @@
 							<section id="one" class="tiles">
 								<article>
 									<span class="image">
-										<img src="images/tenis.jpg" alt="" />
+										<img src="{{ url_for('static', filename='images/tenis.jpg') }}" alt="" />
 									</span>
 									<header class="major">
 										<h3><a href="{{ url_for('canchas') }}" class="link">Nuestras canchas</a></h3>
@@ -33,7 +33,7 @@
 								</article>
 								<article>
 									<span class="image">
-										<img src="images/campeonato.jpg" alt="" />
+										<img src="{{ url_for('static', filename='images/campeonato.jpg') }}" alt="" />
 									</span>
 									<header class="major">
 										<h3><a href="landing.html" class="link">Campeonatos</a> </h3>
@@ -42,7 +42,7 @@
 								</article>
 								<article>
 									<span class="image">
-										<img src="images/estacionamiento.jpg" alt="" />
+										<img src="{{ url_for('static', filename='images/estacionamiento.jpg') }}" alt="" />
 									</span>
 									<header class="major">
 										<h3><a href="landing.html" class="link">Estacionamientos</a></h3>
@@ -51,7 +51,7 @@
 								</article>
 								<article>
 									<span class="image">
-										<img src="images/otros.jpg" alt="" />
+										<img src="{{ url_for('static', filename='images/otros.jpg') }}" alt="" />
 									</span>
 									<header class="major">
 										<h3><a href="landing.html" class="link"> Otros</a></h3>
