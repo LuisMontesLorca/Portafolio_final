@@ -54,10 +54,6 @@ def contacto ():
 def arrendar ():
     return render_template('arrendar.html')
 
-@app.route('/otros')
-def otros ():
-    return render_template('canchas/otros.html')
-
 def pagina_no_encontrada(error):
     return render_template('404.html'), 404
 
@@ -173,25 +169,32 @@ def lista_usuarios ():
 
 ######EDITAR USUARIO#######
 
-@app.route('/editar_usuarios/<int:id>', methods=['GET', 'POST'])
+@app.route('/editar_usuario/<int:id>', methods=['GET', 'POST'])
 def editar_usuarios (id):
     if request.method == 'POST':
+        id_usuario = request.form['id_usuario']
         nombre_usuario = request.form['nombre_usuario']
         apellido_usuario = request.form['apellido_usuario']
         correo_usuario = request.form['correo_usuario']
         password_usuario = request.form['password_usuario']
         telefono_usuario = request.form['telefono_usuario']
         direccion_usuario = request.form['direccion_usuario']
-        usuario = { 'nombre_usuario': nombre_usuario, 'apellido_usuario': apellido_usuario, 
+
+        usuario = { 'id_usuario':id_usuario, 'nombre_usuario': nombre_usuario, 'apellido_usuario': apellido_usuario, 
                 'correo_usuario': correo_usuario, 'password_usuario': password_usuario, 
                 'telefono_usuario': telefono_usuario, 'direccion_usuario': direccion_usuario }
+        print('Usuario antes de actualizar ', usuario)
         usuario_actualizado = usuario_dao['update'](usuario)
         print('Usuario actualizado correctamente', usuario_actualizado)
         return redirect(url_for('lista_usuarios'))
     else:
+        print("ID del usuario:", id)
         usuario_2 = usuario_dao['select_by_id'](id)
+        print("datos del usuario:", usuario_2)
         if usuario_2:
+            print("ENTRO AL IF")
             return render_template('registro/editar_usuario.html', usuarios=usuario_2)
+            
         else:
             return "Usuario no encontrado"
 
@@ -227,3 +230,6 @@ def agregar_trabajador():
 if __name__=='__main__':
     app.register_error_handler(404, pagina_no_encontrada)
     app.run(debug=True, port=os.getenv('APP_PORT'))
+
+
+
