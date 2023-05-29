@@ -1,59 +1,57 @@
+
 {% extends './layout.html' %}
 
         {% block body %}
                     <div class=" box">
                     <h3>Editar usuario</h3>
                    
-                    <form method="POST" action="/editar_usuarios/">
-                       
+                    {% if (usuarios) %}
+                    <form method="POST" action="/editar_usuario/{{ usuarios.id_usuario }}">
                         <div class="row gtr-uniform">
-                            {% for usuario in usuarios %}
-                            <input type="hidden" name="id_usuario" id="id_usuario" value="{{ usuario.id_usuario }}">
+                            <input type="hidden" name="id_usuario" id="id_usuario" value="{{ usuarios.id_usuario }}">
                             <div class="col-6 col-12-xsmall">
-                                <input type="text" name="nombre_usuario" id="nombre_usuario" value="" placeholder="Nombres" />
+                                <input type="text" name="nombre_usuario" id="nombre_usuario" value="{{ usuarios.nombre_usuario }}" placeholder="Nombres" />
                             </div>
                             <div class="col-6 col-12-xsmall">
-                                <input type="text" name="apellido_usuario" id="apellido_usuario" value="" placeholder="Apellidos" />
+                                <input type="text" name="apellido_usuario" id="apellido_usuario" value="{{ usuarios.apellido_usuario }}" placeholder="Apellidos" />
                             </div>
                             <div class="col-6 col-12-xsmall">
-                                <input type="email" name="correo_usuario" id="correo_usuario" value="" placeholder="Email" />
+                                <input type="email" name="correo_usuario" id="correo_usuario" value="{{ usuarios.correo_usuario }}" placeholder="Email" />
                             </div>
                             <div class="col-6 col-12-xsmall">
-                                <input type="text" name="password_usuario" id="password_usuario" value="" placeholder="Teléfono" />
+                                <input type="text" name="password_usuario" id="password_usuario" value="{{ usuarios.correo_usuario }}" placeholder="Teléfono" />
                             </div>
                             <div class="col-6 col-12-xsmall">
-                                <input type="text" name="telefono_usuario" id="telefono_usuario" value="" placeholder="Fecha de nacimiento" />
+                                <input type="text" name="telefono_usuario" id="telefono_usuario" value="{{ usuarios.correo_usuario }}" placeholder="Fecha de nacimiento" />
                             </div>
                             <div class="col-6 col-12-xsmall">
-                                <input type="text" name="direccion_usuario" id="direccion_usuario" value="" placeholder="Dirección" />
+                                <input type="text" name="direccion_usuario" id="direccion_usuario" value="{{ usuarios.correo_usuario }}" placeholder="Dirección" />
                             </div>
-                                <!-- SELECT REGION Y COMUNA
-
-                                <div class="col-6 col-12-xsmall">
-                                    <select name="region" id="region">
-                                        <option value="">Región</option>
-                                        <option value="1">Manufacturing</option>
-                                        <option value="1">Shipping</option>
-                                        <option value="1">Administration</option>
-                                        <option value="1">Human Resources</option>
-                                    </select>
-                                </div>
-                                <div class="col-6 col-12-xsmall">
-                                    <select name="comuna" id="comuna">
-                                        <option value="">Comuna</option>
-                                        <option value="1">Manufacturing</option>
-                                        <option value="1">Shipping</option>
-                                        <option value="1">Administration</option>
-                                        <option value="1">Human Resources</option>
-                                    </select>
-                                </div>--> 
+                            <!-- SELECT REGION Y COMUNA -->
                             <div class="col-6 col-12-xsmall">
-                                <input type="submit" class="button primary"value="Guardar"></input>
+                                <select name="region" id="region">
+                                    <option value="">Región</option>
+                                    <option value="1">Manufacturing</option>
+                                    <option value="1">Shipping</option>
+                                    <option value="1">Administration</option>
+                                    <option value="1">Human Resources</option>
+                                </select>
                             </div>
-                            {% endfor %} 
+                            <div class="col-6 col-12-xsmall">
+                                <select name="comuna" id="comuna">
+                                    <option value="">Comuna</option>
+                                    <option value="1">Manufacturing</option>
+                                    <option value="1">Shipping</option>
+                                    <option value="1">Administration</option>
+                                    <option value="1">Human Resources</option>
+                                </select>
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                <input type="submit" class="button primary" value="Guardar">
+                            </div>
                         </div>
                     </form>
-                 
+                    {% endif %}
                     </div>
                             <!-- Break -->
                             
