@@ -54,6 +54,10 @@ def contacto ():
 def arrendar ():
     return render_template('arrendar.html')
 
+@app.route('/otros')
+def otros ():
+    return render_template('canchas/otros.html')
+
 def pagina_no_encontrada(error):
     return render_template('404.html'), 404
 
