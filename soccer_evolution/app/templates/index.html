@@ -5,6 +5,7 @@
 
         {% block body %}
 
+					{% if id_usuario %}
 					<!-- Banner -->
 						<section id="banner" class="major">
 							<div class="inner">
@@ -14,7 +15,11 @@
 								<div class="content">
 									<p>Somos el ultimo integrante de tu equipo. Jugamos una gran variedad de deportes, entre ellos, futbol, basketball, padel. Te sorprenderas!!, nos encontramos ubicados en Av.Ferrocarril 123, en la comuna de Santiago.</p>
 									<ul class="actions">
+										{% if id_usuario %}
+										<li><a href="{{ url_for('canchas', id=id_usuario) }}" class="button next scrolly">Arrienda con nosotros</a></li>
+										{% else %}
 										<li><a href="{{ url_for('login') }}" class="button next scrolly">Arrienda con nosotros</a></li>
+										{% endif %}
 									</ul>
 								</div>
 							</div>
@@ -30,7 +35,7 @@
 										<img src="{{ url_for('static', filename='images/tenis.jpg') }}" alt="" />
 									</span>
 									<header class="major">
-										<h3><a href="{{ url_for('canchas') }}" class="link">Nuestras canchas</a></h3>
+										<h3><a href="{{ url_for('canchas', id=id_usuario) }}" class="link">Nuestras canchas</a></h3>
 										<p>Tenis y padel. </p>
 									</header>
 								</article>
@@ -62,7 +67,7 @@
 									</header>
 								</article>
 							</section>
-	
+							{% endif %}
 						<!-- Two -->
 							<section id="two">
 								<div class="inner">

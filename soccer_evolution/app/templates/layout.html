@@ -11,7 +11,28 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
 		<script src="https://kit.fontawesome.com/8a340e4015.js" crossorigin="anonymous"></script>
+		<!-- Incluye jQuery -->
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+		<!-- Incluye jQuery UI -->
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+		<script>
+			$.noConflict();
+			jQuery(function($) 
+			{
+				$("#datepicker").datepicker
+				({
+					onSelect: function(dateText, inst) 
+					{
+						var selectedDate = $(this).datepicker("getDate");
+						// Aquí puedes almacenar la fecha seleccionada en una variable o enviarla al servidor
+						console.log(selectedDate);
+					}
+				})
+			});
+
+		</script>
 
 		<noscript><link rel="stylesheet" href="{{ url_for('static', filename='assets/css/noscript.css') }}" /></noscript>
 	</head>
@@ -22,31 +43,38 @@
                 <header id="header" class="alt">
                     <a href="{{ url_for('index') }}" class="logo"><strong>Soccer</strong> <span>Evolution</span></a>
                     <nav>
+						
                         <a href="#menu">Menu</a>
                     </nav>
                 </header>
 
             <!-- Menu -->
+			
                 <nav id="menu">
+					
+					
                     <ul class=" links list-group">
-                        <li class="list-group"><a href="{{ url_for('index') }}">Inicio</a></li>
+						{% if inicio_sesion %}
+                        <li class="list-group"><a href="{{ url_for('index', id=id_usuario) }}">Inicio</a></li>
+						<li class="list-group"><a href="{{ url_for('perfil_usuario', id=id_usuario )}}">Mi perfil</a></li>
+						<li class="list-group"><a href="{{ url_for('canchas', id=id_usuario ) }}">Canchas</a></li>
+						{% else %}
+						<li class="list-group"><a href="{{ url_for('index')}}">Inicio</a></li>
+						<li class="list-group"><a href="{{ url_for('login')}}">Mi perfil</a></li>
 						<li class="list-group"><a href="{{ url_for('canchas') }}">Canchas</a></li>
-                        <li class="list-group"><a href="{{ url_for('contacto') }}">Contacto</a></li>
+						{% endif %}
+                        <li class="list-group"><a href="{{ url_for('contacto') }}">Contacto</a></li>	
 						<li class="list-group"><a href="generic.html">¿Quienes somos?</a></li>
-					 <!--	DROPDOWN
-						<li class="list-group dropdown">
-							 <div class="dropdown"> 
-								<button class="dropbtn">Canchas</button>
-								<div class="dropdown-content">
-									<a href="{{ url_for('cancha_futbol') }}">Futbol</a>
-									<a href="{{ url_for('cancha_basket') }}">Basketball</a>
-									<a href="{{ url_for('cancha_tenis') }}">Tenis</a>
-								</div>
-							</div>
-						</li>-->
                     </ul>
                     <ul class="actions stacked">
-                        <li><a href="{{ url_for('login') }}" class="button primary fit">Iniciar sesion</a></li>
+						{% if inicio_sesion %}
+							<!-- Elementos HTML para usuario autenticado -->
+							<li><a href="{{ url_for('logout') }}" class="button primary fit">Cerrar sesion</a></li>
+						{% else %}
+							<!-- Elementos HTML para usuario no autenticado -->
+							<li><a href="{{ url_for('login') }}" class="button primary fit">Iniciar sesion</a></li>
+						{% endif %}
+                        
                         <li><a href="{{ url_for('registro') }}" class="button fit">Registro</a></li>
                     </ul>
                 </nav>

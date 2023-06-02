@@ -24,23 +24,43 @@ mysql = MySQL(app)
 
 @app.route('/')
 def index ():
-    return render_template('index.html')
+    if 'username' in session:
+        inicio_sesion = True
+        id_usuario = session.get('id_usuario')
+        return render_template('index.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario)
+    else:
+        inicio_sesion = False
+        return render_template('index.html')
+    #return redirect(url_for('index', inicio_sesion=inicio_sesion))
 
 @app.route('/cancha_futbol')
 def cancha_futbol ():
-    return render_template('canchas/cancha_futbol.html')
+        if 'username' in session:
+            inicio_sesion = True
+            id_usuario = session.get('id_usuario')
+        return render_template('canchas/cancha_futbol.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario)
 
 @app.route('/cancha_basket')
 def cancha_basket ():
-    return render_template('canchas/cancha_basket.html')
+            if 'username' in session:
+                inicio_sesion = True
+                id_usuario = session.get('id_usuario')
+            return render_template('canchas/cancha_basket.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario)
 
 @app.route('/cancha_tenis')
 def cancha_tenis ():
-    return render_template('canchas/cancha_tenis.html')
+    if 'username' in session:
+        inicio_sesion = True
+        id_usuario = session.get('id_usuario')
+    return render_template('canchas/cancha_tenis.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario)
 
 @app.route('/canchas')
+
 def canchas ():
-    return render_template('canchas/canchas.html')
+        if 'username' in session:
+            inicio_sesion = True
+            id_usuario = session.get('id_usuario')
+        return render_template('canchas/canchas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario)
 
 @app.route('/campeonatos')
 def campeonatos ():
@@ -52,7 +72,12 @@ def contacto ():
 
 @app.route('/arrendar')
 def arrendar ():
-    return render_template('arrendar.html')
+    if 'username' in session:
+        inicio_sesion = True
+        id_usuario = session.get('id_usuario')
+        return render_template('arrendar.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario)
+    else:
+        return render_template('registro/login.html')
 
 def pagina_no_encontrada(error):
     return render_template('404.html'), 404
@@ -115,9 +140,7 @@ def registro():
 
     return render_template('Registro/registro.html')
 
-
 ######FIN REGISTER#######
-
 
 ######LOGIN#######
 
@@ -129,16 +152,29 @@ def login():
 
         usuario = usuario_dao['select_all']()
         for row in usuario:
+            
+            id_usuario = row['id_usuario']
             correo = row['correo_usuario']
             password = row['password_usuario']
         
         # Verifica las credenciales (aquí puedes implementar tu lógica de autenticación)
         if  password_login == password and username_login == correo:
             
-            session['nombre_usuario'] = username_login
-            return redirect('/dashboard')
+            session['username'] = username_login
+            session['id_usuario'] = id_usuario
+            if 'username' in session:
+            # El usuario ha iniciado sesión
+                username_login = session['username']
+                id_usuario_login = session['id_usuario']
+                return redirect(url_for('index', id_usuario=id_usuario_login))
+            else:
+                # El usuario no ha iniciado sesión
+                return 'Inicia sesión para continuar'
+        
+        # return redirect(url_for('layout', usuario_incia=usuario_iniciado_sesion))
         else:
             return 'Credenciales inválidas'
+
 
     return render_template('registro/login.html')
 
@@ -183,9 +219,10 @@ def editar_usuarios (id):
         usuario = { 'id_usuario':id_usuario, 'nombre_usuario': nombre_usuario, 'apellido_usuario': apellido_usuario, 
                 'correo_usuario': correo_usuario, 'password_usuario': password_usuario, 
                 'telefono_usuario': telefono_usuario, 'direccion_usuario': direccion_usuario }
-        print('Usuario antes de actualizar ', usuario)
+        
         usuario_actualizado = usuario_dao['update'](usuario)
         print('Usuario actualizado correctamente', usuario_actualizado)
+
         return redirect(url_for('lista_usuarios'))
     else:
         print("ID del usuario:", id)
@@ -198,7 +235,42 @@ def editar_usuarios (id):
         else:
             return "Usuario no encontrado"
 
-######FIN EDITAR USUARIO#######
+# PERFIL USUARIO
+
+@app.route('/perfil_usuario/<int:id>', methods=['GET', 'POST'])
+def perfil_usuario (id):
+    if request.method == 'POST':
+        id_usuario = request.form['id_usuario']
+        nombre_usuario = request.form['nombre_usuario']
+        apellido_usuario = request.form['apellido_usuario']
+        correo_usuario = request.form['correo_usuario']
+        password_usuario = request.form['password_usuario']
+        telefono_usuario = request.form['telefono_usuario']
+        direccion_usuario = request.form['direccion_usuario']
+
+        usuario = { 'id_usuario':id_usuario, 'nombre_usuario': nombre_usuario, 'apellido_usuario': apellido_usuario, 
+                'correo_usuario': correo_usuario, 'password_usuario': password_usuario, 
+                'telefono_usuario': telefono_usuario, 'direccion_usuario': direccion_usuario }
+        print('Usuario antes de actualizar ', usuario)
+        usuario_actualizado = usuario_dao['update'](usuario)
+        print('Usuario actualizado correctamente', usuario_actualizado)
+        return redirect(url_for('lista_usuarios'))
+    else:
+        print("ID del usuario:", id)
+        usuario_2 = usuario_dao['select_by_id'](id)
+        print("datos del usuario:", usuario_2)
+        if 'username' in session:
+            inicio_sesion=True
+            if usuario_2:
+                print("ENTRO AL IF")
+                id_usuario = session.get('id_usuario')
+                return render_template('registro/perfil_usuario.html', inicio_sesion=inicio_sesion, usuarios=usuario_2, id_usuario=id_usuario)
+            #render_template('registro/perfil_usuario.html', usuarios=usuario_2, id_usuario=id_usuario)
+        else:
+            return "Usuario no encontrado"
+
+
+######FIN PERFIL USUARIO#######
 
 @app.route('/comunas')
 def listar_comunas ():

@@ -7,7 +7,7 @@
 					<section id="banner" class="style2">
 						<div class="inner">
 							<span class="image">
-								<img src="images/pic07.jpg" alt="" />
+								<img src="{{ url_for('static', filename='images/cancha.jpg') }}" alt="" />
 							</span>
 							<header class="major">
 								<h1>Nuestras canchas</h1>
@@ -21,41 +21,42 @@
 
 				<!-- Main -->
                 <div id="main">
-	
+					
                     <!-- One -->
+					{% if id_usuario %}
                         <section id="one" class="tiles">
                             <article>
                                 <span class="image">
-                                    <img src="images/cancha_2.jpg" alt="" />
+                                    <img src="{{ url_for('static', filename='images/cancha_2.jpg') }}" alt="" />
                                 </span>
                                 <header class="major">
                                     
-                                    <h3><a href="{{ url_for('cancha_futbol') }}" class="link">Football</a></h3>
+                                    <h3><a href="{{ url_for('cancha_futbol', id=id_usuario) }}" class="link">Football</a></h3>
                                     <p>Canchas desde 5 hasta 11 jugadores por lado.</p>
                                 </header>
                             </article>
                             <article>
                                 <span class="image">
-                                    <img src="images/basketball.jpg" alt="" />
+                                    <img src="{{ url_for('static', filename='images/basketball.jpg') }}" alt="" />
                                 </span>
                                 <header class="major">
-                                    <h3><a href="{{ url_for('cancha_basket') }}" class="link">Basketball</a></h3>
+                                    <h3><a href="{{ url_for('cancha_basket', id=id_usuario) }}" class="link">Basketball</a></h3>
                                     <p>Canchas para 5 jugadores por lado.</p>
                                 </header>
                             </article>
                             <article>
                                 <span class="image">
-                                    <img src="images/tenis.jpg" alt="" />
+                                    <img src="{{ url_for('static', filename='images/tenis.jpg') }}" alt="" />
                                 </span>
                                 <header class="major">
-                                    <h3><a href="{{ url_for('cancha_tenis') }}" class="link">Tenis</a></h3>
+                                    <h3><a href="{{ url_for('cancha_tenis', id=id_usuario) }}" class="link">Tenis</a></h3>
                                     <p>Tenis y padel. </p>
                                 </header>
                             </article>
                      
                             <article>
                                 <span class="image">
-                                    <img src="images/otros.jpg" alt="" />
+                                    <img src="{{ url_for('static', filename='images/otros.jpg') }}" alt="" />
                                 </span>
                                 <header class="major">
                                     <h3><a href="landing.html" class="link"> Otros</a></h3>
@@ -63,7 +64,7 @@
                                 </header>
                             </article>
                         </section>
-
+						{% endif %}
                     <!-- Two -->
                         <section id="two">
                             <div class="inner">
