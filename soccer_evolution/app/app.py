@@ -162,28 +162,35 @@ def login():
         password_login = request.form['contraseña_login']
 
         usuario = usuario_dao['select_all']()
+
+        id_usuario = None
+        correo = None
+        password = None
+
         for row in usuario:
             
             id_usuario = row['id_usuario']
             correo = row['correo_usuario']
             password = row['password_usuario']
-              # Verifica las credenciales (aquí puedes implementar tu lógica de autenticación)
-            if  password_login == password and username_login == correo:
-                
-                session['username'] = username_login
-                session['id_usuario'] = id_usuario
-                if 'username' in session:
-                # El usuario ha iniciado sesión
-                    username_login = session['username']
-                    id_usuario_login = session['id_usuario']
-                    return redirect(url_for('index', id_usuario=id_usuario_login))
-                else:
-                    # El usuario no ha iniciado sesión
-                    return 'Inicia sesión para continuar'
-        # return redirect(url_for('layout', usuario_incia=usuario_iniciado_sesion))
-            else:
-                return 'Credenciales inválidas'
+        
+        # Verifica las credenciales (aquí puedes implementar tu lógica de autenticación)
+        if  password_login == password and username_login == correo:
             
+            session['username'] = username_login
+            session['id_usuario'] = id_usuario
+            if 'username' in session:
+            # El usuario ha iniciado sesión
+                username_login = session['username']
+                id_usuario_login = session['id_usuario']
+                return redirect(url_for('index', id_usuario=id_usuario_login))
+            else:
+                # El usuario no ha iniciado sesión
+                return 'Inicia sesión para continuar'
+        
+        # return redirect(url_for('layout', usuario_incia=usuario_iniciado_sesion))
+        else:
+            return 'Credenciales inválidas'
+
     return render_template('registro/login.html')
 
 @app.route('/dashboard')
