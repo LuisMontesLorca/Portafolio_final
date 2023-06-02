@@ -2865,11 +2865,11 @@ input, select, textarea {
 			}
 
 			.tiles article:nth-child(6n - 4):before {
-				background-color: #8d82c4;
+				background-color: #ec8d81;
 			}
 
 			.tiles article:nth-child(6n - 3):before {
-				background-color: #ec8d81;
+				background-color: #8d82c4 ;
 			}
 
 			.tiles article:nth-child(6n - 2):before {
