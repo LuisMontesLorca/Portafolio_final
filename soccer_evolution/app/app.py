@@ -181,10 +181,9 @@ def login():
                     # El usuario no ha iniciado sesión
                     return 'Inicia sesión para continuar'
         # return redirect(url_for('layout', usuario_incia=usuario_iniciado_sesion))
-        else:
-            return 'Credenciales inválidas'
-
-
+            else:
+                return 'Credenciales inválidas'
+            
     return render_template('registro/login.html')
 
 @app.route('/dashboard')
