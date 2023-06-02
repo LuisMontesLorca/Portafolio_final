@@ -64,6 +64,48 @@
                                 </header>
                             </article>
                         </section>
+						{% else %}
+                        <section id="one" class="tiles">
+                            <article>
+                                <span class="image">
+                                    <img src="{{ url_for('static', filename='images/cancha_2.jpg') }}" alt="" />
+                                </span>
+                                <header class="major">
+                                    
+                                    <h3><a href="{{ url_for('cancha_futbol') }}" class="link">Football</a></h3>
+                                    <p>Canchas desde 5 hasta 11 jugadores por lado.</p>
+                                </header>
+                            </article>
+                            <article>
+                                <span class="image">
+                                    <img src="{{ url_for('static', filename='images/basketball.jpg') }}" alt="" />
+                                </span>
+                                <header class="major">
+                                    <h3><a href="{{ url_for('cancha_basket') }}" class="link">Basketball</a></h3>
+                                    <p>Canchas para 5 jugadores por lado.</p>
+                                </header>
+                            </article>
+                            <article>
+                                <span class="image">
+                                    <img src="{{ url_for('static', filename='images/tenis.jpg') }}" alt="" />
+                                </span>
+                                <header class="major">
+                                    <h3><a href="{{ url_for('cancha_tenis') }}" class="link">Tenis</a></h3>
+                                    <p>Tenis y padel. </p>
+                                </header>
+                            </article>
+                     
+                            <article>
+                                <span class="image">
+                                    <img src="{{ url_for('static', filename='images/otros.jpg') }}" alt="" />
+                                </span>
+                                <header class="major">
+                                    <h3><a href="landing.html" class="link"> Otros</a></h3>
+                                    <p>Reihidratantes, agua mineral, balones, todo lo que necesitas lo encontras aquí.</p>
+                                </header>
+                            </article>
+                        </section>
+
 						{% endif %}
                     <!-- Two -->
                         <section id="two">

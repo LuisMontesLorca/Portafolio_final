@@ -35,32 +35,43 @@ def index ():
 
 @app.route('/cancha_futbol')
 def cancha_futbol ():
-        if 'username' in session:
-            inicio_sesion = True
-            id_usuario = session.get('id_usuario')
+    if 'username' in session:
+        inicio_sesion = True
+        id_usuario = session.get('id_usuario')
         return render_template('canchas/cancha_futbol.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario)
-
+    else:
+        inicio_sesion = False
+        return render_template('canchas/cancha_futbol.html')
+    
 @app.route('/cancha_basket')
 def cancha_basket ():
-            if 'username' in session:
-                inicio_sesion = True
-                id_usuario = session.get('id_usuario')
-            return render_template('canchas/cancha_basket.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario)
-
+    if 'username' in session:
+        inicio_sesion = True
+        id_usuario = session.get('id_usuario')
+        return render_template('canchas/cancha_basket.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario)
+    else:
+        inicio_sesion = False
+        return render_template('canchas/cancha_basket.html')
+    
 @app.route('/cancha_tenis')
 def cancha_tenis ():
     if 'username' in session:
         inicio_sesion = True
         id_usuario = session.get('id_usuario')
-    return render_template('canchas/cancha_tenis.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario)
-
+        return render_template('canchas/cancha_tenis.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario)
+    else:
+            inicio_sesion = False
+            return render_template('canchas/cancha_tenis.html')
+    
 @app.route('/canchas')
-
 def canchas ():
-        if 'username' in session:
-            inicio_sesion = True
-            id_usuario = session.get('id_usuario')
+    if 'username' in session:
+        inicio_sesion = True
+        id_usuario = session.get('id_usuario')
         return render_template('canchas/canchas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario)
+    else:
+        inicio_sesion = False
+        return render_template('canchas/canchas.html')
 
 @app.route('/campeonatos')
 def campeonatos ():
