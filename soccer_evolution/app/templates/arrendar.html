@@ -58,10 +58,31 @@
 								</div>
 							</section>
                             <div id= "contenedor-button">
-                                <div id= "button-div">    <a href="#" class="button primary">Continuar</a></div>
+                                <div id= "button-div"><a href="#" id="menu" class="button primary">Continuar</a></div>
                             </div>
 					</div>
 
-	
+					<button id="open_modal">Abrir Modal</button>
+
+					<div id="modal" class="modal">
+						
+						<div class="modal-content">
+							<div class="box">
+						  <div class="modal-header">
+							<h2>Antes de continuar...</h2>
+							<button class="close-button">&times;</button>
+						  </div>
+						  <div class="modal-body">
+							<p>Te facilitamos los instrumentos de tu deporte favorito para que solo te preocupes de venir a jugar.</p>
+						  </div>
+						  </div>
+						  <div class="modal-footer">
+							<button class="btn">Continuar</button>
+							<button class="btn btn-primary">Conseguir instrumentos</button>
+						  </div>
+						
+						</div>
+				
+					  </div>
 	
 					{% endblock %}
