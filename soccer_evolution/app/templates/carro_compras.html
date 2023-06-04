@@ -1,0 +1,22 @@
+{% extends './layout.html' %}
+
+        {% block body %}
+    <div class="box">
+        <div class="container m-4 m-auto">
+            <form action="#">
+                <div class="mb-3">
+                    <div class="m-5">
+                        <h4>EN ESTA SECCIÓN DEBER IR DETALLE DEL CARRITO</h4>
+                    </div>
+                    <label for="txt-amount" class="form-label">TOTAL A PAGAR</label>
+                    <input type="text" class="form-control" id="txt-amount" value="15990">
+                </div>
+                <div id="btn" class="mt-4 d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="button" id="btn-pay" class="btn btn-warning" onclick="create()"
+                        style="width:101px; height:34px; background-image: url('assets/img/webpay-desktop-logo_color.svg');">
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+        {% endblock %}

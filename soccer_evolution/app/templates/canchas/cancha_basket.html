@@ -32,56 +32,26 @@
 							</section> -->
 
 						<!-- Two -->
+				 
 							<section id="two" class="spotlights">
+								{% for cancha in cancha_basket %}
 								<section>
-									<a href="generic.html" class="image">
-										<img src="{{ url_for('static', filename='images/cancha-basquetbal.jpg') }}"  alt="" data-position="center center" />
+									<a class="image">
+										<img src="{{ url_for('static', filename= cancha.img_cancha_basket) }}" alt="" data-position="center center" />
 									</a>
 									<div class="content">
 										<div class="inner">
 											<header class="major">
-												<h3>basquetbol Gimnasio</h3>
+												<h3>{{cancha.nombre_cancha_basket}}</h3>
 											</header>
-											<p>Cancha de basquetbol techada, con piso de parquet. Con una dimensión de 28 x 15 m. Nuestra cancha de Basketball tiene medidas profesionales para que tu experiencia sea de otro nivel.</p>
+											<p>{{cancha.descripcion_cancha_basket}}</p>
 											<ul class="actions">
-												<li><a href="{{ url_for('arrendar') }}" class="button">Arrendar</a></li>
+												<li><a href="{{ url_for('arrendar', id_cancha= cancha.id_cancha_basket, nombre_cancha=cancha.nombre_cancha_basket, valor_cancha=cancha.valor_cancha_basket) }}" class="button">Arrendar</a></li>
 											</ul>
 										</div>
 									</div>
 								</section>
-								<section>
-									<a href="generic.html" class="image">
-										<img src="{{ url_for('static', filename='images/cancha-basquetbal.jpg') }}" alt="" data-position="top center" />
-									</a>
-									<div class="content">
-										<div class="inner">
-											<header class="major">
-												<h3>Cancha basquetbol Poliuretano</h3>
-											</header>
-											<p>Cancha de basquetbol al aire libre con piso de poliuretano con capacidad de 5 jugadores por equipo.</p>
-											<ul class="actions">
-												<li><a href="{{ url_for('arrendar') }}" class="button">Arrendar</a></li>
-											</ul>
-										</div>
-									</div>
-								</section>
-								<section>
-									<a href="generic.html" class="image">
-										<img src="{{ url_for('static', filename='images/cancha-basquetbal3.jpg') }}" alt="" data-position="25% 25%" />
-									</a>
-									<div class="content">
-										<div class="inner">
-											<header class="major">
-												<h3>Canchas basquetbol  </h3>
-											</header>
-											<p>Cancha de basquetbol al aire libre con piso de poliuretano.</p>
-											<ul class="actions">
-												<li><a href="{{ url_for('arrendar') }}" class="button">Arrendar</a></li>
-											</ul>
-										</div>
-									</div>
-								</section>
-
-				
-					</div>
-					{% endblock %}
+								{% endfor %}
+							</section>
+						
+							{% endblock %}

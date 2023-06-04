@@ -15,7 +15,7 @@
 						
 
                                     <h3>Por favor seleccione un horario disponible</h3>
-
+									
 													<h4>Horarios</h4>
 													<div class="table-wrapper">
 														<table>
@@ -24,16 +24,28 @@
 																	<th>Cancha</th>
 																	<th>Fecha</th>
 																	<th>Hora</th>
+																	
 																	<th>Valor</th>
 																</tr>
 															</thead>
 															<tbody>
 																<tr>
-																	<td>Football</td>
+																	{% if inicio_sesion %}
+																	<td><input type="text" value= "{{nombre_cancha}}"disabled></td>
+																	{% endif %}
 																	<td><input type="text" id="datepicker" placeholder="Seleccione una fecha"></td>
-																	<td><select>00:00:00</select></td>
-																	<td>25</td>
 																	
+																	<td><select>
+																		{% for hora in horarios %}
+																		<option value="{{ hora.franja_horarios }}">{{ hora.franja_horarios }}</option>
+																		{% endfor %}
+																	</select></td>
+																	
+																	{% if inicio_sesion %}
+																	<td>
+																		$<span>{{ valor_cancha }}</span>
+																	</td>
+																	{% endif %}
 																</tr>
 
 															</tbody>
@@ -42,6 +54,7 @@
 															</tfoot>
 														</table>
 													</div>
+													
 								</div>
 							</section>
                             <div id= "contenedor-button">

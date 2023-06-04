@@ -32,104 +32,26 @@
 							</section> -->
 
 						<!-- Two -->
-				
+				 
 							<section id="two" class="spotlights">
+								{% for cancha in cancha_futbol %}
 								<section>
 									<a class="image">
-										<img src="{{ url_for('static', filename='images/cancha-futbol.jpg') }}" alt="" data-position="center center" />
+										<img src="{{ url_for('static', filename= cancha.img_cancha_futbol) }}" alt="" data-position="center center" />
 									</a>
 									<div class="content">
 										<div class="inner">
 											<header class="major">
-												<h3>Cancha Futbol</h3>
+												<h3>{{cancha.nombre_cancha_futbol}}</h3>
 											</header>
-											<p>Cancha de futbol de pasto natural con capacidad para 11 jugadores en cancha por equipo. Con una dimensión de 105 × 68 m. nuestra cancha de Football tiene medidas profesionales para que tu experiencia sea de otro nivel.</p>
+											<p>{{cancha.descripcion_cancha_futbol}}</p>
 											<ul class="actions">
-												<li><a href="{{ url_for('arrendar') }}" class="button">Arrendar</a></li>
+												<li><a href="{{ url_for('arrendar', id_cancha= cancha.id_cancha_futbol, nombre_cancha=cancha.nombre_cancha_futbol, valor_cancha=cancha.valor_cancha_futbol ) }}" class="button">Arrendar</a></li>
 											</ul>
 										</div>
 									</div>
 								</section>
-								<section>
-									<a href="generic.html" class="image">
-										<img src="{{ url_for('static', filename='images/cancha-futbolito.jpg') }}" alt="" data-position="top center" />
-									</a>
-									<div class="content">
-										<div class="inner">
-											<header class="major">
-												<h3>Cancha Futbolito </h3>
-											</header>
-											<p>Nuestra cancha de futbolito más grande, de pasto sintetico y con capacidad para 9 jugadores en cancha por equipo.</p>
-											<ul class="actions">
-												<li><a href="{{ url_for('arrendar') }}" class="button">Arrendar</a></li>
-											</ul>
-										</div>
-									</div>
-								</section>
-								<section>
-									<a href="generic.html" class="image">
-										<img src="{{ url_for('static', filename='images/cancha-futbolito2.jpg') }}" alt="" data-position="25% 25%" />
-									</a>
-									<div class="content">
-										<div class="inner">
-											<header class="major">
-												<h3>Fútbolito 2</h3>
-											</header>
-											<p>Cancha de futbolito, de pasto sintetico y con capacidad (recomendada) para 7 jugadores en cancha por equipo.</p>
-											<ul class="actions">
-												<li><a href="{{ url_for('arrendar') }}" class="button">Arrendar</a></li>
-											</ul>
-										</div>
-									</div>
-								</section>
-								<section>
-									<a href="generic.html" class="image">
-										<img src="{{ url_for('static', filename='images/cancha-futbolito3.jpg') }}" alt="" data-position="center center" />
-									</a>
-									<div class="content">
-										<div class="inner">
-											<header class="major">
-												<h3>Fútbolito 3</h3>
-											</header>
-											<p>Cancha de futbolito, de pasto sintetico y con capacidad (recomendada) para 7 jugadores en cancha por equipo.</p>
-											<ul class="actions">
-												<li><a href="{{ url_for('arrendar') }}" class="button">Arrendar</a></li>
-											</ul>
-										</div>
-									</div>
-								</section>
-								<section>
-									<a href="generic.html" class="image">
-										<img src="{{ url_for('static', filename='images/cancha-babyfutbol.jpg') }}" alt="" data-position="center center" />
-									</a>
-									<div class="content">
-										<div class="inner">
-											<header class="major">
-												<h3>Cancha BabyFutbol Gimnasio</h3>
-											</header>
-											<p>Cancha de baby futbol de hormigon pulido en gimnasio, espacio apto para campeonatos. capacidad de la cancha para 5 jugadores en cancha por equipo.</p>
-											<ul class="actions">
-												<li><a href="{{ url_for('arrendar') }}" class="button">Arrendar</a></li>
-											</ul>
-										</div>
-									</div>
-								</section>
-								<section>
-									<a href="generic.html" class="image">
-										<img src="{{ url_for('static', filename='images/cancha-babyfutbol2.jpg') }}" alt="" data-position="center center" />
-									</a>
-									<div class="content">
-										<div class="inner">
-											<header class="major">
-												<h3>Cancha BabyFutbol Pasto sintetico</h3>
-											</header>
-											<p>Cancha de baby futbol de pasto sintetico y con capacidad para 5 jugadores en cancha por equipo. Canha ubicada al aire libre, lugar apto para campeonatos</p>
-											<ul class="actions">
-												<li><a href="{{ url_for('arrendar') }}" class="button">Arrendar</a></li>
-											</ul>
-										</div>
-									</div>
-								</section>
+								{% endfor %}
 							</section>
-					
+						
 							{% endblock %}

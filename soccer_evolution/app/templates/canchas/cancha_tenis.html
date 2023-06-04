@@ -32,71 +32,26 @@
 							</section> -->
 
 						<!-- Two -->
+				 
 							<section id="two" class="spotlights">
+								{% for cancha in cancha_tenis %}
 								<section>
-									<a href="generic.html" class="image">
-										<img src="{{ url_for('static', filename='images/arcilla-2.jpg') }}"alt="" data-position="center center" />
+									<a class="image">
+										<img src="{{ url_for('static', filename= cancha.img_cancha_tenis) }}" alt="" data-position="center center" />
 									</a>
 									<div class="content">
 										<div class="inner">
 											<header class="major">
-												<h3>Cancha Tenis Piso Arcilla</h3>
+												<h3>{{cancha.nombre_cancha_tenis}}</h3>
 											</header>
-											<p>Cancha de Tenis piso de arcilla. Con una dimensión de 23x8. Sin dudas nuestras canchas de Tenis tu experiencia de juego será de otro nivel.</p>
+											<p>{{cancha.descripcion_cancha_tenis}}</p>
 											<ul class="actions">
-												<li><a href="{{ url_for('arrendar') }}" class="button">Arrendar</a></li>
+												<li><a href="{{ url_for('arrendar',  id_cancha= cancha.id_cancha_tenis, nombre_cancha=cancha.nombre_cancha_tenis,valor_cancha=cancha.valor_cancha_tenis ) }}" class="button">Arrendar</a></li>
 											</ul>
 										</div>
 									</div>
 								</section>
-								<section>
-									<a href="generic.html" class="image">
-										<img src="{{ url_for('static', filename='images/tenis-pduro2.jpg') }}"alt="" data-position="top center" />
-									</a>
-									<div class="content">
-										<div class="inner">
-											<header class="major">
-												<h3>Cancha Tenis Rápida</h3>
-											</header>
-											<p>Cancha de tenis con piso GreenSet, la que permite una experiencia distinta, permitiendo que los botes sean mas cortos. Con una dimensión de 23.77x8.23. Nuestras canchas de Tenis tienen medidas profesionales para que tu experiencia sea de otro nivel.</p>
-											<ul class="actions">
-												<li><a href="{{ url_for('arrendar') }}" class="button">Arrendar</a></li>
-											</ul>
-										</div>
-									</div>
-								</section>
-								<section>
-									<a href="generic.html" class="image">
-										<img src="{{ url_for('static', filename='images/padel-pista.jpg') }}" alt="" data-position="25% 25%" />
-									</a>
-									<div class="content">
-										<div class="inner">
-											<header class="major">
-												<h3>Cancha Padel Gimnasio </h3>
-											</header>
-											<p>Cancha Padel de blindex ya que cuenta con paletas modernas que facilitan el juego.Con una dimensión de 10x20 en sala apta para campeonatos.</p>
-											<ul class="actions">
-												<li><a href="{{ url_for('arrendar') }}" class="button">Arrendar</a></li>
-											</ul>
-										</div>
-									</div>
-								</section>
-                                <section>
-									<a href="generic.html" class="image">
-										<img src="{{ url_for('static', filename='images/padel-pasto1.jpg') }}" alt="" data-position="25% 25%" />
-									</a>
-									<div class="content">
-										<div class="inner">
-											<header class="major">
-												<h3>Padel Pasto</h3>
-											</header>
-											<p>Cancha de padel al aire libre de pasto con una dimensión de 10x20 para que puedas jugar singles o dobles sin mayores contratiempos.</p>
-											<ul class="actions">
-												<li><a href="{{ url_for('arrendar') }}" class="button">Arrendar</a></li>
-											</ul>
-										</div>
-									</div>
-								</section>
-				
-					</div>
-					{% endblock %}
+								{% endfor %}
+							</section>
+						
+							{% endblock %}
