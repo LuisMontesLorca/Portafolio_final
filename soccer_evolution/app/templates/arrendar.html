@@ -18,13 +18,14 @@
 									
 													<h4>Horarios</h4>
 													<div class="table-wrapper">
+														<form action="/agregar_al_carro" method="POST">
 														<table>
 															<thead>
 																<tr>
 																	<th>Cancha</th>
 																	<th>Fecha</th>
-																	<th>Hora</th>
-																	
+																	<th>Inicio</th>
+																	<th>Término</th>
 																	<th>Valor</th>
 																</tr>
 															</thead>
@@ -37,7 +38,12 @@
 																	
 																	<td><select>
 																		{% for hora in horarios %}
-																		<option value="{{ hora.franja_horarios }}">{{ hora.franja_horarios }}</option>
+																		<option value="{{ hora.inicio }}">{{ hora.inicio }}</option>
+																		{% endfor %}
+																	</select></td>
+																	<td><select>
+																		{% for hora in horarios %}
+																		<option value="{{ hora.termino }}">{{ hora.termino }}</option>
 																		{% endfor %}
 																	</select></td>
 																	
@@ -53,16 +59,19 @@
 														
 															</tfoot>
 														</table>
+														<button type="submit">Agregar al carro</button>
+														<a type="button">Volver a canchas</a>
+													</form>
 													</div>
 													
 								</div>
 							</section>
                             <div id= "contenedor-button">
-                                <div id= "button-div"><a href="#" id="menu" class="button primary">Continuar</a></div>
+                                <div id= "button-div"><a href="#" id="open_modal" class="button primary">Ir al pago</a></div>
                             </div>
 					</div>
 
-					<button id="open_modal">Abrir Modal</button>
+	
 
 					<div id="modal" class="modal">
 						
@@ -70,15 +79,15 @@
 							<div class="box">
 						  <div class="modal-header">
 							<h2>Antes de continuar...</h2>
-							<button id="close_modal" >&times;</button>
+							<a id="close_modal" >&times;</a>
 						  </div>
 						  <div class="modal-body">
 							<p>Te facilitamos los instrumentos de tu deporte favorito para que solo te preocupes de venir a jugar.</p>
 						  </div>
 						  </div>
 						  <div class="modal-footer">
-							<button class="btn">Continuar</button>
-							<button class="btn btn-primary">Conseguir instrumentos</button>
+							<a class="button primary" href="{{ url_for('carro_compras', nombre_producto=nombre_cancha, valor=valor_cancha) }}" class="btn">Continuar</a>
+							<a class="button">Conseguir instrumentos</a>
 						  </div>
 						
 						</div>

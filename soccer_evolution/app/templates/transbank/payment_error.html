@@ -1,0 +1,26 @@
+{% extends './layout.html' %}
+
+{% block body %}
+
+{% if dataHTML %}
+<div class="box">
+    <h1>ERROR EN EL PAGO. TRANSACCIÓN CANCELADA::</h1>
+    <div class="col-12">
+        <div class="box2">
+        <ul class=" alt list-unstyled centered-list">
+            <img src="{{ url_for('static', filename='images/webpay-desktop-logo_color.svg') }}">
+            <li><strong>Tipo:</strong> {{ dataHTML.tipo }}</li>
+            <li><strong>Codigo autorización:</strong> {{ dataHTML.codigo_autorizacion }}</li>
+            <li><strong>Fecha autorización:</strong> {{ dataHTML.fecha_autorizacion }}</li>
+            <li><strong>Monto anulado:</strong> {{ dataHTML.monto_anulado }}</li>
+            <li><strong>Monto pendiente:</strong> {{ dataHTML.monto_pendiente }}</li>
+            <li><strong>Codigo respuesta:</strong> {{ dataHTML.codigo_respuesta }}</li>
+        </ul>
+    </div>
+    <div class="centered-button">
+        <a href="{{ url_for('index') }}" class="button primary">Continuar</a>
+    </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

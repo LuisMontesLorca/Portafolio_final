@@ -1,0 +1,28 @@
+{% extends './layout.html' %}
+
+{% block body %}
+
+{% if dataHTML %}
+<div class="box">
+    <h1>Detalle de la transacción:</h1>
+    <div class="col-12">
+        <div class="box2">
+        <ul class=" alt list-unstyled centered-list">
+            <img src="{{ url_for('static', filename='images/webpay-desktop-logo_color.svg') }}">
+            <li><strong>Título:</strong> {{ dataHTML.titulo }}</li>
+            <li><strong>Tarjeta:</strong> XXXX-XXXX-XXXX-{{ dataHTML.tarjeta }}</li>
+            <li><strong>Tipo de Tarjeta:</strong> {{ dataHTML.tipo_tarjeta }}</li>
+            <li><strong>Fecha:</strong> {{ dataHTML.fecha }}</li>
+            <li><strong>Orden de Compra:</strong> {{ dataHTML.orden_de_compra }}</li>
+            <li><strong>Session:</strong> {{ dataHTML.session }}</li>
+            <li><strong>Monto:</strong> {{ dataHTML.monto }}</li>
+            <li><strong>Estado:</strong> {{ dataHTML.estado }}</li>
+        </ul>
+    </div>
+    <div class="centered-button">
+        <a href="{{ url_for('index') }}" class="button primary">Continuar</a>
+    </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

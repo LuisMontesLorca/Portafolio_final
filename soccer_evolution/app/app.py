@@ -11,6 +11,8 @@ load_dotenv()
 # IMPORT GENERIC DAO
 from dao import dao
 import requests
+# URL DEFINED
+from urllib.parse import urlparse
 
 app =Flask(__name__)
 app.secret_key = 'Lion333' 
@@ -51,10 +53,11 @@ def cancha_futbol ():
         id_usuario = session.get('id_usuario')
         cancha_futbol = cancha_futbol_dao['select_all']()
         print (cancha_futbol)
-        return render_template('canchas/cancha_futbol.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario, cancha_futbol=cancha_futbol)
+        return render_template('canchas/cancha_futbol.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, cancha_futbol=cancha_futbol)
     else:
         inicio_sesion = False
-        return render_template('canchas/cancha_futbol.html')
+        cancha_futbol = cancha_futbol_dao['select_all']()
+        return render_template('canchas/cancha_futbol.html', cancha_futbol=cancha_futbol)
     
 @app.route('/cancha_basket')
 def cancha_basket ():
@@ -63,7 +66,11 @@ def cancha_basket ():
         id_usuario = session.get('id_usuario')
         cancha_basket = cancha_basket_dao['select_all']()
         print (cancha_basket)
-        return render_template('canchas/cancha_basket.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario, cancha_basket=cancha_basket)
+        return render_template('canchas/cancha_basket.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, cancha_basket=cancha_basket)
+    else:
+        inicio_sesion = False
+        cancha_basket = cancha_basket_dao['select_all']()
+        return render_template('canchas/cancha_basket.html', cancha_basket=cancha_basket)
     
 @app.route('/cancha_tenis')
 def cancha_tenis ():
@@ -72,7 +79,11 @@ def cancha_tenis ():
         id_usuario = session.get('id_usuario')
         cancha_tenis = cancha_tenis_dao['select_all']()
         print (cancha_tenis)
-        return render_template('canchas/cancha_tenis.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario, cancha_tenis=cancha_tenis)
+        return render_template('canchas/cancha_tenis.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, cancha_tenis=cancha_tenis)
+    else:
+        inicio_sesion = False
+        cancha_tenis = cancha_tenis_dao['select_all']()
+        return render_template('canchas/cancha_tenis.html', cancha_tenis=cancha_tenis)
     
 @app.route('/canchas')
 def canchas ():
@@ -83,6 +94,18 @@ def canchas ():
     else:
         inicio_sesion = False
         return render_template('canchas/canchas.html')
+    
+
+@app.route('/otros')
+def otros ():
+    if 'username' in session:
+        inicio_sesion = True
+        id_usuario = session.get('id_usuario')
+        return render_template('otros.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario)
+    else:
+        inicio_sesion = False
+        return render_template('otros.html')
+
 
 @app.route('/campeonatos')
 def campeonatos ():
@@ -94,11 +117,11 @@ def contacto ():
 
 @app.route('/carro_compras')
 def carro_compras ():
-    if 'username' in session:
+    if 'username' in session:        
         inicio_sesion = True
-        id_usuario = session.get('id_usuario')
-
-        return render_template('carro_compras.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario)
+        id_usuario = session.get('id_usuario')  
+    
+    return render_template('carro_compras.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario)
     
 @app.route('/canchas')
 
@@ -133,7 +156,7 @@ tbl_cancha_tenis_columnas = ['id_cancha_tenis', 'nombre_cancha_tenis', 'descripc
 cancha_tenis_dao = dao.dao_generic(app, mysql, tbl_cancha_tenis, tbl_cancha_tenis_columnas)
 
 tbl_horarios = 'horarios'
-tbl_horarios_columnas = ['id_horarios', 'franja_horarios']
+tbl_horarios_columnas = ['id_horarios', 'inicio', 'termino']
 horarios_dao = dao.dao_generic(app, mysql, tbl_horarios, tbl_horarios_columnas)
 #________________________________________________
 #se tienen los métodos:
@@ -210,37 +233,35 @@ def login():
         username_login = request.form['correo_login']
         password_login = request.form['contraseña_login']
 
-        usuario = usuario_dao['select_all']()
+        usuario = usuario_dao['select_all']()  # Elimina los corchetes cuadrados para llamar al método select_all()
 
         id_usuario = None
         correo = None
         password = None
 
         for row in usuario:
-            
             id_usuario = row['id_usuario']
             correo = row['correo_usuario']
             password = row['password_usuario']
         
-        # Verifica las credenciales (aquí puedes implementar tu lógica de autenticación)
-        if  password_login == password and username_login == correo:
-            
-            session['username'] = username_login
-            session['id_usuario'] = id_usuario
-            if 'username' in session:
-            # El usuario ha iniciado sesión
-                username_login = session['username']
-                id_usuario_login = session['id_usuario']
-                return redirect(url_for('index', id_usuario=id_usuario_login))
-            else:
-                # El usuario no ha iniciado sesión
-                return 'Inicia sesión para continuar'
+            # Verifica las credenciales (aquí puedes implementar tu lógica de autenticación)
+            if password_login == password and username_login == correo:
+                session['username'] = username_login
+                session['id_usuario'] = id_usuario
+                if 'username' in session:
+                    # El usuario ha iniciado sesión
+                    username_login = session['username']
+                    id_usuario_login = session['id_usuario']
+                    return redirect(url_for('index', id_usuario=id_usuario_login))
+                else:
+                    # El usuario no ha iniciado sesión
+                    return 'Inicia sesión para continuar'
         
         # return redirect(url_for('layout', usuario_incia=usuario_iniciado_sesion))
-        else:
-            return 'Credenciales inválidas'
+        return 'Credenciales inválidas'  # Mueve el retorno al final del bucle for
 
     return render_template('registro/login.html')
+
 
 @app.route('/dashboard')
 def dashboard():
@@ -287,8 +308,8 @@ def editar_usuarios (id):
         
         usuario_actualizado = usuario_dao['update'](usuario)
         print('Usuario actualizado correctamente', usuario_actualizado)
-
-        return redirect(url_for('lista_usuarios'))
+        inicio_sesion = True
+        return render_template('registro/perfil_usuario.html', inicio_sesion=inicio_sesion, usuarios=usuario_actualizado, id_usuario=id_usuario)
     else:
         print("ID del usuario:", id)
         usuario_2 = usuario_dao['select_by_id'](id)
@@ -304,23 +325,6 @@ def editar_usuarios (id):
 
 @app.route('/perfil_usuario/<int:id>', methods=['GET', 'POST'])
 def perfil_usuario (id):
-    if request.method == 'POST':
-        id_usuario = request.form['id_usuario']
-        nombre_usuario = request.form['nombre_usuario']
-        apellido_usuario = request.form['apellido_usuario']
-        correo_usuario = request.form['correo_usuario']
-        password_usuario = request.form['password_usuario']
-        telefono_usuario = request.form['telefono_usuario']
-        direccion_usuario = request.form['direccion_usuario']
-
-        usuario = { 'id_usuario':id_usuario, 'nombre_usuario': nombre_usuario, 'apellido_usuario': apellido_usuario, 
-                'correo_usuario': correo_usuario, 'password_usuario': password_usuario, 
-                'telefono_usuario': telefono_usuario, 'direccion_usuario': direccion_usuario }
-        print('Usuario antes de actualizar ', usuario)
-        usuario_actualizado = usuario_dao['update'](usuario)
-        print('Usuario actualizado correctamente', usuario_actualizado)
-        return redirect(url_for('lista_usuarios'))
-    else:
         print("ID del usuario:", id)
         usuario_2 = usuario_dao['select_by_id'](id)
         print("datos del usuario:", usuario_2)
@@ -364,6 +368,98 @@ def agregar_trabajador():
 
 ############## TRANSBANK ####################
 
+@app.route('/transbank/commit-pay', methods=['GET', 'POST'])
+def transbank_commit_pay():
+    # SE DEBE APLICAR ESTA DESCOMENTAR ESTA SECCIÓN Y AGREGAR LÓGICA PARA LA RESPUESTA RECIBIDA EN EL RESPONSE
+    # DE SER CORRECTA SE DEBE CONFIRMAR Y MOSTRAR VOUCHER
+    # EN CASO CONTRARIO SE DEBE CANCELAR Y MOSTRAR ERROR 
+    tokenws = request.args.get('token_ws')
+    print('tokenws: ', tokenws)
+    ## DEFINICIÓN DE URL DE TRANSBANK PARA CONFIRMAR UNA TRANSACCIÓN
+    url = "https://webpay3gint.transbank.cl/rswebpaytransaction/api/webpay/v1.2/transactions/{0}".format(tokenws)
+    ## CABECERA SOLICITADA POR TRANSBANK
+    headers = header_request_transbank()
+    ## INVOCACIÓN POR GET A API REST QUE CONFIRMA UNA TRANSACCIÓN EN TRANSBANK   
+
+    try:
+        response = requests.put(url, headers=headers)
+        response.raise_for_status()  # Verificar si la respuesta es exitosa
+
+        data = response.json()
+        status = data['status']
+        monto = data['amount']
+
+        if status == "AUTHORIZED" or status == "FAILED":
+            titulo = ""
+
+            if status == "AUTHORIZED":
+                titulo = "DETALLE DEL PAGO"
+
+            else:
+                titulo = "ERROR PAGO RECHAZADO."
+
+
+            ordenCompra = data['buy_order']
+            tarjeta = data['card_detail']['card_number']
+            tipoTarjeta = ""
+
+            if data['payment_type_code'] == 'VD':
+                tipoTarjeta = "Débito"
+            elif data['payment_type_code'] in ['BV', 'VC', 'YES', 'S2', 'NC']:
+                tipoTarjeta = "Crédito"
+            elif data['payment_type_code'] == 'PV':
+                tipoTarjeta = "Débito Prepago"
+                reversOrCancel(tokenws, monto)
+                return render_template('transbank/payment_error.html', dataHTML=dataHTML)
+
+            session = data['session_id']
+            fecha = data['transaction_date']
+
+            dataHTML ={'titulo': titulo, 'tarjeta': tarjeta, 'tipo_tarjeta': tipoTarjeta,'fecha': fecha,
+                        'orden_de_compra': ordenCompra,'session': session,'monto': monto,'estado': status}
+            
+            return render_template('transbank/commit_pay.html', dataHTML=dataHTML)
+
+        else:
+            reversOrCancel(tokenws, monto)
+            return render_template('transbank/payment_error.html', dataHTML=dataHTML)
+
+    except requests.exceptions.RequestException as err:
+        print('ERROR:', err)
+        return render_template('transbank/payment_error.html', dataHTML='')
+
+def reversOrCancel(tokenws, amount):
+    url = f"http://127.0.0.1:8900/api/v1/transbank/transaction/reverse-or-cancel/{tokenws}"
+    headers = {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    }
+    payload = {
+        'amount': amount
+    }
+    
+    try:
+        response = requests.post(url, headers=headers, json=payload)
+        response.raise_for_status()  # Verificar si la respuesta es exitosa
+
+        data = response.json()
+        tipo = data['type']
+        codigoAutorizacion = data['authorization_code']
+        fechaAutorizacion = data['authorization_date']
+        montoAnulado = data['nullified_amount']
+        balance = data['balance']
+        codigo = data['response_code']
+
+        dataHTML = {'tipo': tipo,'codigo_autorizacion': codigoAutorizacion,'fecha_autorizacion':fechaAutorizacion,
+                    'monto_anulado':montoAnulado,'monto_pendiente':balance,'codigo_respuesta':codigo}
+
+        return render_template('transbank/payment_error.html', dataHTML=dataHTML)
+
+    except requests.exceptions.RequestException as err:
+        print('ERROR:', err)
+        return render_template('transbank/payment_error.html', dataHTML='')
+
+
 
 # MÉTODO QUE CREA LA CABECERA SOLICITADA POR TRANSBANK EN UN REQUEST (SOLICITUD)
 def header_request_transbank():
@@ -384,9 +480,22 @@ def header_request_transbank():
 # DEFINICIÓN DE RUTA API REST, PERMITIENDO SOLO SER LLAMADO POR POST
 @app.route('/api/v1/transbank/transaction/create', methods=['POST'])
 def transbank_create():
+    print('request.form: ', request.form)
+    amount = request.form.get('amount')
+    session_id = '2334567' # ID SESSION
+    buy_order = request.form.get('buyorder')
+    object_url = urlparse(request.base_url)
+    return_url = '{0}://{1}/transbank/commit-pay'.format(object_url.scheme, object_url.netloc)
+    print('return_url:', return_url)
+
     # LECTURA DE PAYLOAD (BODY) CON INFORMACIÓN DE TIPO JSON
     print('headers: ', request.headers)
-    data = request.json
+    data = {
+            'buy_order': buy_order,
+            'session_id': session_id,
+            'amount': amount,
+            'return_url': return_url
+    }
     print('data: ', data)
     # DEFINICIÓN DE URL DE TRANSBANK PARA CREAR UNA TRANSACCIÓN
     url = "https://webpay3gint.transbank.cl/rswebpaytransaction/api/webpay/v1.2/transactions"
@@ -394,40 +503,44 @@ def transbank_create():
     headers = header_request_transbank()
     # INVOCACIÓN POR POST A API REST QUE CREA UNA TRANSACCIÓN EN TRANSBANK
     response = requests.post(url, json = data, headers=headers)
-    print('response: ', response.json())
+    response_json = response.json()
+    token = response_json['token']
+    url = response_json['url']
+    print('token: ', token)
+    print('url: ', url)
     # RETORNO DE LA RESPUESTA DE TRANSBANK
-    return response.json()
+    return render_template('transbank/send_pay.html', url=url, token=token)
 
 # DEFINICIÓN DE RUTA API REST CON UN PARAMETRO DE ENTRADA (tokenws) EN EL PATH, PERMITIENDO SOLO SER LLAMADO POR GET
-@app.route('/api/v1/transbank/transaction/commit/<string:tokenws>', methods=['PUT'])
-def transbank_commit(tokenws):
-    print('tokenws: ', tokenws)
-    # DEFINICIÓN DE URL DE TRANSBANK PARA CONFIRMAR UNA TRANSACCIÓN
-    url = "https://webpay3gint.transbank.cl/rswebpaytransaction/api/webpay/v1.2/transactions/{0}".format(tokenws)
-    # CABECERA SOLICITADA POR TRANSBANK
-    headers = header_request_transbank()
-    # INVOCACIÓN POR GET A API REST QUE CONFIRMA UNA TRANSACCIÓN EN TRANSBANK    
-    response = requests.put(url, headers=headers)
-    print('response: ', response.json())
-    # RETORNO DE LA RESPUESTA DE TRANSBANK
-    return response.json()
-
-# DEFINICIÓN DE RUTA API REST CON UN PARAMETRO DE ENTRADA (tokenws, amount) EN EL PATH, PERMITIENDO SOLO SER LLAMADO POR POST
-@app.route('/api/v1/transbank/transaction/reverse-or-cancel/<string:tokenws>', methods=['POST'])
-def transbank_reverse_or_cancel(tokenws):
-    print('tokenws: ', tokenws)
-    # LECTURA DE PAYLOAD (BODY) CON INFORMACIÓN DE TIPO JSON
-    data = request.json
-    print('data: ', data)
-    # DEFINICIÓN DE URL DE TRANSBANK PARA CONFIRMAR UNA TRANSACCIÓN
-    url = "https://webpay3gint.transbank.cl/rswebpaytransaction/api/webpay/v1.2/transactions/{0}/refunds".format(tokenws)
-    # CABECERA SOLICITADA POR TRANSBANK
-    headers = header_request_transbank()
-    # INVOCACIÓN POR GET A API REST QUE CONFIRMA UNA TRANSACCIÓN EN TRANSBANK    
-    response = requests.post(url, json = data, headers=headers)
-    print('response: ', response.json())
-    # RETORNO DE LA RESPUESTA DE TRANSBANK
-    return response.json()       
+#@app.route('/api/v1/transbank/transaction/commit/<string:tokenws>', methods=['PUT'])
+#def transbank_commit(tokenws):
+#    print('tokenws: ', tokenws)
+#    # DEFINICIÓN DE URL DE TRANSBANK PARA CONFIRMAR UNA TRANSACCIÓN
+#    url = "https://webpay3gint.transbank.cl/rswebpaytransaction/api/webpay/v1.2/transactions/{0}".format(tokenws)
+#    # CABECERA SOLICITADA POR TRANSBANK
+#    headers = header_request_transbank()
+#    # INVOCACIÓN POR GET A API REST QUE CONFIRMA UNA TRANSACCIÓN EN TRANSBANK    
+#    response = requests.put(url, headers=headers)
+#    print('response: ', response.json())
+#    # RETORNO DE LA RESPUESTA DE TRANSBANK
+#    return response.json()
+#
+## DEFINICIÓN DE RUTA API REST CON UN PARAMETRO DE ENTRADA (tokenws, amount) EN EL PATH, PERMITIENDO SOLO SER LLAMADO POR POST
+#@app.route('/api/v1/transbank/transaction/reverse-or-cancel/<string:tokenws>', methods=['POST'])
+#def transbank_reverse_or_cancel(tokenws):
+#    print('tokenws: ', tokenws)
+#    # LECTURA DE PAYLOAD (BODY) CON INFORMACIÓN DE TIPO JSON
+#    data = request.json
+#    print('data: ', data)
+#    # DEFINICIÓN DE URL DE TRANSBANK PARA CONFIRMAR UNA TRANSACCIÓN
+#    url = "https://webpay3gint.transbank.cl/rswebpaytransaction/api/webpay/v1.2/transactions/{0}/refunds".format(tokenws)
+#    # CABECERA SOLICITADA POR TRANSBANK
+#    headers = header_request_transbank()
+#    # INVOCACIÓN POR GET A API REST QUE CONFIRMA UNA TRANSACCIÓN EN TRANSBANK    
+#    response = requests.post(url, json = data, headers=headers)
+#    print('response: ', response.json())
+#    # RETORNO DE LA RESPUESTA DE TRANSBANK
+#    return response.json()       
 
 
 
