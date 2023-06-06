@@ -101,10 +101,55 @@ def otros ():
     if 'username' in session:
         inicio_sesion = True
         id_usuario = session.get('id_usuario')
-        return render_template('otros.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario)
+        productos = productos_dao['select_all']()
+
+        return render_template('productos/otros.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=productos)
     else:
         inicio_sesion = False
-        return render_template('otros.html')
+        return render_template('productos/otros.html')
+
+@app.route('/pelotas', methods=['GET', 'POST'])
+def pelotas ():
+    if request.method == 'POST':
+        if 'username' in session:
+            inicio_sesion = True
+            id_usuario = session.get('id_usuario')
+            productos = productos_dao['select_all']()
+            
+
+            return render_template('productos/pelotas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=productos)
+        else:
+            inicio_sesion = False
+            return render_template('productos/pelotas.html')
+    else: 
+        return render_template('productos/pelotas.html')
+
+@app.route('/camisetas', methods=['GET', 'POST'])
+def camisetas ():
+    if 'username' in session:
+        inicio_sesion = True
+        id_usuario = session.get('id_usuario')
+        productos = productos_dao['select_all']()
+
+        return render_template('productos/camisetas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=productos)
+    else:
+        inicio_sesion = False
+        return render_template('productos/camisetas.html')
+    
+
+
+@app.route('/bebidas', methods=['GET', 'POST'])
+def bebidas ():
+    if 'username' in session:
+        inicio_sesion = True
+        id_usuario = session.get('id_usuario')
+        productos = productos_dao['select_all']()
+
+        return render_template('productos/bebidas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=productos)
+    else:
+        inicio_sesion = False
+        return render_template('productos/bebidas.html')
+
 
 
 @app.route('/campeonatos')
@@ -120,11 +165,16 @@ def carro_compras ():
     if 'username' in session:        
         inicio_sesion = True
         id_usuario = session.get('id_usuario')  
-    
-    return render_template('carro_compras.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario)
-    
-@app.route('/canchas')
+        carro_compras = carro_compras_dao['select_all']()
+        valor_total=0
+        valor=0
+        for row in carro_compras:
+            valor= row['valor_producto']
+            valor_total=valor_total+valor
 
+
+    return render_template('carro_compras.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=carro_compras,valor_total=valor_total)
+    
 
 def pagina_no_encontrada(error):
     return render_template('404.html'), 404
@@ -158,6 +208,14 @@ cancha_tenis_dao = dao.dao_generic(app, mysql, tbl_cancha_tenis, tbl_cancha_teni
 tbl_horarios = 'horarios'
 tbl_horarios_columnas = ['id_horarios', 'inicio', 'termino']
 horarios_dao = dao.dao_generic(app, mysql, tbl_horarios, tbl_horarios_columnas)
+
+tbl_productos = 'producto'
+tbl_productos_columnas = ['id_producto', 'sku', 'nombre_producto', 'imagen_producto', 'valor_producto', 'descripcion_producto']
+productos_dao = dao.dao_generic(app, mysql, tbl_productos, tbl_productos_columnas)
+
+tbl_carro_compras = 'carro_compras'
+tbl_carro_compras_columnas = ['id_carro', 'nombre_producto', 'fecha', 'hora_inicio', 'hora_fin', 'valor_producto', 'id_producto']
+carro_compras_dao = dao.dao_generic(app, mysql, tbl_carro_compras, tbl_carro_compras_columnas)
 #________________________________________________
 #se tienen los métodos:
 # BUSCAR TODOS
@@ -186,19 +244,56 @@ horarios_dao = dao.dao_generic(app, mysql, tbl_horarios, tbl_horarios_columnas)
 #________________________________________________
 
 #### ARRENDAR CANCHA  ######
-@app.route('/arrendar/')
+
+@app.route('/arrendar', methods=['GET', 'POST'])
 def arrendar ():
-    if 'username' in session:
-        inicio_sesion = True
-        id_usuario = session.get('id_usuario')
-        id_cancha = request.args.get('id_cancha')
-        nombre_cancha = request.args.get('nombre_cancha')
-        valor_cancha = request.args.get('valor_cancha')
-        horarios = horarios_dao['select_all']()
-        
-        return render_template('arrendar.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,id_cancha=id_cancha,nombre_cancha=nombre_cancha, valor_cancha= valor_cancha, horarios=horarios)
+    if request.method == 'POST':
+        hora_inicio = request.form['hora_inicio']
+        hora_fin = request.form['hora_fin']
+        fecha = request.form['datepicker']
+        if 'username' in session:
+            inicio_sesion = True
+            id_usuario = session.get('id_usuario')
+            id_cancha = session['id_cancha']
+            nombre_cancha = session['nombre_cancha']
+            valor_cancha = session['valor_cancha']
+            arriendo = {'nombre_producto': nombre_cancha, 'fecha': fecha, 'hora_inicio':hora_inicio, 'hora_fin': hora_fin, 'valor_producto': valor_cancha, 'id_producto': id_cancha}
+            
+            productos_carro = carro_compras_dao['select_all']()
+            
+            arriendo_existente = False
+
+            print (" PRODUCTOS QUE YA ESTAN EN EL CARRO: ", productos_carro)
+            print (" PRODUCTOS QUE NO ESTA EN EL CARRO: ", fecha, hora_inicio, hora_fin, id_cancha )
+            for row in productos_carro:
+                if (row['fecha'] == fecha and row['hora_inicio'] == hora_inicio and row['hora_fin'] == hora_fin and row['nombre_producto'] == nombre_cancha ):
+                    arriendo_existente = True
+                    break
+
+            if arriendo_existente:
+                print (" NOOOOOOO  HICE EL INSERT !!!!!!!!!!!!!!!!!")
+                return 'Ya tienes el arriendo de esa cancha en la hora seleccionada en tu carrito'
+
+            new_arriendo = carro_compras_dao['insert'](arriendo)
+            print ("HICE EL INSERT !!!!!!!!!!!!!!!!!")
+            return redirect(url_for('carro_compras'))
+        else:
+            return render_template('registro/login.html')
     else:
-        return render_template('registro/login.html')
+        if 'username' in session:
+            inicio_sesion = True
+            id_usuario = session.get('id_usuario')
+            id_cancha = request.args.get('id_cancha')
+            nombre_cancha = request.args.get('nombre_cancha')
+            valor_cancha = request.args.get('valor_cancha')
+            session['nombre_cancha'] = nombre_cancha
+            session['valor_cancha'] = valor_cancha
+            session['id_cancha'] = id_cancha
+            horarios = horarios_dao['select_all']()
+            return render_template('arrendar.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,id_cancha=id_cancha,nombre_cancha=nombre_cancha, valor_cancha= valor_cancha, horarios=horarios)
+        else:
+            return render_template('registro/login.html')
+       
 #### FIN ARRENDAR CANCHA  ######
 
 ###### REGISTER #######
@@ -341,11 +436,11 @@ def perfil_usuario (id):
 
 ######FIN PERFIL USUARIO#######
 
-@app.route('/comunas')
-def listar_comunas ():
-    comunas = comuna_dao['select_all']()
-    print('comunas: ', comunas)
-    return render_template('comunas.html', comunas=comunas)
+#@app.route('/comunas')
+##def listar_comunas ():
+  #  comunas = comuna_dao['select_all']()
+   # print('comunas: ', comunas)
+    #return render_template('comunas.html', comunas=comunas)
 
 @app.route('/agregar_trabajador', methods=['GET', 'POST'])
 def agregar_trabajador():
@@ -364,6 +459,11 @@ def agregar_trabajador():
         return nombre
     # Si es un GET, muestra el formulario
     return render_template('trabajador/agregar_trabajador.html')
+
+
+
+###### CARRO COMPRAS ###############
+
 
 
 ############## TRANSBANK ####################
@@ -458,8 +558,6 @@ def reversOrCancel(tokenws, amount):
     except requests.exceptions.RequestException as err:
         print('ERROR:', err)
         return render_template('transbank/payment_error.html', dataHTML='')
-
-
 
 # MÉTODO QUE CREA LA CABECERA SOLICITADA POR TRANSBANK EN UN REQUEST (SOLICITUD)
 def header_request_transbank():

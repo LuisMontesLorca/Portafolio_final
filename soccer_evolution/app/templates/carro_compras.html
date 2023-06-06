@@ -3,18 +3,45 @@
         {% block body %}
     <div class="box">
         <div class="container m-4 m-auto">
+           
             <form action="api/v1/transbank/transaction/create" method="POST">
                 <div class="mb-3">
+                    
                     <div class="m-5">
-                        <h4>EN ESTA SECCIÓN DEBER IR DETALLE DEL CARRITO</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nombre producto</th>
+                                    <th>Fecha</th>
+                                    <th>Inicio</th>
+                                    <th>Término</th>
+                                    <th>Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for producto in productos %}
+                                <tr>
+                                    <td>{{ producto.nombre_producto }}</td>
+                                    <td>{{ producto.fecha }}</td>
+                                    <td>{{ producto.hora_inicio }}</td>
+                                    <td>{{ producto.hora_fin }}</td>
+                                    <td>{{ producto.valor_producto  }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                      
                     </div>
                     <div>
+                        {% if valor_total %}
                         <label for="txt-amount" class="form-label">TOTAL A PAGAR</label>
-                        <input type="text" class="form-control" id="txt-amount" name="amount" value="15990">
+                        <input type="text" class="form-control" id="txt-amount" name="amount" value="{{valor_total}}" disabled>
+                        {% endif %}
                     </div>
                     <div>
                         <label for="txt-buy-order" class="form-label">buy_order</label>
-                        <input type="text" class="form-control" id="txt-orden-compra" name="buyorder" value="FDEAWER4523D">
+                        <input type="text" class="form-control" id="txt-orden-compra" name="buyorder" value="FDEAWER4523D" disabled>
                     </div>                                   
                 </div>
                 <div id="btn" class="mt-4 d-grid gap-2 d-md-flex justify-content-md-end">
@@ -24,6 +51,7 @@
                     
                 </div>
             </form>
+            
         </div>
     </div>
         {% endblock %}

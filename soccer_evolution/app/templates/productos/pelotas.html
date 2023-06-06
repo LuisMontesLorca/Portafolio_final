@@ -1,0 +1,42 @@
+{% extends './layout.html' %}
+
+        {% block body %}
+
+				<!-- Banner -->
+				<!-- Note: The "styleN" class below should match that of the header element. -->
+					<section id="banner" class="style2">
+						<div class="inner">
+							<span class="image">
+								<img src="/soccer_evolution/app/static/images/campeonato-banner.jpg" alt="" />
+							</span>
+							<header class="major">
+								<h1>Servicio de Hidratación y Alimentación</h1>
+							</header>
+							<div class="content">
+								<p>Necesitas hidratarte? Tenemos rehidratantes, agua mineral, barras de cereal, frutas, proteínas</p>
+							</div>
+						</div>
+					</section>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Two -->
+                        <h1>Productos</h1>
+                        <ul>
+                        {% for producto in productos %}
+                            <li>
+                                <h3>{{ producto.nombre_producto }}</h3>
+                                <p>Precio: ${{ producto.valor_producto }}</p>
+                                <form action="{{ url_for('add_to_cart', id_producto=producto.id_producto) }}" method="POST">
+                                    <input type="number" name="quantity_{{ producto.id_producto}}" min="1" value="1">
+                                    <input type="submit" value="Agregar al carrito">
+                                </form>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    
+
+
+					
+					{% endblock %}

@@ -1,0 +1,47 @@
+{% extends './layout.html' %}
+
+        {% block body %}
+
+				<!-- Banner -->
+				<!-- Note: The "styleN" class below should match that of the header element. -->
+					<section id="banner" class="style2">
+						<div class="inner">
+							<span class="image">
+								<img src="/soccer_evolution/app/static/images/campeonato-banner.jpg" alt="" />
+							</span>
+							<header class="major">
+								<h1>Servicio de Hidratación y Alimentación</h1>
+							</header>
+							<div class="content">
+								<p>Necesitas hidratarte? Tenemos rehidratantes, agua mineral, barras de cereal, frutas, proteínas</p>
+							</div>
+						</div>
+					</section>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Two -->
+		 
+						<section id="two" class="spotlights">
+							{% for producto in productos %}
+							<section>
+								<a class="image">
+									<img src="{{ url_for('static', filename= 'images/otros.jpg') }}" alt="" data-position="center center" />
+								</a>
+								<div class="content">
+									<div class="inner">
+										<header class="major">
+											<h3>{{producto.nombre_producto}}</h3>
+										</header>
+										<p>{{producto.descripcion_producto}}</p>
+										<ul class="actions">
+											<li><a href="" class="button">Arrendar</a></li>
+										</ul>
+									</div>
+								</div>
+							</section>
+							{% endfor %}
+						</section>
+					
+					{% endblock %}

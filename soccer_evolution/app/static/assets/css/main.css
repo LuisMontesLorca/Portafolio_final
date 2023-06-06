@@ -4110,3 +4110,25 @@ input, select, textarea {
     align-items: center;
      /* Ajusta la altura según tus necesidades */
 }
+
+
+#contenedor-button {
+	display: flex;
+	justify-content: center;
+	align-items: center; /* Alinea los botones verticalmente en el centro */
+  }
+  
+  .button-div {
+	margin: 10px; /* Ajusta la separación entre los botones según tus necesidades */
+	display: inline-block; /* Cambio a display inline-block */
+  }
+  
+  #button-div-left {
+	text-align: center;
+  }
+  
+  #button-div-right {
+	margin-top: 2%;
+	text-align: center;
+  }
+  

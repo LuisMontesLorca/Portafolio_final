@@ -17,8 +17,9 @@
                                     <h3>Por favor seleccione un horario disponible</h3>
 									
 													<h4>Horarios</h4>
+													<form action="/arrendar" method="POST">
 													<div class="table-wrapper">
-														<form action="/agregar_al_carro" method="POST">
+														
 														<table>
 															<thead>
 																<tr>
@@ -32,24 +33,25 @@
 															<tbody>
 																<tr>
 																	{% if inicio_sesion %}
-																	<td><input type="text" value= "{{nombre_cancha}}"disabled></td>
+																	<td><input type="text" name="nombre_cancha" value= "{{nombre_cancha}}"disabled></td>
 																	{% endif %}
-																	<td><input type="text" id="datepicker" placeholder="Seleccione una fecha"></td>
+																	<td><input type="text" name="datepicker" id="datepicker" placeholder="Seleccione una fecha"></td>
 																	
-																	<td><select>
+																	<td><select name="hora_inicio">
 																		{% for hora in horarios %}
-																		<option value="{{ hora.inicio }}">{{ hora.inicio }}</option>
+																			<option value="{{ hora.inicio }}">{{ hora.inicio }}</option>
 																		{% endfor %}
 																	</select></td>
-																	<td><select>
+																	<td><select name="hora_fin">
 																		{% for hora in horarios %}
-																		<option value="{{ hora.termino }}">{{ hora.termino }}</option>
+																			<option value="{{ hora.termino }}">{{ hora.termino }}</option>
 																		{% endfor %}
-																	</select></td>
+																	</select>
+																	</td>
 																	
 																	{% if inicio_sesion %}
 																	<td>
-																		$<span>{{ valor_cancha }}</span>
+																		$<span  name="valor_cancha"> {{ valor_cancha }}</span>
 																	</td>
 																	{% endif %}
 																</tr>
@@ -60,15 +62,19 @@
 															</tfoot>
 														</table>
 														<button type="submit">Agregar al carro</button>
-														<a type="button">Volver a canchas</a>
-													</form>
-													</div>
 													
-								</div>
+													</div>
+												</form>
 							</section>
-                            <div id= "contenedor-button">
-                                <div id= "button-div"><a href="#" id="open_modal" class="button primary">Ir al pago</a></div>
-                            </div>
+							<div id="contenedor-button">
+								<div id="button-div-left" class="button-div">
+								  <a href="#" id="open_modal" class="button primary">Ir al pago</a>
+								</div>
+								<div id="button-div-right" class="button-div">
+								  <a href="{{ url_for('canchas') }}" class="button primary">Volver a canchas</a>
+								</div>
+							  </div>
+							  
 					</div>
 
 	
@@ -86,7 +92,7 @@
 						  </div>
 						  </div>
 						  <div class="modal-footer">
-							<a class="button primary" href="{{ url_for('carro_compras', nombre_producto=nombre_cancha, valor=valor_cancha) }}" class="btn">Continuar</a>
+							<a class="button primary" href="" class="btn">Continuar</a>
 							<a class="button">Conseguir instrumentos</a>
 						  </div>
 						
