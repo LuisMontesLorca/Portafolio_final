@@ -212,6 +212,10 @@ def campeonatos ():
 def contacto ():
     return render_template('contacto.html')
 
+@app.route('/quienes_somos')
+def quienes_somos ():
+    return render_template('/quienes_somos.html')
+
 @app.route('/carro_compras')
 def carro_compras ():
     if 'username' in session:        
