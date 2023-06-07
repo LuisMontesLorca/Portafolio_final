@@ -1,9 +1,4 @@
 <!DOCTYPE HTML>
-<!--
-	Forty by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 	<head>
 		<title>Soccer Evolution</title>
@@ -114,7 +109,7 @@ $(document).ready(function() {
 						<li class="list-group"><a href="{{ url_for('canchas') }}">Canchas</a></li>
 						{% endif %}
                         <li class="list-group"><a href="{{ url_for('contacto') }}">Contacto</a></li>	
-						<li class="list-group"><a href="generic.html">¿Quienes somos?</a></li>
+						<li class="list-group"><a href="{{ url_for('quienes_somos') }}">¿Quienes somos?</a></li>
                     </ul>
                     <ul class="actions stacked">
 						{% if inicio_sesion %}
