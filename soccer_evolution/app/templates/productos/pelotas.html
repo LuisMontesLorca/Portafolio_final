@@ -22,7 +22,7 @@
 					<div id="main">
 
 						<section id="two" class="spotlights">
-							{% for producto in productos %}
+							{% for pelota in pelotas %}
 							<section>
 								<a class="image">
 									<img src="{{ url_for('static', filename= 'images/otros.jpg') }}" alt="" data-position="center center" />
@@ -30,9 +30,9 @@
 								<div class="content">
 									<div class="inner">
 										<header class="major">
-											<h3>{{producto.nombre_producto}}</h3>
+											<h3>{{ pelota.nombre_pelota }}</h3>
 										</header>
-										<p>{{producto.descripcion_producto}}</p>
+										<p>{{ pelota.descripcion_pelota }}</p>
 										<ul class="actions">
 											<li><a href="" class="button">Arrendar</a></li>
 										</ul>

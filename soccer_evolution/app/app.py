@@ -129,15 +129,15 @@ def otros ():
     if 'username' in session:
         inicio_sesion = True
         id_usuario = session.get('id_usuario')
-        productos = productos_dao['select_all']()
+        
         carro_compras = carro_compras_dao['select_all']()
         print("AQUI ESTA EL CARRO DE COMPRAS:  " , carro_compras)
         if carro_compras:
     
-            return render_template('productos/otros.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=productos)
+            return render_template('productos/otros.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario)
         else:
             cc_vacio ="El carro de compras esta vacío"
-            return render_template('productos/otros.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=productos, cc_vacio=cc_vacio )
+            return render_template('productos/otros.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario, cc_vacio=cc_vacio )
     else:
         inicio_sesion = False
         return render_template('productos/otros.html' )
@@ -147,14 +147,14 @@ def pelotas():
         if 'username' in session:
             inicio_sesion = True
             id_usuario = session.get('id_usuario')
-            productos = productos_dao['select_all']()
+            pelotas = pelotas_dao['select_all']()
             carro_compras = carro_compras_dao['select_all']()
             print("AQUI ESTA EL CARRO DE COMPRAS: ", carro_compras)
             if carro_compras:
-                return render_template('productos/pelotas.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, productos=productos)
+                return render_template('productos/pelotas.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, pelotas=pelotas)
             else:
                 cc_vacio = "El carro de compras está vacío"
-                return render_template('productos/pelotas.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, productos=productos, cc_vacio=cc_vacio)
+                return render_template('productos/pelotas.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, pelotas=pelotas, cc_vacio=cc_vacio)
         else:
             inicio_sesion = False
             return render_template('productos/pelotas.html', inicio_sesion=inicio_sesion)
@@ -165,15 +165,15 @@ def camisetas ():
     if 'username' in session:
         inicio_sesion = True
         id_usuario = session.get('id_usuario')
-        productos = productos_dao['select_all']()
+        camisetas = camisetas_dao['select_all']()
         carro_compras = carro_compras_dao['select_all']()
         print("AQUI ESTA EL CARRO DE COMPRAS:  " , carro_compras)
         if carro_compras:
     
-            return render_template('productos/camisetas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=productos)
+            return render_template('productos/camisetas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,camisetas=camisetas)
         else:
             cc_vacio ="El carro de compras esta vacío"
-            return render_template('productos/camisetas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=productos, cc_vacio=cc_vacio )
+            return render_template('productos/camisetas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,camisetas=camisetas, cc_vacio=cc_vacio )
     else:
         inicio_sesion = False
         return render_template('productos/camisetas.html' )
@@ -185,15 +185,15 @@ def bebidas ():
     if 'username' in session:
         inicio_sesion = True
         id_usuario = session.get('id_usuario')
-        productos = productos_dao['select_all']()
+        bebidas = bebidas_dao['select_all']()
         carro_compras = carro_compras_dao['select_all']()
         print("AQUI ESTA EL CARRO DE COMPRAS:  " , carro_compras)
         if carro_compras:
     
-            return render_template('productos/bebidas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=productos)
+            return render_template('productos/bebidas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,bebidas=bebidas)
         else:
             cc_vacio ="El carro de compras esta vacío"
-            return render_template('productos/bebidas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=productos, cc_vacio=cc_vacio )
+            return render_template('productos/bebidas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,bebidas=bebidas, cc_vacio=cc_vacio )
     else:
         inicio_sesion = False
         return render_template('productos/bebidas.html' )
@@ -278,13 +278,21 @@ tbl_horarios = 'horarios'
 tbl_horarios_columnas = ['id_horarios', 'inicio', 'termino']
 horarios_dao = dao.dao_generic(app, mysql, tbl_horarios, tbl_horarios_columnas)
 
-tbl_productos = 'producto'
-tbl_productos_columnas = ['id_producto', 'sku', 'nombre_producto', 'imagen_producto', 'valor_producto', 'descripcion_producto']
-productos_dao = dao.dao_generic(app, mysql, tbl_productos, tbl_productos_columnas)
-
 tbl_carro_compras = 'carro_compras'
 tbl_carro_compras_columnas = ['id_carro', 'nombre_producto', 'fecha', 'hora_inicio', 'hora_fin', 'valor_producto', 'id_producto']
 carro_compras_dao = dao.dao_generic(app, mysql, tbl_carro_compras, tbl_carro_compras_columnas)
+
+tbl_pelotas = 'pelota'
+tbl_pelotas_columnas = ['id_pelota', 'sku_pelota', 'nombre_pelota', 'imagen_pelota', 'valor_pelota', 'descripcion_pelota']
+pelotas_dao = dao.dao_generic(app, mysql, tbl_pelotas, tbl_pelotas_columnas)
+
+tbl_camisetas = 'camiseta'
+tbl_camisetas_columnas = ['id_camiseta', 'sku_camiseta', 'nombre_camiseta', 'imagen_camiseta', 'valor_camiseta', 'descripcion_camiseta']
+camisetas_dao = dao.dao_generic(app, mysql, tbl_camisetas, tbl_camisetas_columnas)
+
+tbl_bebidas = 'bebida'
+tbl_bebidas_columnas = ['id_bebida', 'sku_bebida', 'nombre_bebida', 'imagen_bebida', 'valor_bebida', 'descripcion_bebida']
+bebidas_dao = dao.dao_generic(app, mysql, tbl_bebidas, tbl_bebidas_columnas)
 #________________________________________________
 #se tienen los métodos:
 # BUSCAR TODOS

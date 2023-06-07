@@ -24,7 +24,7 @@
 						<!-- Two -->
 		 
 						<section id="two" class="spotlights">
-							{% for producto in productos %}
+							{% for bebida in bebidas %}
 							<section>
 								<a class="image">
 									<img src="{{ url_for('static', filename= 'images/otros.jpg') }}" alt="" data-position="center center" />
@@ -32,9 +32,9 @@
 								<div class="content">
 									<div class="inner">
 										<header class="major">
-											<h3>{{producto.nombre_producto}}</h3>
+											<h3>{{bebida.nombre_bebida}}</h3>
 										</header>
-										<p>{{producto.descripcion_producto}}</p>
+										<p>{{bebida.descripcion_bebida}}</p>
 										<ul class="actions">
 											<li><a href="" class="button">Arrendar</a></li>
 										</ul>
