@@ -10,25 +10,44 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 		<script src="https://kit.fontawesome.com/8a340e4015.js" crossorigin="anonymous"></script>
 		<!-- Incluye jQuery -->
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-		<!-- Incluye jQuery UI -->
-		<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<!-- jQuery UI -->
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+		<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+
+
+		<script>
+			jQuery(function($) {
+			  $("#datepicker").datepicker({
+				onSelect: function(dateText, inst) {
+				  var selectedDate = $(this).datepicker("getDate");
+				  console.log(selectedDate);
+				}
+			  });
+			});
+		  </script>
+
+
+
+		</script>
 
 		<script>
 			$(document).ready(function() {
 				$('.eliminar-btn').click(function() {
-					var productoId = $(this).data('id');
+					var id_carro = $(this).data('id');
+					var filaProducto = $(this).closest('tr');
 					$.ajax({
-						url: '/productos/' + productoId,
+						url: '/carro_compras/' + id_carro,
 						type: 'DELETE',
 						success: function(response) {
 							// Manejar la respuesta del servidor después de eliminar el producto
 							console.log(response);
+							filaProducto.remove();
 						},
 						error: function(error) {
 							// Manejar el error si ocurre algún problema durante la solicitud AJAX
@@ -37,7 +56,8 @@
 					});
 				});
 			});
-		</script>		
+		</script>	
+	
 		<script>
 
 
@@ -46,25 +66,8 @@ $(document).ready(function() {
     $('#dropdownMenu').toggle();
   });
 });
+</script>
 
-
-			$.noConflict();
-			jQuery(function($) 
-			{
-				$("#datepicker").datepicker
-				({
-					onSelect: function(dateText, inst) 
-					{
-						var selectedDate = $(this).datepicker("getDate");
-					
-						console.log(selectedDate);
-					}
-				})
-			});
-
-
-
-		</script>
 
 		<noscript><link rel="stylesheet" href="{{ url_for('static', filename='assets/css/noscript.css') }}" /></noscript>
 	</head>

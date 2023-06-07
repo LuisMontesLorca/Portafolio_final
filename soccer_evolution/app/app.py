@@ -62,10 +62,10 @@ def cancha_futbol ():
         carro_compras = carro_compras_dao['select_all']()
 
         if carro_compras:
-            return render_template('canchas/cancha_basket.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, cancha_futbol=cancha_futbol)
+            return render_template('canchas/cancha_futbol.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, cancha_futbol=cancha_futbol)
         else:
             cc_vacio ="El carro de compras esta vacío"
-            return render_template('canchas/cancha_basket.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, cancha_futbol=cancha_futbol, cc_vacio=cc_vacio)
+            return render_template('canchas/cancha_futbol.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, cancha_futbol=cancha_futbol, cc_vacio=cc_vacio)
     else:
         inicio_sesion = False
         cancha_futbol = cancha_futbol_dao['select_all']()
@@ -227,12 +227,12 @@ def carro_compras ():
             cc_vacio ="El carro de compras esta vacío"
             return render_template('carro_compras.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=[], cc_vacio=cc_vacio)
     
-@app.route('/carro_compras/<int:producto_id>', methods=['DELETE'])
-def eliminar_producto(id_producto):
+@app.route('/carro_compras/<int:id_carro>', methods=['DELETE'])
+def eliminar_producto(id_carro):
     cur = mysql.connection.cursor()
 
     try:
-        cur.execute("DELETE FROM carro_compras WHERE id_carro_compras = %s", (id_producto,))
+        cur.execute("DELETE FROM carro_compras WHERE id_carro = %s", (id_carro,))
         mysql.connection.commit()
         response = {'message': 'Producto eliminado exitosamente'}
     except:
