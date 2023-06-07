@@ -19,8 +19,11 @@
 					</section>
 
 				<!-- Main -->
+				
+				
 					<div id="main">
-
+						{% if inicio_sesion %}
+						<form action="/pelotas" method="POST">
 						<section id="two" class="spotlights">
 							{% for pelota in pelotas %}
 							<section>
@@ -34,13 +37,36 @@
 										</header>
 										<p>{{ pelota.descripcion_pelota }}</p>
 										<ul class="actions">
-											<li><a href="" class="button">Arrendar</a></li>
+											<li><a href="" class="button">Agregar al carro</a></li>
 										</ul>
 									</div>
 								</div>
 							</section>
 							{% endfor %}
 						</section>
-
+						</section>
+						{% else %}
+				
+							<section id="two" class="spotlights">
+								{% for pelota in pelotas %}
+								<section>
+									<a class="image">
+										<img src="{{ url_for('static', filename= 'images/otros.jpg') }}" alt="" data-position="center center" />
+									</a>
+									<div class="content">
+										<div class="inner">
+											<header class="major">
+												<h3>{{ pelota.nombre_pelota }}</h3>
+											</header>
+											<p>{{ pelota.descripcion_pelota }}</p>
+											<ul class="actions">
+												<li><a href="{{ url_for('login') }}" class="button">Agregar al carro</a></li>
+											</ul>
+										</div>
+									</div>
+								</section>
+								{% endfor %}
+							</section>
+						{% endif %}
 					
 					{% endblock %}

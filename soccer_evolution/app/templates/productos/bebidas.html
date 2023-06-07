@@ -19,6 +19,7 @@
 					</section>
 
 				<!-- Main -->
+				{% if inicio_sesion %}
 					<div id="main">
 
 						<!-- Two -->
@@ -36,12 +37,34 @@
 										</header>
 										<p>{{bebida.descripcion_bebida}}</p>
 										<ul class="actions">
-											<li><a href="" class="button">Arrendar</a></li>
+											<li><a href="" class="button">Agregar al carro</a></li>
 										</ul>
 									</div>
 								</div>
 							</section>
 							{% endfor %}
 						</section>
+						{% else %}
+						<section id="two" class="spotlights">
+							{% for bebida in bebidas %}
+							<section>
+								<a class="image">
+									<img src="{{ url_for('static', filename= 'images/otros.jpg') }}" alt="" data-position="center center" />
+								</a>
+								<div class="content">
+									<div class="inner">
+										<header class="major">
+											<h3>{{bebida.nombre_bebida}}</h3>
+										</header>
+										<p>{{bebida.descripcion_bebida}}</p>
+										<ul class="actions">
+											<li><a href="{{ url_for('login') }}" class="button">Agregar al carro</a></li>
+										</ul>
+									</div>
+								</div>
+							</section>
+							{% endfor %}
+						</section>
+						{% endif %}
 					
 					{% endblock %}

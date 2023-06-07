@@ -157,7 +157,8 @@ def pelotas():
                 return render_template('productos/pelotas.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, pelotas=pelotas, cc_vacio=cc_vacio)
         else:
             inicio_sesion = False
-            return render_template('productos/pelotas.html', inicio_sesion=inicio_sesion)
+            pelotas = pelotas_dao['select_all']()
+            return render_template('productos/pelotas.html', inicio_sesion=inicio_sesion, pelotas=pelotas)
 
 
 @app.route('/camisetas', methods=['GET', 'POST'])
@@ -176,7 +177,8 @@ def camisetas ():
             return render_template('productos/camisetas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,camisetas=camisetas, cc_vacio=cc_vacio )
     else:
         inicio_sesion = False
-        return render_template('productos/camisetas.html' )
+        camisetas = camisetas_dao['select_all']()
+        return render_template('productos/camisetas.html' ,camisetas=camisetas)
     
 
 
@@ -196,7 +198,8 @@ def bebidas ():
             return render_template('productos/bebidas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,bebidas=bebidas, cc_vacio=cc_vacio )
     else:
         inicio_sesion = False
-        return render_template('productos/bebidas.html' )
+        bebidas = bebidas_dao['select_all']()
+        return render_template('productos/bebidas.html',bebidas=bebidas )
 
 
 
