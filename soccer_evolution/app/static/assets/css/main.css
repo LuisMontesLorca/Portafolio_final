@@ -4097,30 +4097,15 @@ input, select, textarea {
   }
   
 
-  .centered-list {
-	margin: 0 auto;
-	width: fit-content;
-	text-align: left;
-  }
-
-
-  .centered-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-     /* Ajusta la altura según tus necesidades */
-}
-
-
-#contenedor-button {
+  
+  #contenedor-button {
 	display: flex;
 	justify-content: center;
 	align-items: center; /* Alinea los botones verticalmente en el centro */
   }
   
   .button-div {
-	margin: 10px; /* Ajusta la separación entre los botones según tus necesidades */
-	display: inline-block; /* Cambio a display inline-block */
+	margin: 10px; /* Ajusta el margen entre los botones según tus necesidades */
   }
   
   #button-div-left {
@@ -4128,7 +4113,56 @@ input, select, textarea {
   }
   
   #button-div-right {
-	margin-top: 2%;
 	text-align: center;
+	margin-top: 30.5px;
   }
   
+  
+
+
+.dropdown {
+	position: relative;
+	display: inline-block;
+  }
+  
+  .dropdown-toggle {
+	padding: 10px 20px;
+	border: none;
+	cursor: pointer;
+  }
+  
+  .dropdown-menu {
+	display: none;
+	position: absolute;
+	top: 100%;
+	width: 400px;
+	left: 10px;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	background-color:  rgba(42, 47, 74, 0.975);
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .dropdown-menu.dropdown-menu-right {
+    left: auto;
+    right: 0;
+}
+
+  .dropdown-menu li {
+	padding: 10px;
+  }
+  
+  .dropdown-menu li a {
+	display: block;
+	text-decoration: none;
+	color: white;
+	margin-left: 8.5%;
+  }
+  
+  .dropdown.active .dropdown-menu {
+	display: block;
+  }
+  
+
+

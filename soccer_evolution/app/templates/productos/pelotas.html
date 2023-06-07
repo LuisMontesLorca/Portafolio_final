@@ -21,22 +21,26 @@
 				<!-- Main -->
 					<div id="main">
 
-						<!-- Two -->
-                        <h1>Productos</h1>
-                        <ul>
-                        {% for producto in productos %}
-                            <li>
-                                <h3>{{ producto.nombre_producto }}</h3>
-                                <p>Precio: ${{ producto.valor_producto }}</p>
-                                <form action="{{ url_for('add_to_cart', id_producto=producto.id_producto) }}" method="POST">
-                                    <input type="number" name="quantity_{{ producto.id_producto}}" min="1" value="1">
-                                    <input type="submit" value="Agregar al carrito">
-                                </form>
-                            </li>
-                        {% endfor %}
-                        </ul>
-                    
-
+						<section id="two" class="spotlights">
+							{% for producto in productos %}
+							<section>
+								<a class="image">
+									<img src="{{ url_for('static', filename= 'images/otros.jpg') }}" alt="" data-position="center center" />
+								</a>
+								<div class="content">
+									<div class="inner">
+										<header class="major">
+											<h3>{{producto.nombre_producto}}</h3>
+										</header>
+										<p>{{producto.descripcion_producto}}</p>
+										<ul class="actions">
+											<li><a href="" class="button">Arrendar</a></li>
+										</ul>
+									</div>
+								</div>
+							</section>
+							{% endfor %}
+						</section>
 
 					
 					{% endblock %}

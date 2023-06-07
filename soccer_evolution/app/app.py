@@ -40,7 +40,14 @@ def index ():
     if 'username' in session:
         inicio_sesion = True
         id_usuario = session.get('id_usuario')
-        return render_template('index.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario)
+        carro_compras = carro_compras_dao['select_all']()
+
+        if carro_compras:
+            return render_template('index.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario)
+        else:
+            cc_vacio ="El carro de compras esta vacío"
+            return render_template('index.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario,cc_vacio=cc_vacio)
+        
     else:
         inicio_sesion = False
         return render_template('index.html')
@@ -52,8 +59,13 @@ def cancha_futbol ():
         inicio_sesion = True
         id_usuario = session.get('id_usuario')
         cancha_futbol = cancha_futbol_dao['select_all']()
-        print (cancha_futbol)
-        return render_template('canchas/cancha_futbol.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, cancha_futbol=cancha_futbol)
+        carro_compras = carro_compras_dao['select_all']()
+
+        if carro_compras:
+            return render_template('canchas/cancha_basket.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, cancha_futbol=cancha_futbol)
+        else:
+            cc_vacio ="El carro de compras esta vacío"
+            return render_template('canchas/cancha_basket.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, cancha_futbol=cancha_futbol, cc_vacio=cc_vacio)
     else:
         inicio_sesion = False
         cancha_futbol = cancha_futbol_dao['select_all']()
@@ -65,8 +77,13 @@ def cancha_basket ():
         inicio_sesion = True
         id_usuario = session.get('id_usuario')
         cancha_basket = cancha_basket_dao['select_all']()
-        print (cancha_basket)
-        return render_template('canchas/cancha_basket.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, cancha_basket=cancha_basket)
+        carro_compras = carro_compras_dao['select_all']()
+
+        if carro_compras:
+            return render_template('canchas/cancha_basket.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, cancha_basket=cancha_basket)
+        else:
+            cc_vacio ="El carro de compras esta vacío"
+            return render_template('canchas/cancha_basket.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, cancha_basket=cancha_basket, cc_vacio=cc_vacio)
     else:
         inicio_sesion = False
         cancha_basket = cancha_basket_dao['select_all']()
@@ -78,8 +95,13 @@ def cancha_tenis ():
         inicio_sesion = True
         id_usuario = session.get('id_usuario')
         cancha_tenis = cancha_tenis_dao['select_all']()
-        print (cancha_tenis)
-        return render_template('canchas/cancha_tenis.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, cancha_tenis=cancha_tenis)
+        carro_compras = carro_compras_dao['select_all']()
+
+        if carro_compras:
+            return render_template('canchas/cancha_tenis.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, cancha_tenis=cancha_tenis)
+        else:
+            cc_vacio ="El carro de compras esta vacío"
+            return render_template('canchas/cancha_tenis.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, cancha_tenis=cancha_tenis, cc_vacio=cc_vacio)
     else:
         inicio_sesion = False
         cancha_tenis = cancha_tenis_dao['select_all']()
@@ -90,10 +112,16 @@ def canchas ():
     if 'username' in session:
         inicio_sesion = True
         id_usuario = session.get('id_usuario')
-        return render_template('canchas/canchas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario)
+        carro_compras = carro_compras_dao['select_all']()
+
+        if carro_compras:
+            return render_template('canchas/canchas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario)
+        else:
+            cc_vacio ="El carro de compras esta vacío"
+            return render_template('canchas/canchas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario, cc_vacio=cc_vacio )
     else:
         inicio_sesion = False
-        return render_template('canchas/canchas.html')
+        return render_template('canchas/canchas.html' )
     
 
 @app.route('/otros')
@@ -102,27 +130,35 @@ def otros ():
         inicio_sesion = True
         id_usuario = session.get('id_usuario')
         productos = productos_dao['select_all']()
-
-        return render_template('productos/otros.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=productos)
+        carro_compras = carro_compras_dao['select_all']()
+        print("AQUI ESTA EL CARRO DE COMPRAS:  " , carro_compras)
+        if carro_compras:
+    
+            return render_template('productos/otros.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=productos)
+        else:
+            cc_vacio ="El carro de compras esta vacío"
+            return render_template('productos/otros.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=productos, cc_vacio=cc_vacio )
     else:
         inicio_sesion = False
-        return render_template('productos/otros.html')
+        return render_template('productos/otros.html' )
 
 @app.route('/pelotas', methods=['GET', 'POST'])
-def pelotas ():
-    if request.method == 'POST':
+def pelotas():
         if 'username' in session:
             inicio_sesion = True
             id_usuario = session.get('id_usuario')
             productos = productos_dao['select_all']()
-            
-
-            return render_template('productos/pelotas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=productos)
+            carro_compras = carro_compras_dao['select_all']()
+            print("AQUI ESTA EL CARRO DE COMPRAS: ", carro_compras)
+            if carro_compras:
+                return render_template('productos/pelotas.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, productos=productos)
+            else:
+                cc_vacio = "El carro de compras está vacío"
+                return render_template('productos/pelotas.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, productos=productos, cc_vacio=cc_vacio)
         else:
             inicio_sesion = False
-            return render_template('productos/pelotas.html')
-    else: 
-        return render_template('productos/pelotas.html')
+            return render_template('productos/pelotas.html', inicio_sesion=inicio_sesion)
+
 
 @app.route('/camisetas', methods=['GET', 'POST'])
 def camisetas ():
@@ -130,11 +166,17 @@ def camisetas ():
         inicio_sesion = True
         id_usuario = session.get('id_usuario')
         productos = productos_dao['select_all']()
-
-        return render_template('productos/camisetas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=productos)
+        carro_compras = carro_compras_dao['select_all']()
+        print("AQUI ESTA EL CARRO DE COMPRAS:  " , carro_compras)
+        if carro_compras:
+    
+            return render_template('productos/camisetas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=productos)
+        else:
+            cc_vacio ="El carro de compras esta vacío"
+            return render_template('productos/camisetas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=productos, cc_vacio=cc_vacio )
     else:
         inicio_sesion = False
-        return render_template('productos/camisetas.html')
+        return render_template('productos/camisetas.html' )
     
 
 
@@ -144,16 +186,23 @@ def bebidas ():
         inicio_sesion = True
         id_usuario = session.get('id_usuario')
         productos = productos_dao['select_all']()
-
-        return render_template('productos/bebidas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=productos)
+        carro_compras = carro_compras_dao['select_all']()
+        print("AQUI ESTA EL CARRO DE COMPRAS:  " , carro_compras)
+        if carro_compras:
+    
+            return render_template('productos/bebidas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=productos)
+        else:
+            cc_vacio ="El carro de compras esta vacío"
+            return render_template('productos/bebidas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=productos, cc_vacio=cc_vacio )
     else:
         inicio_sesion = False
-        return render_template('productos/bebidas.html')
+        return render_template('productos/bebidas.html' )
 
 
 
 @app.route('/campeonatos')
 def campeonatos ():
+    
     return render_template('canchas/campeonatos.html')
 
 @app.route('/contacto')
@@ -166,15 +215,35 @@ def carro_compras ():
         inicio_sesion = True
         id_usuario = session.get('id_usuario')  
         carro_compras = carro_compras_dao['select_all']()
-        valor_total=0
-        valor=0
-        for row in carro_compras:
-            valor= row['valor_producto']
-            valor_total=valor_total+valor
-
-
-    return render_template('carro_compras.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=carro_compras,valor_total=valor_total)
+        print("AQUI ESTA EL CARRO DE COMPRAS:  " , carro_compras)
+        if carro_compras:
+            valor_total=0
+            valor=0
+            for row in carro_compras:
+                valor= row['valor_producto']
+                valor_total=valor_total+valor
+            return render_template('carro_compras.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=carro_compras,valor_total=valor_total)
+        else:
+            cc_vacio ="El carro de compras esta vacío"
+            return render_template('carro_compras.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=[], cc_vacio=cc_vacio)
     
+@app.route('/carro_compras/<int:producto_id>', methods=['DELETE'])
+def eliminar_producto(id_producto):
+    cur = mysql.connection.cursor()
+
+    try:
+        cur.execute("DELETE FROM carro_compras WHERE id_carro_compras = %s", (id_producto,))
+        mysql.connection.commit()
+        response = {'message': 'Producto eliminado exitosamente'}
+    except:
+        mysql.connection.rollback()
+        response = {'message': 'Error al eliminar el producto'}
+    finally:
+        cur.close()
+
+    return jsonify(response)
+
+
 
 def pagina_no_encontrada(error):
     return render_template('404.html'), 404
@@ -290,7 +359,15 @@ def arrendar ():
             session['valor_cancha'] = valor_cancha
             session['id_cancha'] = id_cancha
             horarios = horarios_dao['select_all']()
-            return render_template('arrendar.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,id_cancha=id_cancha,nombre_cancha=nombre_cancha, valor_cancha= valor_cancha, horarios=horarios)
+
+            carro_compras = carro_compras_dao['select_all']()
+            print("AQUI ESTA EL CARRO DE COMPRAS:  " , carro_compras)
+            if carro_compras:
+                return render_template('arrendar.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,id_cancha=id_cancha,nombre_cancha=nombre_cancha, valor_cancha= valor_cancha, horarios=horarios)
+            else:
+                cc_vacio ="El carro de compras esta vacío"
+                return render_template('arrendar.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,id_cancha=id_cancha,nombre_cancha=nombre_cancha, valor_cancha= valor_cancha, horarios=horarios, cc_vacio=cc_vacio)
+                
         else:
             return render_template('registro/login.html')
        
@@ -315,7 +392,7 @@ def registro():
 
         session['nombre_usuario'] = nombre_usuario  # Inicia sesión automáticamente después del registro
         return redirect('/index')  # Redirige al usuario al panel de control después del registro
-
+    
     return render_template('Registro/registro.html')
 
 ###### FIN REGISTER #######
@@ -428,7 +505,15 @@ def perfil_usuario (id):
             if usuario_2:
                 print("ENTRO AL IF")
                 id_usuario = session.get('id_usuario')
-                return render_template('registro/perfil_usuario.html', inicio_sesion=inicio_sesion, usuarios=usuario_2, id_usuario=id_usuario)
+                carro_compras = carro_compras_dao['select_all']()
+                print("AQUI ESTA EL CARRO DE COMPRAS:  " , carro_compras)
+                if carro_compras:
+                    return render_template('registro/perfil_usuario.html', inicio_sesion=inicio_sesion, usuarios=usuario_2, id_usuario=id_usuario)
+                else:
+                    cc_vacio ="El carro de compras esta vacío"
+                    return render_template('registro/perfil_usuario.html', inicio_sesion=inicio_sesion, usuarios=usuario_2, id_usuario=id_usuario,cc_vacio=cc_vacio)
+
+              
             #render_template('registro/perfil_usuario.html', usuarios=usuario_2, id_usuario=id_usuario)
         else:
             return "Usuario no encontrado"
