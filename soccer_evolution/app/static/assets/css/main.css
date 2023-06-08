@@ -4163,3 +4163,19 @@ input, select, textarea {
   
 
 
+
+    .carrito-icon {
+      position: relative;
+      display: inline-block;
+    }
+
+    .carrito-icon .badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background-color: red;
+      color: white;
+      font-size: 12px;
+      padding: 3px 6px;
+      border-radius: 50%;
+    }

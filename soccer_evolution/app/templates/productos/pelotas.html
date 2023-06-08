@@ -37,14 +37,17 @@
 										</header>
 										<p>{{ pelota.descripcion_pelota }}</p>
 										<ul class="actions">
-											<li><a href="" class="button">Agregar al carro</a></li>
+											<li><button type="submit" >Agregar al carro</button></li>
+											<input type="hidden" name="id_pelota" value="{{ pelota.id_pelota }}">
+											<input type="hidden" name="nombre_pelota" value="{{ pelota.nombre_pelota }}">
+											<input type="hidden" name="valor_pelota" value="{{ pelota.valor_pelota }}">
 										</ul>
 									</div>
 								</div>
 							</section>
 							{% endfor %}
 						</section>
-						</section>
+						</form>
 						{% else %}
 				
 							<section id="two" class="spotlights">
@@ -69,4 +72,15 @@
 							</section>
 						{% endif %}
 					
+						<div id="modal" class="modal">
+							<div class="modal-content">
+							  <h2>Modal de confirmación</h2>
+							  <p>El formulario ha sido enviado correctamente.</p>
+							  <button onclick="document.getElementById('modal').style.display = 'none';">Cerrar</button>
+							</div>
+						  </div>
+						</body>
+						</html>
+
+
 					{% endblock %}

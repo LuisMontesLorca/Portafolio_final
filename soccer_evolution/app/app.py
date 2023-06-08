@@ -43,7 +43,11 @@ def index ():
         carro_compras = carro_compras_dao['select_all']()
 
         if carro_compras:
-            return render_template('index.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario)
+            cur = mysql.connection.cursor()
+            cur.execute('SELECT COUNT(*) FROM carro_compras')
+            count_productos = cur.fetchone()[0]
+            cur.close()
+            return render_template('index.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario,count_productos=count_productos)
         else:
             cc_vacio ="El carro de compras esta vacío"
             return render_template('index.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario,cc_vacio=cc_vacio)
@@ -62,7 +66,11 @@ def cancha_futbol ():
         carro_compras = carro_compras_dao['select_all']()
 
         if carro_compras:
-            return render_template('canchas/cancha_futbol.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, cancha_futbol=cancha_futbol)
+            cur = mysql.connection.cursor()
+            cur.execute('SELECT COUNT(*) FROM carro_compras')
+            count_productos = cur.fetchone()[0]
+            cur.close()
+            return render_template('canchas/cancha_futbol.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, cancha_futbol=cancha_futbol,count_productos=count_productos)
         else:
             cc_vacio ="El carro de compras esta vacío"
             return render_template('canchas/cancha_futbol.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, cancha_futbol=cancha_futbol, cc_vacio=cc_vacio)
@@ -80,7 +88,11 @@ def cancha_basket ():
         carro_compras = carro_compras_dao['select_all']()
 
         if carro_compras:
-            return render_template('canchas/cancha_basket.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, cancha_basket=cancha_basket)
+            cur = mysql.connection.cursor()
+            cur.execute('SELECT COUNT(*) FROM carro_compras')
+            count_productos = cur.fetchone()[0]
+            cur.close()
+            return render_template('canchas/cancha_basket.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, cancha_basket=cancha_basket,count_productos=count_productos)
         else:
             cc_vacio ="El carro de compras esta vacío"
             return render_template('canchas/cancha_basket.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, cancha_basket=cancha_basket, cc_vacio=cc_vacio)
@@ -98,7 +110,11 @@ def cancha_tenis ():
         carro_compras = carro_compras_dao['select_all']()
 
         if carro_compras:
-            return render_template('canchas/cancha_tenis.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, cancha_tenis=cancha_tenis)
+            cur = mysql.connection.cursor()
+            cur.execute('SELECT COUNT(*) FROM carro_compras')
+            count_productos = cur.fetchone()[0]
+            cur.close()
+            return render_template('canchas/cancha_tenis.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, cancha_tenis=cancha_tenis,count_productos=count_productos)
         else:
             cc_vacio ="El carro de compras esta vacío"
             return render_template('canchas/cancha_tenis.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, cancha_tenis=cancha_tenis, cc_vacio=cc_vacio)
@@ -115,7 +131,11 @@ def canchas ():
         carro_compras = carro_compras_dao['select_all']()
 
         if carro_compras:
-            return render_template('canchas/canchas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario)
+            cur = mysql.connection.cursor()
+            cur.execute('SELECT COUNT(*) FROM carro_compras')
+            count_productos = cur.fetchone()[0]
+            cur.close()
+            return render_template('canchas/canchas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,count_productos=count_productos)
         else:
             cc_vacio ="El carro de compras esta vacío"
             return render_template('canchas/canchas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario, cc_vacio=cc_vacio )
@@ -133,8 +153,11 @@ def otros ():
         carro_compras = carro_compras_dao['select_all']()
         print("AQUI ESTA EL CARRO DE COMPRAS:  " , carro_compras)
         if carro_compras:
-    
-            return render_template('productos/otros.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario)
+            cur = mysql.connection.cursor()
+            cur.execute('SELECT COUNT(*) FROM carro_compras')
+            count_productos = cur.fetchone()[0]
+            cur.close()
+            return render_template('productos/otros.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,count_productos=count_productos)
         else:
             cc_vacio ="El carro de compras esta vacío"
             return render_template('productos/otros.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario, cc_vacio=cc_vacio )
@@ -142,24 +165,53 @@ def otros ():
         inicio_sesion = False
         return render_template('productos/otros.html' )
 
+
 @app.route('/pelotas', methods=['GET', 'POST'])
 def pelotas():
-        if 'username' in session:
-            inicio_sesion = True
-            id_usuario = session.get('id_usuario')
-            pelotas = pelotas_dao['select_all']()
-            carro_compras = carro_compras_dao['select_all']()
-            print("AQUI ESTA EL CARRO DE COMPRAS: ", carro_compras)
-            if carro_compras:
-                return render_template('productos/pelotas.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, pelotas=pelotas)
+        if request.method == 'POST':
+            id_pelota = request.form['id_pelota']
+            nombre_pelota = request.form['nombre_pelota']
+            valor_pelota = request.form['valor_pelota']
+            if 'username' in session:
+                inicio_sesion = True
+                id_usuario = session.get('id_usuario')
+                pelotas = pelotas_dao['select_all']()
+                producto_pelotas = {'nombre_producto': nombre_pelota, 'fecha': 0, 'hora_inicio':0, 'hora_fin': 0, 'valor_producto': valor_pelota, 'id_producto': id_pelota}
+                nuevo_producto = carro_compras_dao['insert'](producto_pelotas)
+                carro_compras = carro_compras_dao['select_all']()
+                if carro_compras:
+                    cur = mysql.connection.cursor()
+                    cur.execute('SELECT COUNT(*) FROM carro_compras')
+                    count_productos = cur.fetchone()[0]
+                    cur.close()
+                    return render_template('productos/pelotas.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, pelotas=pelotas,count_productos=count_productos)
+                else:
+                    cc_vacio = "El carro de compras está vacío"
+                    return render_template('productos/pelotas.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, pelotas=pelotas, cc_vacio=cc_vacio)
             else:
-                cc_vacio = "El carro de compras está vacío"
-                return render_template('productos/pelotas.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, pelotas=pelotas, cc_vacio=cc_vacio)
+                inicio_sesion = False
+                pelotas = pelotas_dao['select_all']()
+                return render_template('productos/pelotas.html', inicio_sesion=inicio_sesion, pelotas=pelotas)
         else:
-            inicio_sesion = False
-            pelotas = pelotas_dao['select_all']()
-            return render_template('productos/pelotas.html', inicio_sesion=inicio_sesion, pelotas=pelotas)
-
+            if 'username' in session:
+                inicio_sesion = True
+                id_usuario = session.get('id_usuario')
+                pelotas = pelotas_dao['select_all']()
+                carro_compras = carro_compras_dao['select_all']()
+                print("AQUI ESTA EL CARRO DE COMPRAS: ", carro_compras)
+                if carro_compras:
+                    cur = mysql.connection.cursor()
+                    cur.execute('SELECT COUNT(*) FROM carro_compras')
+                    count_productos = cur.fetchone()[0]
+                    cur.close()
+                    return render_template('productos/pelotas.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, pelotas=pelotas,count_productos=count_productos)
+                else:
+                    cc_vacio = "El carro de compras está vacío"
+                    return render_template('productos/pelotas.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, pelotas=pelotas, cc_vacio=cc_vacio)
+            else:
+                inicio_sesion = False
+                pelotas = pelotas_dao['select_all']()
+                return render_template('productos/pelotas.html', inicio_sesion=inicio_sesion, pelotas=pelotas)
 
 @app.route('/camisetas', methods=['GET', 'POST'])
 def camisetas ():
@@ -170,8 +222,11 @@ def camisetas ():
         carro_compras = carro_compras_dao['select_all']()
         print("AQUI ESTA EL CARRO DE COMPRAS:  " , carro_compras)
         if carro_compras:
-    
-            return render_template('productos/camisetas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,camisetas=camisetas)
+            cur = mysql.connection.cursor()
+            cur.execute('SELECT COUNT(*) FROM carro_compras')
+            count_productos = cur.fetchone()[0]
+            cur.close()
+            return render_template('productos/camisetas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,camisetas=camisetas,count_productos=count_productos)
         else:
             cc_vacio ="El carro de compras esta vacío"
             return render_template('productos/camisetas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,camisetas=camisetas, cc_vacio=cc_vacio )
@@ -191,8 +246,11 @@ def bebidas ():
         carro_compras = carro_compras_dao['select_all']()
         print("AQUI ESTA EL CARRO DE COMPRAS:  " , carro_compras)
         if carro_compras:
-    
-            return render_template('productos/bebidas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,bebidas=bebidas)
+            cur = mysql.connection.cursor()
+            cur.execute('SELECT COUNT(*) FROM carro_compras')
+            count_productos = cur.fetchone()[0]
+            cur.close()
+            return render_template('productos/bebidas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,bebidas=bebidas,count_productos=count_productos)
         else:
             cc_vacio ="El carro de compras esta vacío"
             return render_template('productos/bebidas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,bebidas=bebidas, cc_vacio=cc_vacio )
@@ -224,12 +282,16 @@ def carro_compras ():
         carro_compras = carro_compras_dao['select_all']()
         print("AQUI ESTA EL CARRO DE COMPRAS:  " , carro_compras)
         if carro_compras:
+            cur = mysql.connection.cursor()
+            cur.execute('SELECT COUNT(*) FROM carro_compras')
+            count_productos = cur.fetchone()[0]
+            cur.close()
             valor_total=0
             valor=0
             for row in carro_compras:
                 valor= row['valor_producto']
                 valor_total=valor_total+valor
-            return render_template('carro_compras.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=carro_compras,valor_total=valor_total)
+            return render_template('carro_compras.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=carro_compras,valor_total=valor_total,count_productos=count_productos)
         else:
             cc_vacio ="El carro de compras esta vacío"
             return render_template('carro_compras.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=[], cc_vacio=cc_vacio)

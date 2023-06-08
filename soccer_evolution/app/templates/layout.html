@@ -27,10 +27,6 @@
 			});
 		  </script>
 
-
-
-		</script>
-
 		<script>
 			$(document).ready(function() {
 				$('.eliminar-btn').click(function() {
@@ -53,6 +49,38 @@
 			});
 		</script>	
 	
+	<script>
+		$(document).ready(function() {
+		  // Agregar evento de clic al botón "Agregar al carro"
+		  $('#agregarAlCarro').click(function(event) {
+			event.preventDefault(); // Evitar el envío predeterminado del formulario
+	
+			// Obtener los datos del formulario
+			var nombre = $('#nombre').val();
+	
+			// Realizar la petición AJAX para enviar los datos
+			$.ajax({
+			  url: '/agregar_al_carro',
+			  method: 'POST',
+			  data: {
+				nombre: nombre
+			  },
+			  success: function(response) {
+				// Mostrar la modal
+				$('#modal').show();
+			  }
+			});
+		  });
+	
+		  // Cerrar la modal al hacer clic en el botón "Cerrar"
+		  $('#cerrarModal').click(function() {
+			$('#modal').hide();
+		  });
+		});
+	  </script>
+
+
+
 		<script>
 
 
@@ -84,13 +112,13 @@ $(document).ready(function() {
 						{% else %}
 						<nav>
 							<div class="dropdown">
-								<a href="{{ url_for('carro_compras') }}"> <i class="fas fa-shopping-cart"></i></a>
+								<a href="{{ url_for('carro_compras') }}"> <i class="fas fa-shopping-cart"></i><span class="badge">{{ count_productos }}</span></a>
 				
 							</div>
 						{% endif %}
 						<a href="#menu">Menu</a>
-					  </nav>
-					  
+					</nav>
+					
                 </header>
 
             <!-- Menu -->
