@@ -274,6 +274,10 @@ def contacto ():
 def quienes_somos ():
     return render_template('/quienes_somos.html')
 
+@app.route('/estacionamientos')
+def estacionamientos ():
+    return render_template('/estacionamientos.html')
+
 @app.route('/carro_compras')
 def carro_compras ():
     if 'username' in session:        
