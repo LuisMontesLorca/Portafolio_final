@@ -7,7 +7,8 @@
 					<section id="banner" class="style2">
 						<div class="inner">
 							<span class="image">
-								<img src="/soccer_evolution/app/static/images/campeonato-banner.jpg" alt="" />
+								<img src="{{ url_for('static', filename='images/campeonato-banner.jpg') }}" alt="" />
+								
 							</span>
 							<header class="major">
 								<h1>Campeonatos</h1>
@@ -26,21 +27,11 @@
 				<!-- Main -->
 					<div id="main">
 
-						<!-- One
-							<section id="one">
-								<div class="inner">
-									<header class="major">
-										<h2>Sed amet aliquam</h2>
-									</header>
-									<p>Nullam et orci eu lorem consequat tincidunt vivamus et sagittis magna sed nunc rhoncus condimentum sem. In efficitur ligula tate urna. Maecenas massa vel lacinia pellentesque lorem ipsum dolor. Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis libero. Nullam et orci eu lorem consequat tincidunt vivamus et sagittis magna sed nunc rhoncus condimentum sem. In efficitur ligula tate urna.</p>
-								</div>
-							</section> -->
-
 						<!-- Two -->
 							<section id="two" class="spotlights">
 								<section>
 									<a href="campeonatos.html" class="image">
-										<img src="/soccer_evolution/app/static/images/campeonato-basketbol.jpg" alt="" data-position="center center" />
+										<img src="{{ url_for('static', filename='images/campeonato-basketbol.jpg') }}" alt="" data-position="center center" />
 									</a>
 									<div class="content">
 										<div class="inner">
@@ -56,7 +47,7 @@
 								</section>
 								<section>
 									<a href="campeonatos.html" class="image">
-										<img src="/soccer_evolution/app/static/images/campeonato-basketbol.jpg" alt="" data-position="top center" />
+										<img src="{{ url_for('static', filename='images/gatoradess.jpg') }}" alt="" data-position="top center" />
 									</a>
 									<div class="content">
 										<div class="inner">
@@ -65,7 +56,7 @@
 											</header>
 											<p>No te preocupes tenemos camisetas, pelotas, raquetas, aguas hidratantes y todo lo necesario para tu campeonato.</p>
 											<ul class="actions">
-												<li><a href="{{ url_for('arrendar') }}" class="button">Arrendar</a></li>
+												<li><a href="{{ url_for('arrendar') }}" class="button">Agregar</a></li>
 											</ul>
 										</div>
 									</div>
@@ -135,23 +126,23 @@
 									<div class="contact-method">
 										<span class="icon solid alt fa-envelope"></span>
 										<h3>Email</h3>
-										<a href="#">information@untitled.tld</a>
+										<a href="#">soccer.evolution91@gmail.com</a>
 									</div>
 								</section>
 								<section>
 									<div class="contact-method">
 										<span class="icon solid alt fa-phone"></span>
-										<h3>Phone</h3>
-										<span>(000) 000-0000 x12387</span>
+										<h3>Teléfono</h3>
+										<span>(22) 8567646</span>
 									</div>
 								</section>
 								<section>
 									<div class="contact-method">
 										<span class="icon solid alt fa-home"></span>
-										<h3>Address</h3>
-										<span>1234 Somewhere Road #5432<br />
-										Nashville, TN 00000<br />
-										United States of America</span>
+										<h3>Dirección</h3>
+										<span>Av. Ferrocarril 123, Santiago,<br />
+										Región Metropolitana, Chile.<br />
+										</span>
 									</div>
 								</section>
 							</section>
