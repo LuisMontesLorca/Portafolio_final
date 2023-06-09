@@ -314,7 +314,7 @@ def carro_compras():
             for row in carro_compras:
                 valor = row[5]
                 valor_total += valor
-            return render_template('carro_compras.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, productos={'productos': carro_compras}, valor_total=valor_total, count_productos=count_productos)
+            return render_template('carro_compras.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, productos=carro_compras, valor_total=valor_total, count_productos=count_productos)
 
         else:
             cc_vacio ="El carro de compras esta vacío"
