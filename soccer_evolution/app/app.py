@@ -40,11 +40,25 @@ def index ():
     if 'username' in session:
         inicio_sesion = True
         id_usuario = session.get('id_usuario')
-        carro_compras = carro_compras_dao['select_all']()
+        cur = mysql.connection.cursor()
+        cur.execute('SELECT * FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
+        carro_compras = cur.fetchall()
 
         if carro_compras:
+            # La tupla contiene al menos un elemento, puedes acceder a los valores
+            for producto in carro_compras:
+                id_producto = producto[0]
+                nombre_producto = producto[1]
+                # Realizar acciones con los valores de cada producto
+                print(f"ID: {id_producto}, Nombre: {nombre_producto}")
+        else:
+            # La tupla está vacía, no se encontraron resultados
+            print("No se encontraron productos.")
+
+        cur.close()
+        if carro_compras:
             cur = mysql.connection.cursor()
-            cur.execute('SELECT COUNT(*) FROM carro_compras')
+            cur.execute('SELECT COUNT(*) FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
             count_productos = cur.fetchone()[0]
             cur.close()
             return render_template('index.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario,count_productos=count_productos)
@@ -67,7 +81,7 @@ def cancha_futbol ():
 
         if carro_compras:
             cur = mysql.connection.cursor()
-            cur.execute('SELECT COUNT(*) FROM carro_compras')
+            cur.execute('SELECT COUNT(*) FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
             count_productos = cur.fetchone()[0]
             cur.close()
             return render_template('canchas/cancha_futbol.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, cancha_futbol=cancha_futbol,count_productos=count_productos)
@@ -89,7 +103,7 @@ def cancha_basket ():
 
         if carro_compras:
             cur = mysql.connection.cursor()
-            cur.execute('SELECT COUNT(*) FROM carro_compras')
+            cur.execute('SELECT COUNT(*) FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
             count_productos = cur.fetchone()[0]
             cur.close()
             return render_template('canchas/cancha_basket.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, cancha_basket=cancha_basket,count_productos=count_productos)
@@ -111,7 +125,7 @@ def cancha_tenis ():
 
         if carro_compras:
             cur = mysql.connection.cursor()
-            cur.execute('SELECT COUNT(*) FROM carro_compras')
+            cur.execute('SELECT COUNT(*) FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
             count_productos = cur.fetchone()[0]
             cur.close()
             return render_template('canchas/cancha_tenis.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, cancha_tenis=cancha_tenis,count_productos=count_productos)
@@ -132,7 +146,7 @@ def canchas ():
 
         if carro_compras:
             cur = mysql.connection.cursor()
-            cur.execute('SELECT COUNT(*) FROM carro_compras')
+            cur.execute('SELECT COUNT(*) FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
             count_productos = cur.fetchone()[0]
             cur.close()
             return render_template('canchas/canchas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,count_productos=count_productos)
@@ -154,7 +168,7 @@ def otros ():
         print("AQUI ESTA EL CARRO DE COMPRAS:  " , carro_compras)
         if carro_compras:
             cur = mysql.connection.cursor()
-            cur.execute('SELECT COUNT(*) FROM carro_compras')
+            cur.execute('SELECT COUNT(*) FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
             count_productos = cur.fetchone()[0]
             cur.close()
             return render_template('productos/otros.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,count_productos=count_productos)
@@ -176,12 +190,12 @@ def pelotas():
                 inicio_sesion = True
                 id_usuario = session.get('id_usuario')
                 pelotas = pelotas_dao['select_all']()
-                producto_pelotas = {'nombre_producto': nombre_pelota, 'fecha': 0, 'hora_inicio':0, 'hora_fin': 0, 'valor_producto': valor_pelota, 'id_producto': id_pelota}
+                producto_pelotas = {'nombre_producto': nombre_pelota, 'fecha': 0, 'hora_inicio':0, 'hora_fin': 0, 'valor_producto': valor_pelota, 'id_producto': id_pelota,'id_cliente':id_usuario}
                 nuevo_producto = carro_compras_dao['insert'](producto_pelotas)
                 carro_compras = carro_compras_dao['select_all']()
                 if carro_compras:
                     cur = mysql.connection.cursor()
-                    cur.execute('SELECT COUNT(*) FROM carro_compras')
+                    cur.execute('SELECT COUNT(*) FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
                     count_productos = cur.fetchone()[0]
                     cur.close()
                     return render_template('productos/pelotas.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, pelotas=pelotas,count_productos=count_productos)
@@ -201,7 +215,7 @@ def pelotas():
                 print("AQUI ESTA EL CARRO DE COMPRAS: ", carro_compras)
                 if carro_compras:
                     cur = mysql.connection.cursor()
-                    cur.execute('SELECT COUNT(*) FROM carro_compras')
+                    cur.execute('SELECT COUNT(*) FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
                     count_productos = cur.fetchone()[0]
                     cur.close()
                     return render_template('productos/pelotas.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, pelotas=pelotas,count_productos=count_productos)
@@ -223,7 +237,7 @@ def camisetas ():
         print("AQUI ESTA EL CARRO DE COMPRAS:  " , carro_compras)
         if carro_compras:
             cur = mysql.connection.cursor()
-            cur.execute('SELECT COUNT(*) FROM carro_compras')
+            cur.execute('SELECT COUNT(*) FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
             count_productos = cur.fetchone()[0]
             cur.close()
             return render_template('productos/camisetas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,camisetas=camisetas,count_productos=count_productos)
@@ -247,7 +261,7 @@ def bebidas ():
         print("AQUI ESTA EL CARRO DE COMPRAS:  " , carro_compras)
         if carro_compras:
             cur = mysql.connection.cursor()
-            cur.execute('SELECT COUNT(*) FROM carro_compras')
+            cur.execute('SELECT COUNT(*) FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
             count_productos = cur.fetchone()[0]
             cur.close()
             return render_template('productos/bebidas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,bebidas=bebidas,count_productos=count_productos)
@@ -287,7 +301,7 @@ def carro_compras ():
         print("AQUI ESTA EL CARRO DE COMPRAS:  " , carro_compras)
         if carro_compras:
             cur = mysql.connection.cursor()
-            cur.execute('SELECT COUNT(*) FROM carro_compras')
+            cur.execute('SELECT COUNT(*) FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
             count_productos = cur.fetchone()[0]
             cur.close()
             valor_total=0
@@ -352,7 +366,7 @@ tbl_horarios_columnas = ['id_horarios', 'inicio', 'termino']
 horarios_dao = dao.dao_generic(app, mysql, tbl_horarios, tbl_horarios_columnas)
 
 tbl_carro_compras = 'carro_compras'
-tbl_carro_compras_columnas = ['id_carro', 'nombre_producto', 'fecha', 'hora_inicio', 'hora_fin', 'valor_producto', 'id_producto']
+tbl_carro_compras_columnas = ['id_carro', 'nombre_producto', 'fecha', 'hora_inicio', 'hora_fin', 'valor_producto', 'id_producto','id_cliente']
 carro_compras_dao = dao.dao_generic(app, mysql, tbl_carro_compras, tbl_carro_compras_columnas)
 
 tbl_pelotas = 'pelota'
@@ -407,14 +421,15 @@ def arrendar ():
             id_cancha = session['id_cancha']
             nombre_cancha = session['nombre_cancha']
             valor_cancha = session['valor_cancha']
-            arriendo = {'nombre_producto': nombre_cancha, 'fecha': fecha, 'hora_inicio':hora_inicio, 'hora_fin': hora_fin, 'valor_producto': valor_cancha, 'id_producto': id_cancha}
+            arriendo = {'nombre_producto': nombre_cancha, 'fecha': fecha, 'hora_inicio':hora_inicio, 'hora_fin': hora_fin, 'valor_producto': valor_cancha, 'id_producto': id_cancha,'id_cliente':id_usuario}
             
-            productos_carro = carro_compras_dao['select_all']()
-            
+            id_usuario = session.get('id_usuario')
+            cur = mysql.connection.cursor()
+            cur.execute('SELECT * FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
+            productos_carro = cur.fetchall()
+            cur.close()
             arriendo_existente = False
 
-            print (" PRODUCTOS QUE YA ESTAN EN EL CARRO: ", productos_carro)
-            print (" PRODUCTOS QUE NO ESTA EN EL CARRO: ", fecha, hora_inicio, hora_fin, id_cancha )
             for row in productos_carro:
                 if (row['fecha'] == fecha and row['hora_inicio'] == hora_inicio and row['hora_fin'] == hora_fin and row['nombre_producto'] == nombre_cancha ):
                     arriendo_existente = True
