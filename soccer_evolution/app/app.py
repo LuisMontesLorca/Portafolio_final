@@ -387,6 +387,10 @@ camisetas_dao = dao.dao_generic(app, mysql, tbl_camisetas, tbl_camisetas_columna
 tbl_bebidas = 'bebida'
 tbl_bebidas_columnas = ['id_bebida', 'sku_bebida', 'nombre_bebida', 'imagen_bebida', 'valor_bebida', 'descripcion_bebida']
 bebidas_dao = dao.dao_generic(app, mysql, tbl_bebidas, tbl_bebidas_columnas)
+
+tbl_arriendos_historial = 'arriendos_historial'
+tbl_arriendos_historial_columnas = ['id_arriendos_historial', 'fecha', 'hora', 'valor', 'cancha', 'id_cliente']
+arriendos_historial_dao = dao.dao_generic(app, mysql, tbl_arriendos_historial, tbl_arriendos_historial_columnas)
 #________________________________________________
 #se tienen los métodos:
 # BUSCAR TODOS
@@ -431,13 +435,14 @@ def arrendar ():
             arriendo = {'nombre_producto': nombre_cancha, 'fecha': fecha, 'hora_inicio':hora_inicio, 'hora_fin': hora_fin, 'valor_producto': valor_cancha, 'id_producto': id_cancha,'id_cliente':id_usuario}
             
             id_usuario = session.get('id_usuario')
-            cur = mysql.connection.cursor()
-            cur.execute('SELECT * FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
-            productos_carro = cur.fetchall()
-            cur.close()
+            #cur = mysql.connection.cursor()
+            #cur.execute('SELECT * FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
+            #productos_carro = cur.fetchall()
+            #cur.close()
+            carro_compras = carro_compras_dao['select_all']()
             arriendo_existente = False
-
-            for row in productos_carro:
+        
+            for row in carro_compras:
                 if (row['fecha'] == fecha and row['hora_inicio'] == hora_inicio and row['hora_fin'] == hora_fin and row['nombre_producto'] == nombre_cancha ):
                     arriendo_existente = True
                     break
@@ -447,6 +452,9 @@ def arrendar ():
                 return 'Ya tienes el arriendo de esa cancha en la hora seleccionada en tu carrito'
 
             new_arriendo = carro_compras_dao['insert'](arriendo)
+            hora_concatenada = f"{hora_inicio} - {hora_fin}"
+            arriendo_historial = {'fecha':fecha , 'hora': hora_concatenada , 'valor':valor_cancha,  'cancha': nombre_cancha,'id_cliente': id_usuario}
+            new_historial = arriendos_historial_dao['insert'](arriendo_historial)
             print ("HICE EL INSERT !!!!!!!!!!!!!!!!!")
             return redirect(url_for('carro_compras'))
         else:
@@ -610,8 +618,10 @@ def perfil_usuario (id):
                 id_usuario = session.get('id_usuario')
                 carro_compras = carro_compras_dao['select_all']()
                 print("AQUI ESTA EL CARRO DE COMPRAS:  " , carro_compras)
+
+                arriendos_historial = arriendos_historial_dao['select_all']()
                 if carro_compras:
-                    return render_template('registro/perfil_usuario.html', inicio_sesion=inicio_sesion, usuarios=usuario_2, id_usuario=id_usuario)
+                    return render_template('registro/perfil_usuario.html', inicio_sesion=inicio_sesion, usuarios=usuario_2, id_usuario=id_usuario,arriendos_historial=arriendos_historial)
                 else:
                     cc_vacio ="El carro de compras esta vacío"
                     return render_template('registro/perfil_usuario.html', inicio_sesion=inicio_sesion, usuarios=usuario_2, id_usuario=id_usuario,cc_vacio=cc_vacio)

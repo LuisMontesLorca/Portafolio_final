@@ -71,12 +71,21 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {% if arriendos_historial %}
+                                {% for arriendos in arriendos_historial %}
                                 <tr>
-                                    <td>01-01-0001</td>
-                                    <td>00:00:00</td>
-                                    <td>25000</td>
+                                    <td>{{arriendos.fecha}}</td>
+                                    <td>{{arriendos.hora}}</td>
+                                    <td>{{arriendos.valor}}</td>
+                                    <td>{{arriendos.cancha}}</td>
                                 </tr>
+                                {% endfor %}
+                                {% else %}
+                                <tr>
+                                    <td>No hay arriendos</td>
 
+                                </tr>
+                                {% endif %}
                             </tbody>
                             <tfoot>
                         
