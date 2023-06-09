@@ -10,10 +10,10 @@
 								<img src="/soccer_evolution/app/static/images/campeonato-banner.jpg" alt="" />
 							</span>
 							<header class="major">
-								<h1>Servicio de Hidratación y Alimentación</h1>
+								<h1>Arriendo de bálones</h1>
 							</header>
 							<div class="content">
-								<p>Necesitas hidratarte? Tenemos rehidratantes, agua mineral, barras de cereal, frutas, proteínas</p>
+								<p>Lo que necesitas para despreocuparte de la pelota, nosotros te la pasamos. Tenemos bálones de calidad las que vamos cambiando constantemente para entregarte el mejor servicio.</p>
 							</div>
 						</div>
 					</section>
@@ -28,7 +28,7 @@
 							{% for pelota in pelotas %}
 							<section>
 								<a class="image">
-									<img src="{{ url_for('static', filename= 'images/otros.jpg') }}" alt="" data-position="center center" />
+									<img src="{{ url_for('static', filename= pelota.imagen_pelota) }} " alt="" data-position="center center" />
 								</a>
 								<div class="content">
 									<div class="inner">

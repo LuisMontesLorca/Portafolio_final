@@ -293,23 +293,29 @@ def estacionamientos ():
     return render_template('/estacionamientos.html')
 
 @app.route('/carro_compras')
-def carro_compras ():
-    if 'username' in session:        
+def carro_compras():
+    if 'username' in session:
         inicio_sesion = True
-        id_usuario = session.get('id_usuario')  
-        carro_compras = carro_compras_dao['select_all']()
-        print("AQUI ESTA EL CARRO DE COMPRAS:  " , carro_compras)
+        id_usuario = session.get('id_usuario')
+
+        cur = mysql.connection.cursor()
+        cur.execute('SELECT * FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
+        carro_compras = cur.fetchall()
+
+        cur.close()
+        print("AQUI ESTA EL CARRO DE COMPRAS:  ", carro_compras)
         if carro_compras:
             cur = mysql.connection.cursor()
             cur.execute('SELECT COUNT(*) FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
             count_productos = cur.fetchone()[0]
+            print("este es el select count id ", count_productos)
             cur.close()
-            valor_total=0
-            valor=0
+            valor_total = 0
             for row in carro_compras:
-                valor= row['valor_producto']
-                valor_total=valor_total+valor
-            return render_template('carro_compras.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=carro_compras,valor_total=valor_total,count_productos=count_productos)
+                valor = row[5]
+                valor_total += valor
+            return render_template('carro_compras.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, productos={'productos': carro_compras}, valor_total=valor_total, count_productos=count_productos)
+
         else:
             cc_vacio ="El carro de compras esta vacío"
             return render_template('carro_compras.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=[], cc_vacio=cc_vacio)
