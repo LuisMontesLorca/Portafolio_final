@@ -303,6 +303,7 @@ def carro_compras():
         carro_compras = cur.fetchall()
 
         cur.close()
+
         print("AQUI ESTA EL CARRO DE COMPRAS:  ", carro_compras)
         if carro_compras:
             cur = mysql.connection.cursor()
