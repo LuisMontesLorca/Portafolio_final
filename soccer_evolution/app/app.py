@@ -454,7 +454,31 @@ def arrendar ():
             new_arriendo = carro_compras_dao['insert'](arriendo)
             hora_concatenada = f"{hora_inicio} - {hora_fin}"
             arriendo_historial = {'fecha':fecha , 'hora': hora_concatenada , 'valor':valor_cancha,  'cancha': nombre_cancha,'id_cliente': id_usuario}
-            new_historial = arriendos_historial_dao['insert'](arriendo_historial)
+
+            consulta_eliminar = "DROP TRIGGER IF EXISTS insertar_arriendo_historial"
+            with mysql.connection.cursor() as cursor:
+                cursor.execute(consulta_eliminar)
+                mysql.connection.commit()
+
+            cursor =  mysql.connection.cursor()
+            # Definir la consulta para crear el trigger
+            consulta = """
+                CREATE TRIGGER insertar_arriendo_historial
+            AFTER INSERT ON carro_compras
+            FOR EACH ROW
+            BEGIN
+                INSERT INTO arriendos_historial (fecha, hora, valor, cancha, id_cliente)
+                VALUES (NEW.fecha, CONCAT(NEW.hora_inicio, '-', NEW.hora_fin), NEW.valor_producto, NEW.nombre_producto, NEW.id_cliente);
+            END
+            """
+
+            with mysql.connection.cursor() as cursor:
+                cursor.execute(consulta)
+                mysql.connection.commit()
+            
+
+
+            
             print ("HICE EL INSERT !!!!!!!!!!!!!!!!!")
             return redirect(url_for('carro_compras'))
         else:
