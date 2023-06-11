@@ -23,7 +23,7 @@
 				
 					<div id="main">
 						{% if inicio_sesion %}
-						<form action="/pelotas" method="POST">
+						<form id="formulario-pelotas " action="/pelotas" method="POST">
 						<section id="two" class="spotlights">
 							{% for pelota in pelotas %}
 							<section>
@@ -37,7 +37,7 @@
 										</header>
 										<p>{{ pelota.descripcion_pelota }}</p>
 										<ul class="actions">
-											<li><button type="submit" >Agregar al carro</button></li>
+											<li><button type="button" class="btn btn-primary agregar-carrito" data-id_pelota="{{ pelota.id_pelota }}" data-nombre_pelota="{{ pelota.nombre_pelota }}" data-valor_pelota="{{ pelota.valor_pelota }}">Agregar al carrito</button></li>
 											<input type="hidden" name="id_pelota" value="{{ pelota.id_pelota }}">
 											<input type="hidden" name="nombre_pelota" value="{{ pelota.nombre_pelota }}">
 											<input type="hidden" name="valor_pelota" value="{{ pelota.valor_pelota }}">
@@ -63,7 +63,7 @@
 											</header>
 											<p>{{ pelota.descripcion_pelota }}</p>
 											<ul class="actions">
-												<li><a href="{{ url_for('login') }}" class="button">Agregar al carro</a></li>
+												<li> <a href="{{ url_for('login') }}" class="button">Agregar al carro</a></li>
 											</ul>
 										</div>
 									</div>
@@ -72,15 +72,29 @@
 							</section>
 						{% endif %}
 					
-						<div id="modal" class="modal">
-							<div class="modal-content">
-							  <h2>Modal de confirmación</h2>
-							  <p>El formulario ha sido enviado correctamente.</p>
-							  <button onclick="document.getElementById('modal').style.display = 'none';">Cerrar</button>
-							</div>
-						  </div>
-						</body>
-						</html>
+						
 
+						<div  id="modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+							  <div class="modal-content">
+								<div class="modal-header">
+								  <h5 class="modal-title" id="confirmar-modal-label">Confirmar acción</h5>
+								  <a type="text" id="cerrar_modal"class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								  </a>
+								</div>
+								<div class="modal-body">
+								  ¿Desea agregar este producto al carrito?
+								</div>
+								<div class="modal-footer">
+								  <button type="button" class="btn btn-secondary" id="cancelar_btn"data-dismiss="modal">Cancelar</button>
+								  <button type="button" class="btn btn-primary" id="confirmar-btn">Confirmar</button>
+								</div>
+							  </div>
+							</div>
+						</div>
+
+
+						
 
 					{% endblock %}

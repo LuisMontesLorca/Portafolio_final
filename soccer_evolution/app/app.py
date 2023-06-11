@@ -183,9 +183,10 @@ def otros ():
 @app.route('/pelotas', methods=['GET', 'POST'])
 def pelotas():
         if request.method == 'POST':
-            id_pelota = request.form['id_pelota']
-            nombre_pelota = request.form['nombre_pelota']
-            valor_pelota = request.form['valor_pelota']
+            data = request.get_json()  # Obtener los datos enviados en formato JSON
+            id_pelota = data['id_pelota']
+            nombre_pelota = data['nombre_pelota']
+            valor_pelota = data['valor_pelota']
             if 'username' in session:
                 inicio_sesion = True
                 id_usuario = session.get('id_usuario')
@@ -229,25 +230,69 @@ def pelotas():
 
 @app.route('/camisetas', methods=['GET', 'POST'])
 def camisetas ():
-    if 'username' in session:
-        inicio_sesion = True
-        id_usuario = session.get('id_usuario')
-        camisetas = camisetas_dao['select_all']()
-        carro_compras = carro_compras_dao['select_all']()
-        print("AQUI ESTA EL CARRO DE COMPRAS:  " , carro_compras)
-        if carro_compras:
-            cur = mysql.connection.cursor()
-            cur.execute('SELECT COUNT(*) FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
-            count_productos = cur.fetchone()[0]
-            cur.close()
-            return render_template('productos/camisetas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,camisetas=camisetas,count_productos=count_productos)
-        else:
-            cc_vacio ="El carro de compras esta vacío"
-            return render_template('productos/camisetas.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,camisetas=camisetas, cc_vacio=cc_vacio )
+    if request.method == 'POST':
+            data = request.get_json()  # Obtener los datos enviados en formato JSON
+            id_camiseta = data['id_camiseta']
+            nombre_camiseta = data['nombre_camiseta']
+            valor_camiseta = data['valor_camiseta']
+            if 'username' in session:
+                inicio_sesion = True
+                id_usuario = session.get('id_usuario')
+                camisetas = camisetas_dao['select_all']()
+                producto_camisetas = {'nombre_producto': nombre_camiseta, 'fecha': 0, 'hora_inicio':0, 'hora_fin': 0, 'valor_producto': valor_camiseta, 'id_producto': id_camiseta,'id_cliente':id_usuario}
+                nuevo_producto = carro_compras_dao['insert'](producto_camisetas)
+                cur = mysql.connection.cursor()
+                cur.execute('SELECT * FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
+                rows = cur.fetchall()
+                carro_compras = []
+                print('rows: ', rows)
+                for row in rows:
+                    carrito_producto = {
+                    'id_carro' : row[0],
+                    'nombre_producto' : row[1],
+                    'id_cliente' : row[2],
+                    'hora_inicio' : row[3],
+                    'hora_fin' : row[4],
+                    'valor_producto' : row[5],
+                    'id_producto' : row[6],
+                    'id_cliente' : row[7]
+                    }
+                    carro_compras.append(carrito_producto)
+                cur.close()
+                print ("carro_compras: ", carro_compras)
+                if  carro_compras:
+                    cur = mysql.connection.cursor()
+                    cur.execute('SELECT COUNT(*) FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
+                    count_productos = cur.fetchone()[0]
+                    cur.close()
+                    return render_template('productos/camisetas.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, camisetas=camisetas,count_productos=count_productos)
+                else:
+                    cc_vacio = "El carro de compras está vacío"
+                    return render_template('productos/camisetas.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, camisetas=camisetas, cc_vacio=cc_vacio)
+            else:
+                inicio_sesion = False
+                camisetas = camisetas_dao['select_all']()
+                return render_template('productos/camisetas.html', inicio_sesion=inicio_sesion, camisetas=camisetas)
     else:
-        inicio_sesion = False
-        camisetas = camisetas_dao['select_all']()
-        return render_template('productos/camisetas.html' ,camisetas=camisetas)
+        if 'username' in session:
+            inicio_sesion = True
+            id_usuario = session.get('id_usuario')
+            camisetas = camisetas_dao['select_all']()
+            carro_compras = carro_compras_dao['select_all']()
+            print("AQUI ESTA EL CARRO DE COMPRAS: ", carro_compras)
+            if carro_compras:
+                cur = mysql.connection.cursor()
+                cur.execute('SELECT COUNT(*) FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
+                count_productos = cur.fetchone()[0]
+                cur.close()
+                return render_template('productos/camisetas.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, camisetas=camisetas,count_productos=count_productos)
+            else:
+                cc_vacio = "El carro de compras está vacío"
+                return render_template('productos/camisetas.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, camisetas=camisetas, cc_vacio=cc_vacio)
+        else:
+            inicio_sesion = False
+            camisetas = camisetas_dao['select_all']()
+            return render_template('productos/camisetas.html', inicio_sesion=inicio_sesion, camisetas=camisetas)
     
 
 
@@ -298,10 +343,24 @@ def carro_compras():
         inicio_sesion = True
         id_usuario = session.get('id_usuario')
 
+        print('id_usuario: ', id_usuario)
         cur = mysql.connection.cursor()
         cur.execute('SELECT * FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
-        carro_compras = cur.fetchall()
-
+        rows = cur.fetchall()
+        carro_compras = []
+        print('rows: ', rows)
+        for row in rows:
+            carrito_producto = {
+            'id_carro' : row[0],
+            'nombre_producto' : row[1],
+            'id_cliente' : row[2],
+            'hora_inicio' : row[3],
+            'hora_fin' : row[4],
+            'valor_producto' : row[5],
+            'id_producto' : row[6],
+            'id_cliente' : row[7]
+            }
+            carro_compras.append(carrito_producto)
         cur.close()
 
         print("AQUI ESTA EL CARRO DE COMPRAS:  ", carro_compras)
@@ -313,7 +372,7 @@ def carro_compras():
             cur.close()
             valor_total = 0
             for row in carro_compras:
-                valor = row[5]
+                valor = row['valor_producto']
                 valor_total += valor
             return render_template('carro_compras.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, productos=carro_compras, valor_total=valor_total, count_productos=count_productos)
 
@@ -432,24 +491,18 @@ def arrendar ():
             id_cancha = session['id_cancha']
             nombre_cancha = session['nombre_cancha']
             valor_cancha = session['valor_cancha']
-            arriendo = {'nombre_producto': nombre_cancha, 'fecha': fecha, 'hora_inicio':hora_inicio, 'hora_fin': hora_fin, 'valor_producto': valor_cancha, 'id_producto': id_cancha,'id_cliente':id_usuario}
-            
-            id_usuario = session.get('id_usuario')
-            #cur = mysql.connection.cursor()
-            #cur.execute('SELECT * FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
-            #productos_carro = cur.fetchall()
-            #cur.close()
+            arriendo = {'nombre_producto': nombre_cancha, 'fecha': fecha, 'hora_inicio':hora_inicio, 
+                        'hora_fin': hora_fin, 'valor_producto': valor_cancha, 'id_producto': id_cancha,'id_cliente':id_usuario}
             carro_compras = carro_compras_dao['select_all']()
-            arriendo_existente = False
         
             for row in carro_compras:
                 if (row['fecha'] == fecha and row['hora_inicio'] == hora_inicio and row['hora_fin'] == hora_fin and row['nombre_producto'] == nombre_cancha ):
                     arriendo_existente = True
                     break
-
+            arriendo_existente =False           
             if arriendo_existente:
                 print (" NOOOOOOO  HICE EL INSERT !!!!!!!!!!!!!!!!!")
-                return 'Ya tienes el arriendo de esa cancha en la hora seleccionada en tu carrito'
+                return 'Ya tienes el aiendo de esa cancha en la hora seleccionada en tu carrito'
 
             new_arriendo = carro_compras_dao['insert'](arriendo)
             hora_concatenada = f"{hora_inicio} - {hora_fin}"
@@ -800,10 +853,11 @@ def header_request_transbank():
 # DEFINICIÓN DE RUTA API REST, PERMITIENDO SOLO SER LLAMADO POR POST
 @app.route('/api/v1/transbank/transaction/create', methods=['POST'])
 def transbank_create():
+    print('transbank_create')
     print('request.form: ', request.form)
     amount = request.form.get('amount')
     session_id = '2334567' # ID SESSION
-    buy_order = request.form.get('buyorder')
+    buy_order = request.form.get('buy_order')
     object_url = urlparse(request.base_url)
     return_url = '{0}://{1}/transbank/commit-pay'.format(object_url.scheme, object_url.netloc)
     print('return_url:', return_url)

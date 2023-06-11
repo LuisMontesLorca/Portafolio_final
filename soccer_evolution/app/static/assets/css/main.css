@@ -2993,6 +2993,7 @@ input, select, textarea {
 			-ms-flex-direction: row;
 			flex-direction: row;
 			background-color: #2e3450;
+			
 		}
 
 			.spotlights > section > .image {
@@ -4047,7 +4048,8 @@ input, select, textarea {
   border-radius: 8px;
   position: relative;
   text-align: left;
-  
+  margin-top: 10%;
+  margin-left: 18%;
 }
 
 .modal-header {

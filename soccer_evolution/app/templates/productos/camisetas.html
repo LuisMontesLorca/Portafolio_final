@@ -10,62 +10,91 @@
 								<img src="/soccer_evolution/app/static/images/campeonato-banner.jpg" alt="" />
 							</span>
 							<header class="major">
-								<h1>Servicio de Hidratación y Alimentación</h1>
+								<h1>Arriendo de camisetas</h1>
 							</header>
 							<div class="content">
-								<p>Necesitas hidratarte? Tenemos rehidratantes, agua mineral, barras de cereal, frutas, proteínas</p>
+								<p>Lo que necesitas para no tener confuciones en la cancha, entregamos equipamiento de primera para que no tengas problemas con los colores de tus camisetas.</p>
 							</div>
 						</div>
 					</section>
 
 				<!-- Main -->
-				{% if inicio_sesion %}
+				
+				
 					<div id="main">
-
-						<!-- Two -->
-		 
+						{% if inicio_sesion %}
+						<form id="formulario-camisetas " action="/camisetas" method="POST">
 						<section id="two" class="spotlights">
 							{% for camiseta in camisetas %}
-							<section>
+							<section> 
 								<a class="image">
-									<img src="{{ url_for('static', filename= 'images/otros.jpg') }}" alt="" data-position="center center" />
+									<img src="{{ url_for('static', filename= camiseta.imagen_camiseta) }} " alt="" data-position="center center" />
 								</a>
 								<div class="content">
 									<div class="inner">
 										<header class="major">
-											<h3>{{camiseta.nombre_camiseta}}</h3>
+											<h3>{{ camiseta.nombre_camiseta }}</h3>
 										</header>
-										<p>{{camiseta.descripcion_camiseta}}</p>
+										<p>{{ camiseta.descripcion_camiseta }}</p>
 										<ul class="actions">
-											<li><a href="" class="button">Agregar al carro</a></li>
+											<li><button type="button" class="btn btn-primary agregar-carrito" data-id_camiseta="{{ camiseta.id_camiseta }}" data-nombre_camiseta="{{ camiseta.nombre_camiseta }}" data-valor_camiseta="{{ camiseta.valor_camiseta }}">Agregar al carrito</button></li>
+											<input type="hidden" name="id_camiseta" value="{{ camiseta.id_camiseta }}">
+											<input type="hidden" name="nombre_camiseta" value="{{ camiseta.nombre_camiseta }}">
+											<input type="hidden" name="valor_camiseta" value="{{ camiseta.valor_camiseta }}">
 										</ul>
 									</div>
 								</div>
 							</section>
 							{% endfor %}
 						</section>
+						</form>
 						{% else %}
-	 
-						<section id="two" class="spotlights">
-							{% for camiseta in camisetas %}
-							<section>
-								<a class="image">
-									<img src="{{ url_for('static', filename= 'images/otros.jpg') }}" alt="" data-position="center center" />
-								</a>
-								<div class="content">
-									<div class="inner">
-										<header class="major">
-											<h3>{{camiseta.nombre_camiseta}}</h3>
-										</header>
-										<p>{{camiseta.descripcion_camiseta}}</p>
-										<ul class="actions">
-											<li><a href="{{ url_for('login') }}" class="button">Agregar al carro</a></li>
-										</ul>
+				
+							<section id="two" class="spotlights">
+								{% for camiseta in camiseta %}
+								<section>
+									<a class="image">
+										<img src="{{ url_for('static', filename= camiseta.imagen_camiseta) }}" alt="" data-position="center center" />
+									</a>
+									<div class="content">
+										<div class="inner">
+											<header class="major">
+												<h3>{{ camiseta.nombre_camiseta }}</h3>
+											</header>
+											<p>{{ camiseta.descripcion_camiseta }}</p>
+											<ul class="actions">
+												<li> <a href="{{ url_for('login') }}" class="button">Agregar al carro</a></li>
+											</ul>
+										</div>
 									</div>
-								</div>
+								</section>
+								{% endfor %}
 							</section>
-							{% endfor %}
-						</section>
 						{% endif %}
 					
+						
+
+						<div  id="modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+							  <div class="modal-content">
+								<div class="modal-header">
+								  <h5 class="modal-title" id="confirmar-modal-label">Confirmar acción</h5>
+								  <a type="text" id="cerrar_modal"class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								  </a>
+								</div>
+								<div class="modal-body">
+								  ¿Desea agregar este producto al carrito?
+								</div>
+								<div class="modal-footer">
+								  <button type="button" class="btn btn-secondary" id="cancelar_btn"data-dismiss="modal">Cancelar</button>
+								  <button type="button" class="btn btn-primary" id="confirmar-btn">Confirmar</button>
+								</div>
+							  </div>
+							</div>
+						</div>
+
+
+						
+
 					{% endblock %}

@@ -100,25 +100,24 @@
                    
                             
 
-                            <div id="modal" class="modal">
-						
+                            <div id="modal" class="modal">						
                                 <div class="modal-content">
                                     <div class="box">
-                                  <div class="modal-header">
-                                    <h2>¿Estas seguro?</h2>
-                                    <a id="close_modal" >&times;</a>
-                                  </div>
-                                  <div class="modal-body">
-                                    <p>Tus datos serán actualizados, estás de acuerdo?</p>
-                                  </div>
-                                  </div>
-                                  <div class="modal-footer">
-                                    <a class="button primary" href="{{ url_for('editar_usuarios', id= usuarios.id_usuario) }}" class="btn">Si</a>
-                                    <a class="button">No</a>
-                                  </div>
-                                
+                                        <div class="modal-header">
+                                            <h2>¿Estas seguro?</h2>
+                                            <a id="close_modal" >&times;</a>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Tus datos serán actualizados, estás de acuerdo?</p>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a class="button primary" href="{{ url_for('editar_usuarios', id= usuarios.id_usuario) }}" class="btn">Si</a>
+                                        <a class="button">No</a>
+                                    </div>
                                 </div>
-
+                            </div>
+                                
 
                     {% endblock %}
 
