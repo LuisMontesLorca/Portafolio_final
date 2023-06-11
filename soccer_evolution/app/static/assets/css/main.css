@@ -4211,12 +4211,12 @@ input, select, textarea {
 	  
 	  .carousel__slides {
 		display: flex;
-		width: 200%; /* Cambia este valor según el número de diapositivas */
+		width: 300%; /* Cambia este valor según el número de diapositivas */
 		transition: transform 0.5s;
 	  }
 	  
 	  .carousel__slide {
-		flex: 0 0 22.22%; /* Cambia este valor según el número de diapositivas */
+		flex: 0 0 33.33%; /* Cambia este valor según el número de diapositivas */
 		padding: 20px;
 		
 	  }
