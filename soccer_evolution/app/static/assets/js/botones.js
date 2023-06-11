@@ -106,3 +106,27 @@ $(document).ready(function() {
 
 
 /* AGREGAR BEBIDAS */ 
+
+/* CARRUSEL ESTACIONAMIENTOS*/ 
+
+const prevButton = document.querySelector('.carousel__button--prev');
+const nextButton = document.querySelector('.carousel__button--next');
+const slides = document.querySelector('.carousel__slides');
+const slideWidth = document.querySelector('.carousel__slide').offsetWidth;
+let currentPosition = 0;
+
+prevButton.addEventListener('click', () => {
+  currentPosition += slideWidth;
+  if (currentPosition > 0) {
+    currentPosition = -(slides.offsetWidth - slideWidth);
+  }
+  slides.style.transform = `translateX(${currentPosition}px)`;
+});
+
+nextButton.addEventListener('click', () => {
+  currentPosition -= slideWidth;
+  if (Math.abs(currentPosition) > slides.offsetWidth - slideWidth) {
+    currentPosition = 0;
+  }
+  slides.style.transform = `translateX(${currentPosition}px)`;
+});
