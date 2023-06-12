@@ -494,20 +494,18 @@ def arrendar ():
             arriendo = {'nombre_producto': nombre_cancha, 'fecha': fecha, 'hora_inicio':hora_inicio, 
                         'hora_fin': hora_fin, 'valor_producto': valor_cancha, 'id_producto': id_cancha,'id_cliente':id_usuario}
             carro_compras = carro_compras_dao['select_all']()
-        
+            arriendo_existente = False
             for row in carro_compras:
                 if (row['fecha'] == fecha and row['hora_inicio'] == hora_inicio and row['hora_fin'] == hora_fin and row['nombre_producto'] == nombre_cancha ):
                     arriendo_existente = True
-                    break
-            arriendo_existente =False           
+                    break         
             if arriendo_existente:
                 print (" NOOOOOOO  HICE EL INSERT !!!!!!!!!!!!!!!!!")
-                return 'Ya tienes el aiendo de esa cancha en la hora seleccionada en tu carrito'
-
-            new_arriendo = carro_compras_dao['insert'](arriendo)
-            hora_concatenada = f"{hora_inicio} - {hora_fin}"
-            arriendo_historial = {'fecha':fecha , 'hora': hora_concatenada , 'valor':valor_cancha,  'cancha': nombre_cancha,'id_cliente': id_usuario}
-
+                return 'Ya tienes el arriendo de esa cancha en la hora seleccionada en tu carrito'
+            else:
+                    arriendo_existente =False  
+                    new_arriendo = carro_compras_dao['insert'](arriendo)
+        
             consulta_eliminar = "DROP TRIGGER IF EXISTS insertar_arriendo_historial"
             with mysql.connection.cursor() as cursor:
                 cursor.execute(consulta_eliminar)
