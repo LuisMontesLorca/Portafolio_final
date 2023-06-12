@@ -379,7 +379,8 @@ def carro_compras():
         else:
             cc_vacio ="El carro de compras esta vacío"
             return render_template('carro_compras.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=[], cc_vacio=cc_vacio)
-    
+    else:
+         return redirect(url_for('login'))
 @app.route('/carro_compras/<int:id_carro>', methods=['DELETE'])
 def eliminar_producto(id_carro):
     cur = mysql.connection.cursor()

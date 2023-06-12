@@ -104,8 +104,66 @@ $(document).ready(function() {
   });
 });
 
+/* AGREGAR BEBIDAS */
 
-/* AGREGAR BEBIDAS */ 
+
+/* AGREGAR CANCHAS 
+
+$(document).ready(function() {
+  $('.agregar-cancha').on('click', function() {
+    var hora_inicio = $(this).data('hora-inicio');
+    console.log('Hora de inicio:', hora_inicio);
+    
+    var hora_fin = $(this).data('hora-fin');
+    console.log('Hora de fin:', hora_fin);
+    
+    var datepicker = $(this).data('datepicker');
+    console.log('Fecha:', datepicker);
+
+    // Abrir la modal
+    $('#modal').modal('show');
+
+    // Manejar el evento de confirmación
+    $('#confirmar-btn').on('click', function() {
+      // Cerrar la modal
+      $('#modal').modal('hide');
+
+      // Enviar el formulario mediante AJAX
+      var formData = {
+        hora_inicio: hora_inicio,
+        hora_fin: hora_fin,
+        datepicker: datepicker
+      };
+      
+      console.log("ESTA ES LA DATA: ", formData);
+      
+      $.ajax({
+        url: '/arrendar',
+        type: 'POST',
+        contentType: 'application/json', // Configura el tipo de contenido como JSON
+        data: JSON.stringify(formData),
+        success: function(response) {
+          // Manejar la respuesta del servidor
+          console.log('Envío exitoso');
+          // Puedes realizar acciones adicionales después de enviar los datos del formulario
+        },
+        error: function(error) {
+          // Manejar los errores del servidor
+          console.log('Error en el envío: ', error);
+        }
+      });
+    });
+
+    // Manejar el evento de cerrar modal al hacer clic en el botón "Cerrar" o "Cancelar"
+    $('#modal').on('click', '.close, .btn-secondary', function() {
+      // Cerrar la modal
+      $('#modal').modal('hide');
+    });
+  });
+});*/ 
+
+
+
 
 /* CARRUSEL ESTACIONAMIENTOS*/ 
 
