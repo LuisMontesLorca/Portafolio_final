@@ -111,22 +111,25 @@ $(document).ready(function() {
 
 const prevButton = document.querySelector('.carousel__button--prev');
 const nextButton = document.querySelector('.carousel__button--next');
-const slides = document.querySelector('.carousel__slides');
-const slideWidth = document.querySelector('.carousel__slide').offsetWidth;
+const slidesContainer = document.querySelector('.carousel__slides');
+const slides = Array.from(document.querySelectorAll('.carousel__slide'));
+const slideWidth = slides[0].offsetWidth;
 let currentPosition = 0;
+
+slidesContainer.style.width = `${slideWidth * slides.length}px`;
 
 prevButton.addEventListener('click', () => {
   currentPosition += slideWidth;
   if (currentPosition > 0) {
-    currentPosition = -(slides.offsetWidth - slideWidth);
+    currentPosition = -(slideWidth * (slides.length - 1));
   }
-  slides.style.transform = `translateX(${currentPosition}px)`;
+  slidesContainer.style.transform = `translateX(${currentPosition}px)`;
 });
 
 nextButton.addEventListener('click', () => {
   currentPosition -= slideWidth;
-  if (Math.abs(currentPosition) > slides.offsetWidth - slideWidth) {
+  if (Math.abs(currentPosition) > slideWidth * (slides.length - 1)) {
     currentPosition = 0;
   }
-  slides.style.transform = `translateX(${currentPosition}px)`;
+  slidesContainer.style.transform = `translateX(${currentPosition}px)`;
 });
