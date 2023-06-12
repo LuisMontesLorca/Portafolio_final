@@ -4181,3 +4181,43 @@ input, select, textarea {
       padding: 3px 6px;
       border-radius: 50%;
     }
+
+	/*CARRUSEL ESTACIONAMIENTOS */
+
+	.carousel {
+		position: relative;
+		width: 100%;
+		overflow: hidden;
+	  }
+	  
+	  .carousel__button {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		background: none;
+		border: none;
+		color: #000;
+		font-size: 24px;
+		cursor: pointer;
+	  }
+	  
+	  .carousel__button--prev {
+		left: 10px;
+	  }
+	  
+	  .carousel__button--next {
+		right: 10px;
+	  }
+	  
+	  .carousel__slides {
+		display: flex;
+		width: 300%; /* Cambia este valor según el número de diapositivas */
+		transition: transform 0.5s;
+	  }
+	  
+	  .carousel__slide {
+		flex: 0 0 33.33%; /* Cambia este valor según el número de diapositivas */
+		padding: 20px;
+		
+	  }
+	
