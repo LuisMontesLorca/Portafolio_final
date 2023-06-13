@@ -1,7 +1,7 @@
 
 /* AGREGAR PELOTAS */ 
 $(document).ready(function() {
-  $('.agregar-carrito').on('click', function() {
+  $('.agregar-pelota').on('click', function() {
     
     var id_pelota = $(this).data('id_pelota');
     console.log('ID de la pelota:', id_pelota);
@@ -54,7 +54,7 @@ $(document).ready(function() {
 /* AGREGAR CAMISETAS */ 
 
 $(document).ready(function() {
-  $('.agregar-carrito').on('click', function() {
+  $('.agregar-camiseta').on('click', function() {
     
     var id_camiseta = $(this).data('id_camiseta');
     console.log('ID de la pelota:', id_camiseta);
@@ -178,42 +178,3 @@ $(document).ready(function()
     });
 
 
-
-$(document).ready(function() {
-  $('#hora_inicio').on('change', function() {
-    var horaInicio = $(this).val();
-    $('#hora_fin option').each(function() {
-      if ($(this).val() <= horaInicio) {
-        $(this).hide();
-      } else {
-        $(this).show();
-      }
-    });
-  });
-});
-/* CARRUSEL ESTACIONAMIENTOS*/ 
-
-const prevButton = document.querySelector('.carousel__button--prev');
-const nextButton = document.querySelector('.carousel__button--next');
-const slidesContainer = document.querySelector('.carousel__slides');
-const slides = Array.from(document.querySelectorAll('.carousel__slide'));
-const slideWidth = slides[0].offsetWidth;
-let currentPosition = 0;
-
-slidesContainer.style.width = `${slideWidth * slides.length}px`;
-
-prevButton.addEventListener('click', () => {
-  currentPosition += slideWidth;
-  if (currentPosition > 0) {
-    currentPosition = -(slideWidth * (slides.length - 1));
-  }
-  slidesContainer.style.transform = `translateX(${currentPosition}px)`;
-});
-
-nextButton.addEventListener('click', () => {
-  currentPosition -= slideWidth;
-  if (Math.abs(currentPosition) > slideWidth * (slides.length - 1)) {
-    currentPosition = 0;
-  }
-  slidesContainer.style.transform = `translateX(${currentPosition}px)`;
-});

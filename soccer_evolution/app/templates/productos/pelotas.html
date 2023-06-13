@@ -28,7 +28,7 @@
 							{% for pelota in pelotas %}
 							<section>
 								<a class="image">
-									<img src="{{ url_for('static', filename= pelota.imagen_pelota) }} " alt="" data-position="center center" />
+									<img  class="img_for" src="{{ url_for('static', filename= pelota.imagen_pelota) }} " alt="" data-position="center center" />
 								</a>
 								<div class="content">
 									<div class="inner">
@@ -37,7 +37,7 @@
 										</header>
 										<p>{{ pelota.descripcion_pelota }}</p>
 										<ul class="actions">
-											<li><button type="button" class="btn btn-primary agregar-carrito" data-id_pelota="{{ pelota.id_pelota }}" data-nombre_pelota="{{ pelota.nombre_pelota }}" data-valor_pelota="{{ pelota.valor_pelota }}">Agregar al carrito</button></li>
+											<li><button type="button" class="btn btn-primary agregar-pelota" data-id_pelota="{{ pelota.id_pelota }}" data-nombre_pelota="{{ pelota.nombre_pelota }}" data-valor_pelota="{{ pelota.valor_pelota }}">Agregar al carrito</button></li>
 											<input type="hidden" name="id_pelota" value="{{ pelota.id_pelota }}">
 											<input type="hidden" name="nombre_pelota" value="{{ pelota.nombre_pelota }}">
 											<input type="hidden" name="valor_pelota" value="{{ pelota.valor_pelota }}">

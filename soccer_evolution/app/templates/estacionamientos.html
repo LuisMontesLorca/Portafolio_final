@@ -40,17 +40,24 @@
 									</div>
 								</section>
 								<section>
-									<div class="carousel__slides">
-										<div class="carousel__slide">
-										  <img src="{{ url_for('static', filename='images/estacionamiento2.jpg') }}" alt="estacionamiento auto">
+									<div class="carousel">
+										
+										<div class="slide active">
+										<img src="{{ url_for('static', filename='images/estacionamiento2.jpg') }}" alt="Slide 1" >
 										</div>
-										<div class="carousel__slide">
-										  <img src="{{ url_for('static', filename='images/bici.jpg') }}" alt="estacionamiento bicicleta">
+										<div class="slide">
+										<img src="{{ url_for('static', filename='images/bici.jpg') }}" alt="Slide 2">
 										</div>
-										<div class="carousel__slide">
-											<img src="{{ url_for('static', filename='images/estacionamiento-techado.jpg') }}" alt="estacionamiento techado">
-										  </div>
-									  </div>
+										<div class="slide">
+										<img src="{{ url_for('static', filename='images/estacionamiento-techado.jpg') }}" alt="Slide 3">
+										</div>
+										
+										<a class="carousel-prev" onclick="prevSlide()">&#10094;</a>
+										<a class="carousel-next" onclick="nextSlide()">&#10095;</a>
+									</div>
+									
+									
+									
 								</section>
 					</div>
 

@@ -4187,37 +4187,49 @@ input, select, textarea {
 	.carousel {
 		position: relative;
 		width: 100%;
+		height: 300px; /* Ajusta la altura según tus necesidades */
 		overflow: hidden;
 	  }
 	  
-	  .carousel__button {
+	  .carousel-inner {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		transition: transform 0.5s ease;
+	  }
+	  
+	  .slide {
+		display: none;
+		text-align: center; 
+	  }
+	  
+	  .slide img {
+		display: inline-block;
+		vertical-align: middle;
+		max-height: 100%;
+		max-width: 200%; /* Ajusta el valor según tus necesidades */
+	  }
+	  .carousel-prev,
+	  .carousel-next {
 		position: absolute;
 		top: 50%;
 		transform: translateY(-50%);
-		background: none;
-		border: none;
+		font-size: 30px;
 		color: #000;
-		font-size: 24px;
 		cursor: pointer;
 	  }
 	  
-	  .carousel__button--prev {
+	  .carousel-prev {
 		left: 10px;
 	  }
 	  
-	  .carousel__button--next {
+	  .carousel-next {
 		right: 10px;
 	  }
 	  
-	  .carousel__slides {
-		display: flex;
-		width: 300%; /* Cambia este valor según el número de diapositivas */
-		transition: transform 0.5s;
+	  .img_for {
+		
+		height: 425px; /* Ajusta la altura deseada */
+
 	  }
 	  
-	  .carousel__slide {
-		flex: 0 0 33.33%; /* Cambia este valor según el número de diapositivas */
-		padding: 20px;
-		
-	  }
-	
