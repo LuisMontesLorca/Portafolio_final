@@ -50,26 +50,26 @@
 						</form>
 						{% else %}
 				
-							<section id="two" class="spotlights">
-								{% for camiseta in camiseta %}
-								<section>
-									<a class="image">
-										<img src="{{ url_for('static', filename= camiseta.imagen_camiseta) }}" alt="" data-position="center center" />
-									</a>
-									<div class="content">
-										<div class="inner">
-											<header class="major">
-												<h3>{{ camiseta.nombre_camiseta }}</h3>
-											</header>
-											<p>{{ camiseta.descripcion_camiseta }}</p>
-											<ul class="actions">
-												<li> <a href="{{ url_for('login') }}" class="button">Agregar al carro</a></li>
-											</ul>
-										</div>
+						<section id="two" class="spotlights">
+							{% for camiseta in camisetas %}
+							<section>
+								<a class="image">
+									<img src="{{ url_for('static', filename= camiseta.imagen_camiseta) }}" alt="" data-position="center center" />
+								</a>
+								<div class="content">
+									<div class="inner">
+										<header class="major">
+											<h3>{{ camiseta.nombre_camiseta }}</h3>
+										</header>
+										<p>{{ camiseta.descripcion_camiseta }}</p>
+										<ul class="actions">
+											<li> <a href="{{ url_for('login') }}" class="button">Agregar al carro</a></li>
+										</ul>
 									</div>
-								</section>
-								{% endfor %}
+								</div>
 							</section>
+							{% endfor %}
+						</section>
 						{% endif %}
 					
 						

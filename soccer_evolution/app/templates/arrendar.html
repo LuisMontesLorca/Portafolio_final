@@ -37,16 +37,22 @@
 																	{% endif %}
 																	<td><input type="text" name="datepicker" id="datepicker" placeholder="Seleccione una fecha"></td>
 																	
-																	<td><select name="hora_inicio">
-																		{% for hora in horarios %}
-																			<option value="{{ hora.inicio }}">{{ hora.inicio }}</option>
-																		{% endfor %}
-																	</select></td>
-																	<td><select name="hora_fin">
-																		{% for hora in horarios %}
-																			<option value="{{ hora.termino }}">{{ hora.termino }}</option>
-																		{% endfor %}
-																	</select>
+																	<td>
+																		<select id="hora_inicio" name="hora_inicio">
+																			<option value="">---</option>
+																			{% for hora in horarios %}
+																				<option value="{{ hora.inicio }}">{{ hora.inicio }}</option>
+																			{% endfor %}
+																		</select>
+																	</td>
+																	<td>
+																		<select id="hora_fin" name="hora_fin">
+																			<option value="">---</option>
+																			{% for hora in horarios %}
+																				
+																				<option value="{{ hora.termino }}">{{ hora.termino }}</option>
+																			{% endfor %}
+																		</select>
 																	</td>
 																	
 																	{% if inicio_sesion %}
@@ -61,14 +67,13 @@
 														
 															</tfoot>
 														</table>
-														<button type="submit">Agregar al carro</button>
-													
+														<button type="button" class="btn btn-primary agregar-cancha">Agregar al carrito</button>
 													</div>
 												</form>
-							</section>
+							
 							<div id="contenedor-button">
 								<div id="button-div-left" class="button-div">
-								  <a href="#" id="open_modal" class="button primary">Ir al pago</a>
+								  <a href="{{ url_for('carro_compras') }}" id="open_modal" class="button primary">Ir al pago</a>
 								</div>
 								<div id="button-div-right" class="button-div">
 								  <a href="{{ url_for('canchas') }}" class="button primary">Volver a canchas</a>
@@ -76,28 +81,49 @@
 							  </div>
 							  
 					</div>
-
+				</section>
 	
 
-					<div id="modal" class="modal">
-						
-						<div class="modal-content">
-							<div class="box">
-						  <div class="modal-header">
-							<h2>Antes de continuar...</h2>
-							<a id="close_modal" >&times;</a>
+
+					  <div  id="modal_arrendar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+						  <div class="modal-content">
+							<div class="modal-header">
+							  <h2 class="modal-title" id="confirmar-modal-label">Antes de continuar...</h2>
+							  <a type="text" id="cerrar_modal"class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							  </a>
+							</div>
+							<div class="modal-body">
+							  ¿Desea agregar este producto al carrito?
+							</div>
+							<div class="modal-footer">
+							  <button type="button" class="btn btn-secondary" id="cancelar_btn"data-dismiss="modal">Cancelar</button>
+							  <button type="button" class="btn btn-primary" id="confirmar-btn">Confirmar</button>
+							</div>
 						  </div>
-						  <div class="modal-body">
-							<p>Te facilitamos los instrumentos de tu deporte favorito para que solo te preocupes de venir a jugar.</p>
-						  </div>
-						  </div>
-						  <div class="modal-footer">
-							<a class="button primary" href="{{ url_for('carro_compras') }}"  class="btn">Continuar</a>
-							<a class="button" href="{{ url_for('otros') }}">Conseguir instrumentos</a>
-						  </div>
-						
 						</div>
-				
-					  </div>
+					</div>
 	
+
+					
+					<div  id="modal_condicion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+						  <div class="modal-content">
+							<div class="modal-header">
+							  <h2 class="modal-title" id="confirmar-modal-label">Faltan datos...</h2>
+							  <a type="text" id="cerrar_modal"class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							  </a>
+							</div>
+							<div class="modal-body">
+								Los campos de fecha, hora inicio y hora fin son obligatorios.
+							</div>
+							<div class="modal-footer">
+							  <button type="button" class="btn btn-secondary" id="cancelar_btn"data-dismiss="modal">OK</button>
+							 
+							</div>
+						  </div>
+						</div>
+					</div>
 					{% endblock %}

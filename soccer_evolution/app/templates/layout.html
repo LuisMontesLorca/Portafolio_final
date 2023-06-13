@@ -14,12 +14,19 @@
 		<!-- jQuery UI -->
 		<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 		<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+		
 
 
 		<script>
 			jQuery(function($) {
+			  var today = new Date();
+			  
 			  $("#datepicker").datepicker({
+				
+				minDate: today,
+				dateFormat: 'dd/mm/yy',
 				onSelect: function(dateText, inst) {
+				  
 				  var selectedDate = $(this).datepicker("getDate");
 				  console.log(selectedDate);
 				}
@@ -175,6 +182,7 @@ $(document).ready(function() {
 		
 
 	<!-- Scripts -->
+		<script src="{{url_for('static', filename='assets/js/jquery.ui.datepicker-es.js') }}"></script>
 		<script src="{{url_for('static', filename='assets/js/jquery.min.js') }}"></script>
 		<script src="{{url_for('static', filename='assets/js/jquery.scrolly.min.js') }}"></script>
 		<script src="{{url_for('static', filename='assets/js/jquery.scrollex.min.js') }}"></script>
