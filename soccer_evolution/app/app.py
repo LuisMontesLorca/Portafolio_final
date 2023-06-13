@@ -552,6 +552,22 @@ def eliminar_producto(id_carro):
 
     return jsonify(response)
 
+@app.route('/vaciar_carro_compras', methods=['DELETE'])
+def eliminar_carro():
+    id_cliente=session.get('id_usuario')
+    cur = mysql.connection.cursor()
+
+    try:
+        cur.execute("DELETE FROM carro_compras WHERE id_cliente = %s", (id_cliente,))
+        mysql.connection.commit()
+        response = {'message': 'Carro eliminado exitosamente'}
+    except:
+        mysql.connection.rollback()
+        response = {'message': 'Error al eliminar el producto'}
+    finally:
+        cur.close()
+
+    return jsonify(response)
 
 
 def pagina_no_encontrada(error):
