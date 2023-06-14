@@ -520,22 +520,33 @@ def carro_compras():
 
         print("AQUI ESTA EL CARRO DE COMPRAS:  ", carro_compras)
         if carro_compras:
-            cur = mysql.connection.cursor()
-            cur.execute('SELECT COUNT(*) FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
-            count_productos = cur.fetchone()[0]
-            print("este es el select count id ", count_productos)
-            cur.close()
+
             valor_total = 0
             for row in carro_compras:
                 valor = row['valor_producto']
                 valor_total += valor
-            return render_template('carro_compras.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, productos=carro_compras, valor_total=valor_total, count_productos=count_productos)
+            return render_template('carro_compras.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, productos=carro_compras, valor_total=valor_total)
 
         else:
             cc_vacio ="El carro de compras esta vacío"
             return render_template('carro_compras.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,productos=[], cc_vacio=cc_vacio)
     else:
          return redirect(url_for('login'))
+    
+      
+@app.route('/agregar_al_carrito', methods=['POST', 'GET'])
+def agregar_al_carrito():
+    # Lógica para agregar el producto al carrito en la base de datos
+    
+    id_usuario = session.get('id_usuario')
+    # Consulta para obtener el nuevo número de productos en el carrito
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT COUNT(*) FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
+    count_productos = cur.fetchone()[0]
+    cur.close()
+    # Devuelve el resultado en formato JSON
+    return jsonify({'count_productos': count_productos})
+
 @app.route('/carro_compras/<int:id_carro>', methods=['DELETE'])
 def eliminar_producto(id_carro):
     cur = mysql.connection.cursor()

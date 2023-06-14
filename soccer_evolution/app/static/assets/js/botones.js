@@ -109,10 +109,9 @@ $(document).ready(function() {
 
 /* AGREGAR CANCHAS */ 
 
-$(document).ready(function() 
-{
-  $('.agregar-cancha').on('click', function() 
-  {
+$(document).ready(function() {
+  $('.agregar-cancha').on('click', function() {
+    updateCartCount();
     var hora_inicio = $('#hora_inicio').val();
     console.log('Hora de inicio:', hora_inicio);
 
@@ -123,26 +122,19 @@ $(document).ready(function()
     console.log('Fecha:', datepicker);
 
     if (hora_inicio === '' || hora_fin === '') {
-     // alert('Por favor, completa los campos de hora inicio y hora fin.');
       $('#modal_condicion').modal('show');
       $('#modal_condicion').on('click', '.close, .btn-secondary', function() {
-        // Cerrar la modal
         $('#modal_condicion').modal('hide');
       });
-      return
+      return;
     }
-    // Abrir la modal
+
     $('#modal_arrendar').modal('show');
 
-    // Manejar el evento de confirmación
-    $('#confirmar-btn').on('click', function() 
-    {
-      // Cerrar la modal
+    $('#confirmar-btn').on('click', function() {
       $('#modal_arrendar').modal('hide');
 
-      // Enviar el formulario mediante AJAX
-      var formData = 
-      {
+      var formData = {
         hora_inicio: hora_inicio,
         hora_fin: hora_fin,
         datepicker: datepicker
@@ -153,28 +145,52 @@ $(document).ready(function()
       $.ajax({
         url: '/arrendar',
         type: 'POST',
-        contentType: 'application/json', // Configura el tipo de contenido como JSON
+        contentType: 'application/json',
         data: JSON.stringify(formData),
-        success: function(response) 
-        {
-          // Manejar la respuesta del servidor
+        success: function(response) {
           console.log('Envío exitoso');
-          // Puedes realizar acciones adicionales después de enviar los datos del formulario
+          updateCartCount(); // Actualizar el número de productos en el carrito
         },
-        error: function(error) 
-        {
-          // Manejar los errores del servidor
+        error: function(error) {
           console.log('Error en el envío: ', error);
         }
       });
     });
-        // Manejar el evento de cerrar modal al hacer clic en el botón "Cerrar" o "Cancelar"
-        $('#modal_arrendar').on('click', '.close, .btn-secondary', function() {
-          // Cerrar la modal
-          $('#modal_arrendar').modal('hide');
-        });
-   
-      });
-    });
 
+    $('#modal_arrendar').on('click', '.close, .btn-secondary', function() {
+      $('#modal_arrendar').modal('hide');
+    });
+  });
+
+  // Función para actualizar el número de productos en el carrito
+  function updateCartCount() {
+    $.ajax({
+      url: '/agregar_al_carrito',
+      type: 'GET',
+      success: function(response) {
+        if (response.count_productos != '')
+        {
+        console.log("logrado")
+        var count_productos = response.count_productos;
+        $('#cantidad-productos').text(count_productos);
+        }
+        else
+        {
+          var count_productos = 0;
+          $('#cantidad-productos').text(count_productos);
+        }
+      },
+      error: function(error) {
+        console.log('Error al obtener el número de productos: ', error);
+      }
+    });
+  }
+
+  // Llamar a la función para actualizar el número de productos al cargar la página
+  updateCartCount();
+});
+
+
+
+    /* BOTON AGREGAR */
 

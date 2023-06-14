@@ -68,7 +68,7 @@ $(document).ready(function() {
 						{% else %}
 						<nav>
 							<div class="dropdown">
-								<a href="{{ url_for('carro_compras') }}"> <i class="fas fa-shopping-cart"></i><span class="badge">{{ count_productos }}</span></a>
+								<a href="{{ url_for('carro_compras') }}"> <i class="fas fa-shopping-cart"></i><span class="badge" id="cantidad-productos">{{ count_productos }}</span></a>
 				
 							</div>
 						{% endif %}
