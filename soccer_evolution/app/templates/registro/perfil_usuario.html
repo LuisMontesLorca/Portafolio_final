@@ -53,13 +53,13 @@
                                 <input  value="" hidden>
                             </div>
                             <div class="col-6 col-12-xsmall">
-                                <a class="button primary" id="open_modal" class="btn">Editar</a>
+                                <a class="button primary" href="{{ url_for('editar_usuarios', id= usuarios.id_usuario) }}" id="open_modal" class="btn">Editar</a>
                             </div>
                      
                         </div>
                     </form>
                     <div class="box">
-                    <h4>Historial de arrendamientos</h4>
+                    <h4>Historial de arriendos</h4>
                     <div class="table-wrapper">
                         <table>
                             <thead>
@@ -82,7 +82,10 @@
                                 {% endfor %}
                                 {% else %}
                                 <tr>
-                                    <td>No hay arriendos</td>
+                                    <td></td>
+                                    <td><b>No hay arriendos</b></td>
+                                    <td></td>
+                                    <td></td>
 
                                 </tr>
                                 {% endif %}

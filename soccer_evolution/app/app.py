@@ -13,6 +13,7 @@ from dao import dao
 import requests
 # URL DEFINED
 from urllib.parse import urlparse
+from mail import send_outlook
 
 app =Flask(__name__)
 app.secret_key = 'Lion333' 
@@ -497,7 +498,7 @@ def carro_compras():
     if 'username' in session:
         inicio_sesion = True
         id_usuario = session.get('id_usuario')
-
+        correo = session.get('username')
         print('id_usuario: ', id_usuario)
         cur = mysql.connection.cursor()
         cur.execute('SELECT * FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
@@ -525,7 +526,7 @@ def carro_compras():
             for row in carro_compras:
                 valor = row['valor_producto']
                 valor_total += valor
-            return render_template('carro_compras.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, productos=carro_compras, valor_total=valor_total)
+            return render_template('carro_compras.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario, productos=carro_compras, valor_total=valor_total, correo=correo)
 
         else:
             cc_vacio ="El carro de compras esta vacío"
@@ -1027,6 +1028,7 @@ def transbank_commit_pay():
     # SE DEBE APLICAR ESTA DESCOMENTAR ESTA SECCIÓN Y AGREGAR LÓGICA PARA LA RESPUESTA RECIBIDA EN EL RESPONSE
     # DE SER CORRECTA SE DEBE CONFIRMAR Y MOSTRAR VOUCHER
     # EN CASO CONTRARIO SE DEBE CANCELAR Y MOSTRAR ERROR 
+
     tokenws = request.args.get('token_ws')
     print('tokenws: ', tokenws)
     ## DEFINICIÓN DE URL DE TRANSBANK PARA CONFIRMAR UNA TRANSACCIÓN
@@ -1072,8 +1074,12 @@ def transbank_commit_pay():
 
             dataHTML ={'titulo': titulo, 'tarjeta': tarjeta, 'tipo_tarjeta': tipoTarjeta,'fecha': fecha,
                         'orden_de_compra': ordenCompra,'session': session,'monto': monto,'estado': status}
-            id_cliente=0
-            transaccion ={'tipo_tarjeta': tipoTarjeta, 'fecha_transaccion': fecha, 'orden_compra': ordenCompra, 'session': session, 'estado':status, 'id_cliente': id_cliente}
+            
+            to_list = [correo, 'soccer_evoution91@outlook.com']
+            email = 'soccer_evoution91@outlook.com'
+            password = 'soccer_evolution'
+            send_outlook(to_list, email, password)
+            transaccion ={'tipo_tarjeta': tipoTarjeta, 'fecha_transaccion': fecha, 'orden_compra': ordenCompra, 'session': session, 'estado':status}
             new_comuna = transaccion_dao['insert'](transaccion)
             
             return render_template('transbank/commit_pay.html', dataHTML=dataHTML)

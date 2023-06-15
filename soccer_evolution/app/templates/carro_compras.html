@@ -45,6 +45,14 @@
                     <label for="txt-buy-order" class="form-label">buy_order</label>
                     <input type="text" class="form-control" id="txt-orden-compra" name="buy_order"
                         value="FDEAWER4523D" readonly>
+                        {% if id_usuario %}
+                        <input type="text" class="form-control" id="txt-orden-compra" name="buy_order"
+                        value="{{ id_usuario }}" readonly>
+                        {% endif %}
+                        {% if correo %}
+                        <input type="text" class="form-control" id="txt-orden-compra" name="buy_order"
+                        value="{{correo}}" readonly>
+                        {% endif %}
                 </div>
             </div>
             <div id="btn" class="mt-4 d-grid gap-2 d-md-flex justify-content-md-end">
