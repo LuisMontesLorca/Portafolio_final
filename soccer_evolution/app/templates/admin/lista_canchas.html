@@ -1,0 +1,51 @@
+{% extends './layout.html' %}
+
+        {% block body %}
+
+				<!-- Main -->
+					<div id="main" class="alt">
+
+						<!-- One -->
+							<section id="one">
+								<div class="inner">
+									<header class="major">
+										<h1>Usuarios </h1>
+									</header>
+									<span class="image main"><img src="images/pic11.jpg" alt="" /></span>
+
+													<h3>Usuarios registrado</h3>
+													<div class="table-wrapper">
+														<table>
+															<thead>
+																<tr>
+																	<th>Nombre cancha</th>
+																	<th>Descripcion</th>
+																	<th>valor</th>
+                                                                    <th></th>
+																</tr>
+															</thead>
+															<tbody>
+                                                                {% for cancha in canchas_futbol %}
+																<tr>
+																	<td>{{ cancha.nombre_cancha_futbol }}</td>
+																	<td>{{ cancha.descripcion_cancha_futbol }}</td>
+																	<td>{{ cancha.valor_cancha_futbol }}</td>
+                                                                    <td><a href ="" data-toggle="tooltip" data-placement="top" data-original-title="Editar" ><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
+																</tr>
+                                                                {% endfor %}
+															</tbody>
+															<tfoot>
+														
+															</tfoot>
+														</table>
+													</div>
+								</div>
+							</section>
+                            <div id= "contenedor-button">
+                                <div id= "button-div">    <a href="#" class="button primary">Continuar</a></div>
+                            </div>
+					</div>
+
+	
+	
+					{% endblock %}

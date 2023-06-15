@@ -493,6 +493,11 @@ def quienes_somos ():
 def estacionamientos ():
     return render_template('/estacionamientos.html')
 
+@app.route('/lista_canchas')
+def lista_canchas ():
+    canchas_futbol = cancha_futbol_dao['select_all']()
+    return render_template('admin/lista_canchas.html', canchas_futbol = canchas_futbol)
+
 @app.route('/carro_compras')
 def carro_compras():
     if 'username' in session:
