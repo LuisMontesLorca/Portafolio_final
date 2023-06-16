@@ -484,7 +484,7 @@ def lista_canchas ():
     pelota = pelotas_dao['select_all']()
     bebida = bebidas_dao['select_all']()
     
-    return render_template('admin/lista_canchas.html', canchas_futbol = canchas_futbol, canchas_basket = canchas_basket, canchas_tenis = canchas_tenis, camiseta = camiseta, pelotas = pelota, bebidas = bebida )
+    return render_template('admin/lista_canchas.html', canchas_futbol = canchas_futbol, canchas_basket = canchas_basket, canchas_tenis = canchas_tenis, camisetas = camiseta, pelotas = pelota, bebidas = bebida )
 
 @app.route('/campeonatos')
 def campeonatos ():
@@ -503,7 +503,8 @@ def contacto ():
         nombre = request.form['nombre']
         email = request.form['email']
         mensaje = request.form['mensaje']
-        contacto = {'comuna': 'nueva comuna', 'id_provincia': 1}
+        tipo_contacto=1
+        contacto = {'nombre_contacto': nombre, 'mensaje_contacto': mensaje, 'correo_contacto':email,'tipo_contacto':tipo_contacto, 'id_cliente':id_usuario }
         new_contacto = contacto_dao['insert'](contacto)
         to_list = 'soccer_evoution91@outlook.com'
         email = 'soccer_evoution91@outlook.com'
