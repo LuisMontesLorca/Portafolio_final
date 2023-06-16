@@ -1,5 +1,5 @@
 
-from flask import Flask, render_template, jsonify, request, redirect, session, url_for
+from flask import Flask, make_response, render_template, jsonify, request, redirect, session, url_for
 from flask_cors import CORS
 # IMPORT MYSQL LIB CONNECTION
 from flask_mysqldb import MySQL
@@ -64,6 +64,7 @@ def index ():
             cur.execute('SELECT COUNT(*) FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
             count_productos = cur.fetchone()[0]
             cur.close()
+
             return render_template('index.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario,count_productos=count_productos)
         else:
             cc_vacio ="El carro de compras esta vacío"
@@ -474,25 +475,6 @@ def bebidas ():
         bebidas = bebidas_dao['select_all']()
         return render_template('productos/bebidas.html',bebidas=bebidas )
 
-
-
-@app.route('/campeonatos')
-def campeonatos ():
-    
-    return render_template('canchas/campeonatos.html')
-
-@app.route('/contacto')
-def contacto ():
-    return render_template('contacto.html')
-
-@app.route('/quienes_somos')
-def quienes_somos ():
-    return render_template('/quienes_somos.html')
-
-@app.route('/estacionamientos')
-def estacionamientos ():
-    return render_template('/estacionamientos.html')
-
 @app.route('/lista_canchas')
 def lista_canchas ():
     canchas_futbol = cancha_futbol_dao['select_all']()
@@ -503,6 +485,39 @@ def lista_canchas ():
     bebida = bebidas_dao['select_all']()
     
     return render_template('admin/lista_canchas.html', canchas_futbol = canchas_futbol, canchas_basket = canchas_basket, canchas_tenis = canchas_tenis, camiseta = camiseta, pelotas = pelota, bebidas = bebida )
+
+@app.route('/campeonatos')
+def campeonatos ():
+    if 'username' in session:
+        inicio_sesion = True
+        id_usuario = session.get('id_usuario')
+        return render_template('canchas/campeonatos.html',inicio_sesion=inicio_sesion,id_usuario=id_usuario)
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route('/contacto' , methods=['GET', 'POST'])
+def contacto ():
+    if request.method == 'POST':
+        id_usuario = session.get('id_usuario')
+        nombre = request.form['nombre']
+        email = request.form['email']
+        mensaje = request.form['mensaje']
+        to_list = 'soccer_evoution91@outlook.com'
+        email = 'soccer_evoution91@outlook.com'
+        password = 'soccer_evolution'
+        send_outlook(to_list, email, password)
+        return render_template('contacto.html')
+    else:
+         return render_template('contacto.html')
+
+@app.route('/quienes_somos')
+def quienes_somos ():
+    return render_template('/quienes_somos.html')
+
+@app.route('/estacionamientos')
+def estacionamientos ():
+    return render_template('/estacionamientos.html')
 
 @app.route('/carro_compras')
 def carro_compras():
@@ -646,9 +661,13 @@ tbl_arriendos_historial = 'arriendos_historial'
 tbl_arriendos_historial_columnas = ['id_arriendos_historial', 'fecha', 'hora', 'valor', 'cancha', 'id_cliente']
 arriendos_historial_dao = dao.dao_generic(app, mysql, tbl_arriendos_historial, tbl_arriendos_historial_columnas)
 
-tbl_atransaccion = 'transaccion'
+tbl_transaccion = 'transaccion'
 tbl_transaccion_columnas = ['id_transanccion', 'tipo_tarjeta', 'fecha_transaccion', 'orden_compra', 'session','estado', 'id_cliente']
-transaccion_dao = dao.dao_generic(app, mysql, tbl_atransaccion, tbl_transaccion_columnas)
+transaccion_dao = dao.dao_generic(app, mysql, tbl_transaccion, tbl_transaccion_columnas)
+
+tbl_campeonato = 'campeonato'
+tbl_campeonato_columnas = ['id_campeonato', 'nombre_contacto', 'mensaje_contacto', 'correo_contacto', 'tipo_contacto','id_cliente']
+campeonato_dao = dao.dao_generic(app, mysql, tbl_campeonato, tbl_campeonato_columnas)
 #________________________________________________
 #se tienen los métodos:
 # BUSCAR TODOS
@@ -857,11 +876,15 @@ def login():
             if password_login == password and username_login == correo:
                 session['username'] = username_login
                 session['id_usuario'] = id_usuario
+                response = make_response("Cookie set!")  # Crear una respuesta
+                response.set_cookie('correo', username_login) 
                 if 'username' in session:
                     # El usuario ha iniciado sesión
                     username_login = session['username']
                     id_usuario_login = session['id_usuario']
-                    return redirect(url_for('index', id_usuario=id_usuario_login))
+                    if username_login == 'admin@gmail.com':
+                        admin = True
+                    return redirect(url_for('index', id_usuario=id_usuario_login, admin=admin))
                 else:
                     # El usuario no ha iniciado sesión
                     return 'Inicia sesión para continuar'
@@ -1037,7 +1060,9 @@ def agregar_trabajador():
 @app.route('/transbank/commit-pay', methods=['GET', 'POST'])
 def transbank_commit_pay():
     # SE DEBE APLICAR ESTA DESCOMENTAR ESTA SECCIÓN Y AGREGAR LÓGICA PARA LA RESPUESTA RECIBIDA EN EL RESPONSE
-    # DE SER CORRECTA SE DEBE CONFIRMAR Y MOSTRAR VOUCHER
+    # DE SER CORRECTA SE DEBE CONFIRM
+    correo=request.cookies.get('correo')
+    print('aqui se va a enviar el correo: ', correo)
     # EN CASO CONTRARIO SE DEBE CANCELAR Y MOSTRAR ERROR 
 
     tokenws = request.args.get('token_ws')
@@ -1055,7 +1080,7 @@ def transbank_commit_pay():
         data = response.json()
         status = data['status']
         monto = data['amount']
-       
+
 
         if status == "AUTHORIZED" or status == "FAILED":
             titulo = ""
@@ -1085,15 +1110,15 @@ def transbank_commit_pay():
 
             dataHTML ={'titulo': titulo, 'tarjeta': tarjeta, 'tipo_tarjeta': tipoTarjeta,'fecha': fecha,
                         'orden_de_compra': ordenCompra,'session': session,'monto': monto,'estado': status}
-            
-            to_list = [correo, 'soccer_evoution91@outlook.com']
+            id_usuario=0
+            to_list = correo
             email = 'soccer_evoution91@outlook.com'
             password = 'soccer_evolution'
             send_outlook(to_list, email, password)
-            transaccion ={'tipo_tarjeta': tipoTarjeta, 'fecha_transaccion': fecha, 'orden_compra': ordenCompra, 'session': session, 'estado':status}
+            transaccion ={'tipo_tarjeta': tipoTarjeta, 'fecha_transaccion': fecha, 'orden_compra': ordenCompra, 'session': session, 'estado':status, 'id_cliente':id_usuario}
             new_comuna = transaccion_dao['insert'](transaccion)
             
-            return render_template('transbank/commit_pay.html', dataHTML=dataHTML)
+            return render_template('transbank/commit_pay.html', dataHTML=dataHTML, id_usuario=id_usuario)
 
         else:
             reversOrCancel(tokenws, monto)
@@ -1158,6 +1183,8 @@ def transbank_create():
     amount = request.form.get('amount')
     session_id = '2334567' # ID SESSION
     buy_order = request.form.get('buy_order')
+    id_usuario = request.form.get('id_usuario')
+    correo = request.form.get('correo')
     object_url = urlparse(request.base_url)
     return_url = '{0}://{1}/transbank/commit-pay'.format(object_url.scheme, object_url.netloc)
     print('return_url:', return_url)
@@ -1183,7 +1210,7 @@ def transbank_create():
     print('token: ', token)
     print('url: ', url)
     # RETORNO DE LA RESPUESTA DE TRANSBANK
-    return render_template('transbank/send_pay.html', url=url, token=token)
+    return render_template('transbank/send_pay.html', url=url, token=token,id_usuario=id_usuario,correo=correo)
 
 # DEFINICIÓN DE RUTA API REST CON UN PARAMETRO DE ENTRADA (tokenws) EN EL PATH, PERMITIENDO SOLO SER LLAMADO POR GET
 #@app.route('/api/v1/transbank/transaction/commit/<string:tokenws>', methods=['PUT'])

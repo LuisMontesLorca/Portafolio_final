@@ -46,12 +46,10 @@
                     <input type="text" class="form-control" id="txt-orden-compra" name="buy_order"
                         value="FDEAWER4523D" readonly>
                         {% if id_usuario %}
-                        <input type="text" class="form-control" id="txt-orden-compra" name="buy_order"
-                        value="{{ id_usuario }}" readonly>
+                        <input type="text" class="form-control" id="txt-id-usuario" name="id_usuario" value="{{ id_usuario }}"  style="display: none;">
                         {% endif %}
                         {% if correo %}
-                        <input type="text" class="form-control" id="txt-orden-compra" name="buy_order"
-                        value="{{correo}}" readonly>
+                        <input type="text" class="form-control" id="txt-correo" name="correo" value="{{ correo }}"  style="display: none;">
                         {% endif %}
                 </div>
             </div>

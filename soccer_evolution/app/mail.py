@@ -9,7 +9,7 @@ def send(to_list, email, password, hostmail, portmail):
         subject = "TESTING MAIL"
         mail_body = ""
         # Read template html
-        txt_file = open(os.path.join('template', 'mail.html'))
+        txt_file = open(os.path.join('templates', 'mail.html'))
         mail_body = txt_file.read()
         txt_file.close()
         # Override template html (REPLACE VALUE IN TEMPLATE)
