@@ -39,37 +39,71 @@ mysql = MySQL(app)
 @app.route('/')
 def index ():
     if 'username' in session:
+        print ("EL USER ESTA EN LA SESSION: " )
         inicio_sesion = True
         id_usuario = session.get('id_usuario')
-        cur = mysql.connection.cursor()
-        cur.execute('SELECT * FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
-        rows = cur.fetchall()
-        carro_compras = []
-        print('rows: ', rows)
-        for row in rows:
-            carrito_producto = {
-            'id_carro' : row[0],
-            'nombre_producto' : row[1],
-            'fecha' : row[2],
-            'hora_inicio' : row[3],
-            'hora_fin' : row[4],
-            'valor_producto' : row[5],
-            'id_producto' : row[6],
-            'id_cliente' : row[7]
-            }
-            carro_compras.append(carrito_producto)
-        cur.close()
-        if carro_compras:
+        admin = session.get('username')
+        if admin == 'admin@gmail.com':
+            print ("EL ADMIN ESTA EN EL LA SESSION: " )
+            admin =True
             cur = mysql.connection.cursor()
-            cur.execute('SELECT COUNT(*) FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
-            count_productos = cur.fetchone()[0]
+            cur.execute('SELECT * FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
+            rows = cur.fetchall()
+            carro_compras = []
+            print('rows: ', rows)
+            for row in rows:
+                carrito_producto = {
+                'id_carro' : row[0],
+                'nombre_producto' : row[1],
+                'fecha' : row[2],
+                'hora_inicio' : row[3],
+                'hora_fin' : row[4],
+                'valor_producto' : row[5],
+                'id_producto' : row[6],
+                'id_cliente' : row[7]
+                }
+                carro_compras.append(carrito_producto)
             cur.close()
+            if carro_compras:
+                cur = mysql.connection.cursor()
+                cur.execute('SELECT COUNT(*) FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
+                count_productos = cur.fetchone()[0]
+                cur.close()
 
-            return render_template('index.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario,count_productos=count_productos)
+                return render_template('index.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario,count_productos=count_productos, admin = admin)
+            else:
+                cc_vacio ="El carro de compras esta vacío"
+                return render_template('index.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario,cc_vacio=cc_vacio,admin = admin)
         else:
-            cc_vacio ="El carro de compras esta vacío"
-            return render_template('index.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario,cc_vacio=cc_vacio)
-        
+            admin =False
+            cur = mysql.connection.cursor()
+            cur.execute('SELECT * FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
+            rows = cur.fetchall()
+            carro_compras = []
+            print('rows: ', rows)
+            for row in rows:
+                carrito_producto = {
+                'id_carro' : row[0],
+                'nombre_producto' : row[1],
+                'fecha' : row[2],
+                'hora_inicio' : row[3],
+                'hora_fin' : row[4],
+                'valor_producto' : row[5],
+                'id_producto' : row[6],
+                'id_cliente' : row[7]
+                }
+                carro_compras.append(carrito_producto)
+            cur.close()
+            if carro_compras:
+                cur = mysql.connection.cursor()
+                cur.execute('SELECT COUNT(*) FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
+                count_productos = cur.fetchone()[0]
+                cur.close()
+
+                return render_template('index.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario,count_productos=count_productos, admin = admin)
+            else:
+                cc_vacio ="El carro de compras esta vacío"
+                return render_template('index.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario,cc_vacio=cc_vacio,admin = admin)
     else:
         inicio_sesion = False
         return render_template('index.html')
@@ -886,11 +920,13 @@ def login():
                     username_login = session['username']
                     id_usuario_login = session['id_usuario']
                     if username_login == 'admin@gmail.com':
+                        session['admin'] = username_login
+                        print ('INGRESO EL ADMIN;', username_login )
                         admin = True
                         return redirect(url_for('index', id_usuario=id_usuario_login, admin=admin))
                     else:
                         admin = False
-                        return redirect(url_for('index', id_usuario=id_usuario_login))
+                        return redirect(url_for('index', id_usuario=id_usuario_login, admin=admin))
                 else:
                     # El usuario no ha iniciado sesión
                     return 'Inicia sesión para continuar'

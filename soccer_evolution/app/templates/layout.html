@@ -15,40 +15,33 @@
 		<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 		<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 		
+		<noscript><link rel="stylesheet" href="{{ url_for('static', filename='assets/css/noscript.css') }}" /></noscript>
 
 
 		<script>
 			jQuery(function($) {
-			  var today = new Date();
-			  
-			  $("#datepicker").datepicker({
-				
-				minDate: today,
-				dateFormat: 'dd/mm/yy',
-				onSelect: function(dateText, inst) {
-				  
-				  var selectedDate = $(this).datepicker("getDate");
-				  console.log(selectedDate);
-				}
-			  });
+			    var today = new Date();			
+			    $("#datepicker").datepicker
+				({
+					minDate: today,
+					dateFormat: 'dd/mm/yy',
+					onSelect: function(dateText, inst) 
+					{
+						var selectedDate = $(this).datepicker("getDate");
+						console.log(selectedDate);
+					}
+			    });
 			});
-		  </script>
-
-		
-
-
+		</script>
 		<script>
-
-
-$(document).ready(function() {
-  $('#dropdownBtn').click(function() {
-    $('#dropdownMenu').toggle();
-  });
-});
-</script>
-
-
-		<noscript><link rel="stylesheet" href="{{ url_for('static', filename='assets/css/noscript.css') }}" /></noscript>
+			$(document).ready(function() 
+			{
+				$('#dropdownBtn').click(function() 
+				{
+					$('#dropdownMenu').toggle();
+				});
+			});
+		</script>
 	</head>
 
     <body class="is-preload">
@@ -58,6 +51,10 @@ $(document).ready(function() {
                     <a href="{{ url_for('index') }}" class="logo"><strong>Soccer</strong> <span>Evolution</span></a>
 					{% if cc_vacio %}
 					<nav>
+
+						{% if admin %}
+						<a href="{{ url_for('lista_canchas') }}">ADMINISTRADOR</a>
+						{% endif %}
 					    <div class="dropdown">
 							<a class="dropdown-toggle" id="dropdownBtn"> <i class="fas fa-shopping-cart"></i></a>
 							<ul class="dropdown-menu dropdown-menu-right alt" id="dropdownMenu">
@@ -67,9 +64,11 @@ $(document).ready(function() {
 						</div>
 						{% else %}
 						<nav>
+							{% if admin %}
+							<a href="{{ url_for('lista_canchas') }}">ADMINISTRADOR</a>
+							{% endif %}
 							<div class="dropdown">
 								<a href="{{ url_for('carro_compras') }}"> <i class="fas fa-shopping-cart"></i><span class="badge" id="cantidad-productos">{{ count_productos }}</span></a>
-				
 							</div>
 						{% endif %}
 						<a href="#menu">Menu</a>
@@ -83,6 +82,7 @@ $(document).ready(function() {
 					
 					
                     <ul class=" links list-group">
+		
 						{% if inicio_sesion %}
                         <li class="list-group"><a href="{{ url_for('index', id=id_usuario) }}">Inicio</a></li>
 						<li class="list-group"><a href="{{ url_for('perfil_usuario', id=id_usuario )}}">Mi perfil</a></li>
@@ -105,7 +105,9 @@ $(document).ready(function() {
 						{% endif %}
                         
                         <li><a href="{{ url_for('registro') }}" class="button fit">Registro</a></li>
+						
                     </ul>
+					
                 </nav>
 	{% block body %}
 
