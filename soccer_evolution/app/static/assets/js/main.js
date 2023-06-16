@@ -328,3 +328,19 @@
 			});
 
 })(jQuery);
+
+
+document.addEventListener("DOMContentLoaded", function() {
+	var accordionItems = document.querySelectorAll(".accordion-item");
+  
+	accordionItems.forEach(function(item) {
+	  var header = item.querySelector(".accordion-header");
+  
+	  header.addEventListener("click", function() {
+		item.classList.toggle("active");
+		var content = item.querySelector(".accordion-content");
+		content.classList.toggle("show");
+	  });
+	});
+  });
+  

@@ -9,41 +9,221 @@
 							<section id="one">
 								<div class="inner">
 									<header class="major">
-										<h1>Usuarios </h1>
+										<h1>Canchas  </h1>
 									</header>
 									<span class="image main"><img src="images/pic11.jpg" alt="" /></span>
 
-													<h3>Usuarios registrado</h3>
-													<div class="table-wrapper">
-														<table>
-															<thead>
-																<tr>
+													
+													<div class="accordion">
+														<div class="accordion-item">
+														  <div class="accordion-header">
+															<h3>Canchas de Futbol</h3>
+														  </div>
+														  <div class="accordion-content">
+															<div class="table-wrapper">
+															  <table>
+																<thead>
+																  <tr>
 																	<th>Nombre cancha</th>
-																	<th>Descripcion</th>
-																	<th>valor</th>
-                                                                    <th></th>
-																</tr>
-															</thead>
-															<tbody>
-                                                                {% for cancha in canchas_futbol %}
-																<tr>
+																	<th>Descripción</th>
+																	<th>Valor</th>
+																	<th></th>
+																  </tr>
+																</thead>
+																<tbody>
+																  {% for cancha in canchas_futbol %}
+																  <tr>
 																	<td>{{ cancha.nombre_cancha_futbol }}</td>
 																	<td>{{ cancha.descripcion_cancha_futbol }}</td>
 																	<td>{{ cancha.valor_cancha_futbol }}</td>
-                                                                    <td><a href ="" data-toggle="tooltip" data-placement="top" data-original-title="Editar" ><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
-																</tr>
-                                                                {% endfor %}
-															</tbody>
-															<tfoot>
+																	<td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
+																  </tr>
+																  {% endfor %}
+																</tbody>
+																<tfoot>
 														
-															</tfoot>
-														</table>
-													</div>
+																</tfoot>
+															  </table>
+															</div>
+														  </div>
+														</div>
+
+														<div class="accordion-item">
+															<div class="accordion-header">
+																<h3>Canchas de Basketball</h3>
+															</div>
+															<div class="accordion-content">
+																<div class="table-wrapper">
+																	<table>
+																	  <thead>
+																		<tr>
+																		  <th>Nombre cancha</th>
+																		  <th>Descripción</th>
+																		  <th>Valor</th>
+																		  <th></th>
+																		</tr>
+																	  </thead>
+																	  <tbody>
+																		{% for cancha in canchas_basket %}
+																		<tr>
+																		  <td>{{ cancha.nombre_cancha_basket }}</td>
+																		  <td>{{ cancha.descripcion_cancha_basket }}</td>
+																		  <td>{{ cancha.valor_cancha_basket }}</td>
+																		  <td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
+																		</tr>
+																		{% endfor %}
+																	  </tbody>
+																	  <tfoot>
+															  
+																	  </tfoot>
+																	</table>
+																  </div>
+															</div>
+														  </div>
+
+														  <div class="accordion-item">
+															<div class="accordion-header">
+																<h3>Canchas Tenis y Padel</h3>
+															</div>
+															<div class="accordion-content">
+																<div class="table-wrapper">
+																	<table>
+																	  <thead>
+																		<tr>
+																		  <th>Nombre cancha</th>
+																		  <th>Descripción</th>
+																		  <th>Valor</th>
+																		  <th></th>
+																		</tr>
+																	  </thead>
+																	  <tbody>
+																		{% for cancha in canchas_tenis %}
+																		<tr>
+																		  <td>{{ cancha.nombre_cancha_tenis }}</td>
+																		  <td>{{ cancha.descripcion_cancha_tenis }}</td>
+																		  <td>{{ cancha.valor_cancha_tenis }}</td>
+																		  <td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
+																		</tr>
+																		{% endfor %}
+																	  </tbody>
+																	  <tfoot>
+															  
+																	  </tfoot>
+																	</table>
+																  </div>
+															</div>
+														  </div>
+
+														  <div class="accordion-item">
+															<div class="accordion-header">
+																<h3>Camiseta</h3>
+															</div>
+															<div class="accordion-content">
+																<div class="table-wrapper">
+																	<table>
+																	  <thead>
+																		<tr>
+																		  <th>Nombre</th>
+																		  <th>Descripción</th>
+																		  <th>Valor</th>
+																		  <th></th>
+																		</tr>
+																	  </thead>
+																	  <tbody>
+																		{% for camiseta in camisetas %}
+																		<tr>
+																		  <td>{{ camiseta.nombre_camiseta }}</td>
+																		  <td>{{ camiseta.descripcion_camiseta }}</td>
+																		  <td>{{ camiseta.valor_cancha_camiseta }}</td>
+																		  <td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
+																		</tr>
+																		{% endfor %}
+																	  </tbody>
+																	  <tfoot>
+															  
+																	  </tfoot>
+																	</table>
+																  </div>
+															</div>
+														  </div>
+
+														  <div class="accordion-item">
+															<div class="accordion-header">
+																<h3>Pelota</h3>
+															</div>
+															<div class="accordion-content">
+																<div class="table-wrapper">
+																	<table>
+																	  <thead>
+																		<tr>
+																		  <th>Nombre</th>
+																		  <th>Descripción</th>
+																		  <th>Valor</th>
+																		  <th></th>
+																		</tr>
+																	  </thead>
+																	  <tbody>
+																		{% for pelota in pelotas %}
+																		<tr>
+																		  <td>{{ pelota.nombre_pelota }}</td>
+																		  <td>{{ pelota.descripcion_pelota }}</td>
+																		  <td>{{ pelota.valor_pelota }}</td>
+																		  <td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
+																		</tr>
+																		{% endfor %}
+																	  </tbody>
+																	  <tfoot>
+															  
+																	  </tfoot>
+																	</table>
+																  </div>
+															</div>
+														  </div>
+
+														  <div class="accordion-item">
+															<div class="accordion-header">
+																<h3>Bebida</h3>
+															</div>
+															<div class="accordion-content">
+																<div class="table-wrapper">
+																	<table>
+																	  <thead>
+																		<tr>
+																		  <th>Nombre</th>
+																		  <th>Descripción</th>
+																		  <th>Valor</th>
+																		  <th></th>
+																		</tr>
+																	  </thead>
+																	  <tbody>
+																		{% for bebida in bebidas %}
+																		<tr>
+																		  <td>{{ bebida.nombre_bebida }}</td>
+																		  <td>{{ bebida.descripcion_bebida }}</td>
+																		  <td>{{ bebida.valor_bebida }}</td>
+																		  <td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
+																		</tr>
+																		{% endfor %}
+																	  </tbody>
+																	  <tfoot>
+															  
+																	  </tfoot>
+																	</table>
+																  </div>
+															</div>
+														  </div>
+
+
+													  </div>
+													  
 								</div>
 							</section>
-                            <div id= "contenedor-button">
+							<div id= "contenedor-button">
                                 <div id= "button-div">    <a href="#" class="button primary">Continuar</a></div>
                             </div>
+								  
+
+							
 					</div>
 
 	

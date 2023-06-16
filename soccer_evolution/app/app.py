@@ -496,7 +496,13 @@ def estacionamientos ():
 @app.route('/lista_canchas')
 def lista_canchas ():
     canchas_futbol = cancha_futbol_dao['select_all']()
-    return render_template('admin/lista_canchas.html', canchas_futbol = canchas_futbol)
+    canchas_basket = cancha_basket_dao['select_all']()
+    canchas_tenis = cancha_tenis_dao['select_all']()
+    camiseta = camisetas_dao['select_all']()
+    pelota = pelotas_dao['select_all']()
+    bebida = bebidas_dao['select_all']()
+    
+    return render_template('admin/lista_canchas.html', canchas_futbol = canchas_futbol, canchas_basket = canchas_basket, canchas_tenis = canchas_tenis, camiseta = camiseta, pelotas = pelota, bebidas = bebida )
 
 @app.route('/carro_compras')
 def carro_compras():

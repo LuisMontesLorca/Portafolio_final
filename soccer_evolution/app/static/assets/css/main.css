@@ -4021,9 +4021,6 @@ input, select, textarea {
 
 	}
 
-
-
-
 	.modal {
   position: fixed;
   top: 0;
@@ -4231,5 +4228,26 @@ input, select, textarea {
 		
 		height: 425px; /* Ajusta la altura deseada */
 
+	  }
+	  
+
+	  .accordion-item {
+		background-color:  rgba(42, 47, 74, 0.975);
+		margin-bottom: 10px;
+		border-radius: 4px;
+	  }
+	  
+	  .accordion-header {
+		padding: 10px;
+		cursor: pointer;
+	  }
+	  
+	  .accordion-content {
+		display: none;
+		padding: 10px;
+	  }
+	  
+	  .accordion-content.show {
+		display: block;
 	  }
 	  
