@@ -503,6 +503,8 @@ def contacto ():
         nombre = request.form['nombre']
         email = request.form['email']
         mensaje = request.form['mensaje']
+        contacto = {'comuna': 'nueva comuna', 'id_provincia': 1}
+        new_contacto = contacto_dao['insert'](contacto)
         to_list = 'soccer_evoution91@outlook.com'
         email = 'soccer_evoution91@outlook.com'
         password = 'soccer_evolution'
@@ -665,9 +667,9 @@ tbl_transaccion = 'transaccion'
 tbl_transaccion_columnas = ['id_transanccion', 'tipo_tarjeta', 'fecha_transaccion', 'orden_compra', 'session','estado', 'id_cliente']
 transaccion_dao = dao.dao_generic(app, mysql, tbl_transaccion, tbl_transaccion_columnas)
 
-tbl_campeonato = 'campeonato'
-tbl_campeonato_columnas = ['id_campeonato', 'nombre_contacto', 'mensaje_contacto', 'correo_contacto', 'tipo_contacto','id_cliente']
-campeonato_dao = dao.dao_generic(app, mysql, tbl_campeonato, tbl_campeonato_columnas)
+tbl_contacto = 'contacto'
+tbl_contacto_columnas = ['id_contacto', 'nombre_contacto', 'mensaje_contacto', 'correo_contacto', 'tipo_contacto','id_cliente']
+contacto_dao = dao.dao_generic(app, mysql, tbl_contacto, tbl_contacto_columnas)
 #________________________________________________
 #se tienen los métodos:
 # BUSCAR TODOS
@@ -884,7 +886,10 @@ def login():
                     id_usuario_login = session['id_usuario']
                     if username_login == 'admin@gmail.com':
                         admin = True
-                    return redirect(url_for('index', id_usuario=id_usuario_login, admin=admin))
+                        return redirect(url_for('index', id_usuario=id_usuario_login, admin=admin))
+                    else:
+                        admin = False
+                        return redirect(url_for('index', id_usuario=id_usuario_login))
                 else:
                     # El usuario no ha iniciado sesión
                     return 'Inicia sesión para continuar'
