@@ -812,8 +812,9 @@ def arrendar ():
                     arriendo_existente = True
                     break         
             if arriendo_existente:
+                mensaje= "La hora seleccionada para el dia", fecha, "no esta disponible"
                 print (" NOOOOOOO  HICE EL INSERT !!!!!!!!!!!!!!!!!")
-                return 'Ya tienes el arriendo de esa cancha en la hora seleccionada en tu carrito'
+                return render_template('arrendar.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,id_cancha=id_cancha,nombre_cancha=nombre_cancha, valor_cancha= valor_cancha, horarios=horarios, cc_vacio=cc_vacio,mensaje=mensaje)
             else:
                     arriendo_existente =False  
                     new_arriendo = carro_compras_dao['insert'](arriendo)

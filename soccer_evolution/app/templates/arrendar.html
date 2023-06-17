@@ -99,14 +99,18 @@
 							</div>
 							<div class="modal-footer">
 							  <button type="button" class="btn btn-secondary" id="cancelar_btn"data-dismiss="modal">Cancelar</button>
+							  {% if mensaje %}
 							  <button type="button" class="btn btn-primary" id="confirmar-btn">Confirmar</button>
+							  {% else %}
+							  <button type="button" class="btn btn-primary" id="confirmar-btn">Confirmar</button>
+							  {% endif %}
 							</div>
 						  </div>
 						</div>
 					</div>
 	
 
-					
+					<!-- MODAL FALTAN DATOS DE ARRIENDO -->
 					<div  id="modal_condicion" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
 						<div class="modal-dialog" role="document">
 						  <div class="modal-content">
@@ -126,4 +130,28 @@
 						  </div>
 						</div>
 					</div>
+
+						<!-- MODAL ARRIENDO NO DISPONIBLE -->
+
+						<div  id="modal_arriendo_no_disponible" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+							  <div class="modal-content">
+								<div class="modal-header">
+								  <h2 class="modal-title" id="confirmar-modal-label">ATENCIÓN!!!</h2>
+								  <a type="text" id="cerrar_modal"class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								  </a>
+								</div>
+								<div class="modal-body">
+									{% if mensaje %}
+									{{mensaje}}
+									{% endif %}
+								</div>
+								<div class="modal-footer">
+								  <button type="button" class="btn btn-secondary" id="cancelar_btn"data-dismiss="modal">OK</button>
+								 
+								</div>
+							  </div>
+							</div>
+						</div>
 					{% endblock %}
