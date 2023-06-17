@@ -557,6 +557,10 @@ def quienes_somos ():
 def estacionamientos ():
     return render_template('/estacionamientos.html')
 
+@app.route('/new_producto')
+def new_producto ():
+    return render_template('admin/new_producto.html')
+
 @app.route('/carro_compras')
 def carro_compras():
     if 'username' in session:
