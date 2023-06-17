@@ -168,7 +168,7 @@ $(document).ready(function() {
       url: '/agregar_al_carrito',
       type: 'GET',
       success: function(response) {
-        if (response.count_productos != '')
+        if (response.count_productos > 0)
         {
         console.log("logrado")
         var count_productos = response.count_productos;
@@ -176,8 +176,8 @@ $(document).ready(function() {
         }
         else
         {
-          var count_productos = 0;
-          $('#cantidad-productos').text(count_productos);
+          
+          $('#cantidad-productos').text('0');
         }
       },
       error: function(error) {

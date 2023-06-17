@@ -1,11 +1,27 @@
 {% extends './layout.html' %}
 
         {% block body %}
+        <section id="banner" class="major">
+            <div class="inner">
+                <header class="major">
+                    <h1>Soccer Evolution</h1>
+                </header>
+                <div class="content">
+                    <p>Somos el ultimo integrante de tu equipo. Jugamos una gran variedad de deportes, entre ellos, futbol, basketball, padel. Te sorprenderas!!, nos encontramos ubicados en Av.Ferrocarril 123, en la comuna de Santiago.</p>
+                    <ul class="actions">
+                        <li><a href="{{ url_for('login') }}" class="button next scrolly">Arrienda con nosotros</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
                     <div class=" box">
                     <h3>Formulario de registro</h3>
 
-                    <form method="POST" action="/registro">
+                    <form method="POST" action="/registro" id="form_registro">
                         <div class="row gtr-uniform">
+                            <div class="col-6 col-12-xsmall">
+                                <input type="text" name="rut_usuario" id="rut_usuario" value="" placeholder="RUT" />
+                            </div>
                             <div class="col-6 col-12-xsmall">
                                 <input type="text" name="nombre_usuario" id="nombre_usuario" value="" placeholder="Nombres" />
                             </div>
@@ -16,35 +32,44 @@
                                 <input type="email" name="correo_usuario" id="correo_usuario" value="" placeholder="Email" />
                             </div>
                             <div class="col-6 col-12-xsmall">
-                                <input type="text" name="password_usuario" id="password_usuario" value="" placeholder="Teléfono" />
+                                <input type="text" name="password_usuario" id="password_usuario" value="" placeholder="Contraseña" />
                             </div>
                             <div class="col-6 col-12-xsmall">
-                                <input type="text" name="telefono_usuario" id="telefono_usuario" value="" placeholder="Fecha de nacimiento" />
+                                <input type="text" name="telefono_usuario" id="telefono_usuario" value="" placeholder="Telefono: 987656789" />
                             </div>
                             <div class="col-6 col-12-xsmall">
                                 <input type="text" name="direccion_usuario" id="direccion_usuario" value="" placeholder="Dirección" />
                             </div>
-                                <!-- SELECT REGION Y COMUNA
-
+                            
                                 <div class="col-6 col-12-xsmall">
-                                    <select name="region" id="region">
-                                        <option value="">Región</option>
-                                        <option value="1">Manufacturing</option>
-                                        <option value="1">Shipping</option>
-                                        <option value="1">Administration</option>
-                                        <option value="1">Human Resources</option>
+                                    <select name="region_usuario" id="region_usuario" placeholder="Region">
+                                        <option value="">Seleccione región</option>
+                                        {% for region in regiones %}
+                                        <option value="{{region.id_region}}">{{region.region}}</option>
+                                        {% endfor  %}
+
                                     </select>
                                 </div>
                                 <div class="col-6 col-12-xsmall">
-                                    <select name="comuna" id="comuna">
-                                        <option value="">Comuna</option>
-                                        <option value="1">Manufacturing</option>
-                                        <option value="1">Shipping</option>
-                                        <option value="1">Administration</option>
-                                        <option value="1">Human Resources</option>
+                                    <select name="provincia_usuario" id="provincia_usuario">
+                                        <option value="">Seleccione provincia</option>
+                                        {% for provincia in provincias %}
+                                        <option value="{{provincia.id_provincia}}">{{provincia.provincia}}</option>
+                                        {% endfor  %}
                                     </select>
-                                </div>--> 
-                            <div class="col-6 col-12-xsmall">
+                                </div>
+                                <div class="col-6 col-12-xsmall">
+                                    <select name="comuna_usuario" id="comuna_usuario">
+                                        <option value="">Seleccione comuna</option>
+                                        {% for comuna in comunas %}
+                                        <option value="{{comuna.id_comuna}}"> {{comuna.comuna}}</option>
+                                        {% endfor  %}
+                                    </select>
+                                </div>
+                            
+                           
+                        
+                            <div class="col-6 col-12-xsmall" >
                                 <input type="submit" class="button primary"value="Registrarse"></input>
                             </div>
                         </div>

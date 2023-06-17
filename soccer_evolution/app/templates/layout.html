@@ -5,16 +5,18 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 	
 		<script src="https://kit.fontawesome.com/8a340e4015.js" crossorigin="anonymous"></script>
 		<!-- Incluye jQuery -->
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+	
 		<!-- jQuery UI -->
 		<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 		<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
-		
+
+
+
 		<noscript><link rel="stylesheet" href="{{ url_for('static', filename='assets/css/noscript.css') }}" /></noscript>
 
 
@@ -53,7 +55,10 @@
 					<nav>
 
 						{% if admin %}
-						<a href="{{ url_for('lista_canchas') }}">ADMINISTRADOR</a>
+						<a href="{{ url_for('lista_canchas') }}" style="text-align: center;">ADMINISTRADOR</a>
+						{% endif %}
+						{% if nombre_usuario %}
+						<a href="{{ url_for('perfil_usuario', id=id_usuario ) }}" style="text-align: center;">{{nombre_usuario}}</a>
 						{% endif %}
 					    <div class="dropdown">
 							<a class="dropdown-toggle" id="dropdownBtn"> <i class="fas fa-shopping-cart"></i></a>
@@ -65,7 +70,10 @@
 						{% else %}
 						<nav>
 							{% if admin %}
-							<a href="{{ url_for('lista_canchas') }}">ADMINISTRADOR</a>
+							<a href="{{ url_for('lista_canchas') }} ">ADMINISTRADOR</a>
+							{% endif %}
+							{% if nombre_usuario %}
+							<a href="{{ url_for('perfil_usuario', id=id_usuario ) }}">{{nombre_usuario}}</a>
 							{% endif %}
 							<div class="dropdown">
 								<a href="{{ url_for('carro_compras') }}"> <i class="fas fa-shopping-cart"></i><span class="badge" id="cantidad-productos">{{ count_productos }}</span></a>
@@ -143,8 +151,12 @@
 		<script src="{{url_for('static', filename='assets/js/main.js') }}"></script>
 		<script src="{{url_for('static', filename='assets/js/carrusel.js') }}"></script>
 		<script src="{{url_for('static', filename='assets/js/hora.js') }}"></script>
+		<script src="{{url_for('static', filename='assets/js/select.js') }}"></script>
+		<script src="{{url_for('static', filename='assets/js/select_editar.js') }}"></script>
 		<script src="{{url_for('static', filename='assets/js/carro_compras.js') }}"></script>
+		<script src="{{url_for('static', filename='assets/js/validation.js') }}"></script>
 		<script src="{{url_for('static', filename='assets/js/botones.js') }}"></script>
+		<script src="{{url_for('static', filename='assets/js/jquery-validation/dist/jquery.validate.min.js') }}"></script>
 		<script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
 		
 

@@ -13,40 +13,40 @@
                         <div class="row gtr-uniform">
                             <input type="hidden" name="id_usuario" id="id_usuario" value="{{ usuarios.id_usuario }}">
                             <div class="col-6 col-12-xsmall">
-                                <input type="text" name="nombre_usuario" id="nombre_usuario" value="{{ usuarios.nombre_usuario }}" placeholder="Nombres" disabled/>
+                                <input type="text" name="rut_usuario" id="rut_usuario" value="{{ usuarios.rut_usuario }}" placeholder="Rut" readonly/>
                             </div>
                             <div class="col-6 col-12-xsmall">
-                                <input type="text" name="apellido_usuario" id="apellido_usuario" value="{{ usuarios.apellido_usuario }}" placeholder="Apellidos" disabled/>
+                                <input type="text" name="nombre_usuario" id="nombre_usuario" value="{{ usuarios.nombre_usuario }}" placeholder="Nombres" readonly/>
                             </div>
                             <div class="col-6 col-12-xsmall">
-                                <input type="email" name="correo_usuario" id="correo_usuario" value="{{ usuarios.correo_usuario }}" placeholder="Email" disabled/>
+                                <input type="text" name="apellido_usuario" id="apellido_usuario" value="{{ usuarios.apellido_usuario }}" placeholder="Apellidos" readonly/>
                             </div>
                             <div class="col-6 col-12-xsmall">
-                                <input type="text" name="password_usuario" id="password_usuario" value="{{ usuarios.password_usuario }}" placeholder="Teléfono" disabled/>
+                                <input type="email" name="correo_usuario" id="correo_usuario" value="{{ usuarios.correo_usuario }}" placeholder="Email" readonly/>
                             </div>
                             <div class="col-6 col-12-xsmall">
-                                <input type="text" name="telefono_usuario" id="telefono_usuario" value="{{ usuarios.telefono_usuario }}" placeholder="Fecha de nacimiento" disabled/>
+                                <input type="text" name="password_usuario" id="password_usuario" value="{{ usuarios.password_usuario }}" placeholder="Teléfono" readonly/>
                             </div>
                             <div class="col-6 col-12-xsmall">
-                                <input type="text" name="direccion_usuario" id="direccion_usuario" value="{{ usuarios.direccion_usuario }}" placeholder="Dirección" disabled/>
+                                <input type="text" name="telefono_usuario" id="telefono_usuario" value="{{ usuarios.telefono_usuario }}" placeholder="Fecha de nacimiento" readonly/>
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                <input type="text" name="direccion_usuario" id="direccion_usuario" value="{{ usuarios.direccion_usuario }}" placeholder="Dirección" readonly/>
                             </div>
                             <!-- SELECT REGION Y COMUNA -->
                             <div class="col-6 col-12-xsmall">
-                                <select name="region" id="region" disabled>
-                                    <option value="">Región</option>
-                                    <option value="1">Manufacturing</option>
-                                    <option value="1">Shipping</option>
-                                    <option value="1">Administration</option>
-                                    <option value="1">Human Resources</option>
+                                <select name="region_usuario" id="region_usuario" disabled>
+                                    <option value="{{usuarios.region_usuario}}">{{usuarios.region_usuario}}</option>
                                 </select>
                             </div>
                             <div class="col-6 col-12-xsmall">
-                                <select name="comuna" id="comuna" disabled>
-                                    <option value="">Comuna</option>
-                                    <option value="1">Manufacturing</option>
-                                    <option value="1">Shipping</option>
-                                    <option value="1">Administration</option>
-                                    <option value="1">Human Resources</option>
+                                <select name="provincia_usuario" id="provincia_usuario"  value="{{ usuarios.provincia_usuario }}"disabled>
+                                    <option value="{{usuarios.provincia_usuario}}">{{usuarios.provincia_usuario}}</option>
+                                </select>
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                <select name="comuna_usuario" id="comuna_usuario"  value="{{ usuarios.comuna_usuario }}"disabled>
+                                    <option value="{{usuarios.comuna_usuario}}">{{usuarios.comuna_usuario}}</option>
                                 </select>
                             </div>
                             <div class="col-6 col-12-xsmall">

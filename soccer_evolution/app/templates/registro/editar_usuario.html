@@ -6,9 +6,12 @@
                     <h3>Editar usuario</h3>
                    
                     {% if (usuarios) %}
-                    <form method="POST" action="/editar_usuario/{{ usuarios.id_usuario }}">
+                    <form method="POST" action="/editar_usuario/{{ usuarios.id_usuario }}" id="form_editar">
                         <div class="row gtr-uniform">
                             <input type="hidden" name="id_usuario" id="id_usuario" value="{{ usuarios.id_usuario }}">
+                            <div class="col-6 col-12-xsmall">
+                                <input type="text" name="rut_usuario" id="rut_usuario" value="{{ usuarios.rut_usuario }}" placeholder="RUT" />
+                            </div>
                             <div class="col-6 col-12-xsmall">
                                 <input type="text" name="nombre_usuario" id="nombre_usuario" value="{{ usuarios.nombre_usuario }}" placeholder="Nombres" />
                             </div>
@@ -29,21 +32,28 @@
                             </div>
                             <!-- SELECT REGION Y COMUNA -->
                             <div class="col-6 col-12-xsmall">
-                                <select name="region" id="region">
-                                    <option value="">Región</option>
-                                    <option value="1">Manufacturing</option>
-                                    <option value="1">Shipping</option>
-                                    <option value="1">Administration</option>
-                                    <option value="1">Human Resources</option>
+                                <select name="region_usuario_editar" id="region_usuario_editar"  placeholder="Region">
+                                    <option value="">---</option>
+                                    {% for region in regiones %}
+                                    <option value="{{region.id_region}}">{{region.region}}</option>
+                                    {% endfor  %}
+
                                 </select>
                             </div>
                             <div class="col-6 col-12-xsmall">
-                                <select name="comuna" id="comuna">
-                                    <option value="">Comuna</option>
-                                    <option value="1">Manufacturing</option>
-                                    <option value="1">Shipping</option>
-                                    <option value="1">Administration</option>
-                                    <option value="1">Human Resources</option>
+                                <select name="provincia_usuario_editar" id="provincia_usuario_editar">
+                                    <option value="">---</option>
+                                    {% for provincia in provincias %}
+                                    <option value="{{provincia.id_provincia}}">{{provincia.provincia}}</option>
+                                    {% endfor  %}
+                                </select>
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                <select name="comuna_usuario_editar" id="comuna_usuario_editar">
+                                    <option value="">---</option>
+                                    {% for comuna in comunas %}
+                                    <option value="{{comuna.id_comuna}}"> {{comuna.comuna}}</option>
+                                    {% endfor  %}
                                 </select>
                             </div>
                             <div class="col-6 col-12-xsmall">

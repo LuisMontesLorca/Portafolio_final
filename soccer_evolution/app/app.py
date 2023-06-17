@@ -42,8 +42,9 @@ def index ():
         print ("EL USER ESTA EN LA SESSION: " )
         inicio_sesion = True
         id_usuario = session.get('id_usuario')
-        admin = session.get('username')
-        if admin == 'admin@gmail.com':
+        usuario = session.get('username')
+        nombre_usuario=session.get('nombre_usuario')
+        if usuario == 'admin@gmail.com':
             print ("EL ADMIN ESTA EN EL LA SESSION: " )
             admin =True
             cur = mysql.connection.cursor()
@@ -100,10 +101,10 @@ def index ():
                 count_productos = cur.fetchone()[0]
                 cur.close()
 
-                return render_template('index.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario,count_productos=count_productos, admin = admin)
+                return render_template('index.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario,count_productos=count_productos,nombre_usuario=nombre_usuario)
             else:
                 cc_vacio ="El carro de compras esta vacío"
-                return render_template('index.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario,cc_vacio=cc_vacio,admin = admin)
+                return render_template('index.html', inicio_sesion=inicio_sesion, id_usuario=id_usuario,cc_vacio=cc_vacio, nombre_usuario=nombre_usuario)
     else:
         inicio_sesion = False
         return render_template('index.html')
@@ -608,8 +609,12 @@ def agregar_al_carrito():
     cur.execute('SELECT COUNT(*) FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
     count_productos = cur.fetchone()[0]
     cur.close()
+    if count_productos>0:
     # Devuelve el resultado en formato JSON
-    return jsonify({'count_productos': count_productos})
+        return jsonify({'count_productos': count_productos})
+    else:
+        count_productos=0
+        return jsonify({'count_productos': count_productos})
 
 @app.route('/carro_compras/<int:id_carro>', methods=['DELETE'])
 def eliminar_producto(id_carro):
@@ -645,6 +650,21 @@ def eliminar_carro():
     return jsonify(response)
 
 
+
+@app.route('/region', methods=['POST', 'GET'])
+def region():
+    id_cliente=session.get('id_usuario')
+    region = region_dao['select_all']()
+    print("ESTAS SON LAS REGIONES: ", region)
+    regiones = []
+    for row in region:
+        regiones_array = {
+                'id_region' : row['id_region'],
+                'region' : row['region']
+                }
+        regiones.append(regiones_array)
+    return jsonify(regiones)
+
 def pagina_no_encontrada(error):
     return render_template('404.html'), 404
 
@@ -654,8 +674,16 @@ tbl_comunas = 'comunas'
 tbl_comunas_columnas = ['id_comuna', 'comuna', 'id_provincia']
 comuna_dao = dao.dao_generic(app, mysql, tbl_comunas, tbl_comunas_columnas)
 
+tbl_provincia = 'provincias'
+tbl_provincia_columnas = ['id_provincia', 'provincia', 'id_region']
+provincia_dao = dao.dao_generic(app, mysql, tbl_provincia, tbl_provincia_columnas)
+
+tbl_region = 'regiones'
+tbl_region_columnas = ['id_region', 'region', 'abreviatura', 'capital']
+region_dao = dao.dao_generic(app, mysql, tbl_region, tbl_region_columnas)
+
 tbl_usuario = 'usuario'
-tbl_usuario_columnas = ['id_usuario', 'nombre_usuario', 'apellido_usuario','correo_usuario','password_usuario','telefono_usuario','direccion_usuario']
+tbl_usuario_columnas = ['id_usuario', 'nombre_usuario', 'apellido_usuario','correo_usuario','password_usuario','telefono_usuario','direccion_usuario','rut_usuario','region_usuario','provincia_usuario','comuna_usuario']
 usuario_dao = dao.dao_generic(app, mysql, tbl_usuario, tbl_usuario_columnas)
 
 tbl_arriendo = 'arriendo'
@@ -870,25 +898,125 @@ def arrendar ():
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
     if request.method == 'POST':
+        rut_usuario = request.form['rut_usuario']
         nombre_usuario = request.form['nombre_usuario']
         apellido_usuario = request.form['apellido_usuario']
         correo_usuario = request.form['correo_usuario']
         password_usuario = request.form['password_usuario']
         telefono_usuario = request.form['telefono_usuario']
         direccion_usuario = request.form['direccion_usuario']
+        region_usuario = request.form['region_usuario']
+        provincia_usuario = request.form['provincia_usuario']
+        comuna_usuario = request.form['comuna_usuario']
+        if region_usuario !='' and provincia_usuario !='' and comuna_usuario !='':
+            cur = mysql.connection.cursor()
+            cur.execute('SELECT region FROM regiones WHERE id_region = %s', (region_usuario,))
+            nombre_region = cur.fetchone()[0]
+            print("este es el select count id ", nombre_region)
+            cur.close()
 
+            cur = mysql.connection.cursor()
+            cur.execute('SELECT provincia FROM provincias WHERE id_provincia = %s', (provincia_usuario,))
+            nombre_provincia = cur.fetchone()[0]
+            print("este es el select count id ", nombre_provincia)
+            cur.close()
+
+            cur = mysql.connection.cursor()
+            cur.execute('SELECT comuna FROM comunas WHERE id_comuna = %s', (comuna_usuario,))
+            nombre_comuna = cur.fetchone()[0]
+            print("este es el select count id ", nombre_comuna)
+            cur.close()
+        else:
+            nombre_region=0
+            nombre_provincia=0
+            nombre_comuna=0
         usuario = { 'nombre_usuario': nombre_usuario, 'apellido_usuario': apellido_usuario, 
                     'correo_usuario': correo_usuario, 'password_usuario': password_usuario, 
-                    'telefono_usuario': telefono_usuario, 'direccion_usuario': direccion_usuario }
+                    'telefono_usuario': telefono_usuario, 'direccion_usuario': direccion_usuario,
+                    'rut_usuario': rut_usuario, 'region_usuario': nombre_region, 
+                    'provincia_usuario': nombre_provincia, 'comuna_usuario': nombre_comuna }
         new_usuario = usuario_dao['insert'](usuario)
+        to_list = correo_usuario
+        email = 'soccer_evoution91@outlook.com'
+        password = 'soccer_evolution'
+        send_outlook(to_list, email, password)
         print('new_usuario: ', new_usuario)
 
         session['nombre_usuario'] = nombre_usuario  # Inicia sesión automáticamente después del registro
-        return redirect('/index')  # Redirige al usuario al panel de control después del registro
-    
-    return render_template('Registro/registro.html')
+        return redirect(url_for('index'))  # Redirige al usuario al panel de control después del registro
+    else:
+            region = region_dao['select_all']()
+            print("ESTAS SON LAS REGIONES: ", region)
+            regiones = []
+            for row in region:
+                regiones_array = {
+                        'id_region' : row['id_region'],
+                        'region' : row['region']
+                        }
+                regiones.append(regiones_array)
+
+            provincia = provincia_dao['select_all']()
+            print("ESTAS SON LAS provincias: ", provincia)
+            provincias = []
+            for row in provincia:
+                provincias_array = {
+                        'id_provincia' : row['id_provincia'],
+                        'provincia' : row['provincia']
+                        }
+                provincias.append(provincias_array)
+
+            comuna = comuna_dao['select_all']()
+            print("ESTAS SON LAS comuna: ", comuna)
+            comunas = []
+            for row in comuna:
+                comunas_array = {
+                        'id_comuna' : row['id_comuna'],
+                        'comuna' : row['comuna']
+                        }
+                comunas.append(comunas_array)
+            return render_template('Registro/registro.html',regiones=regiones,provincias=provincias,comunas=comunas)
 
 ###### FIN REGISTER #######
+
+@app.route('/obtener_provincias', methods=['POST'])
+def obtener_provincias():
+    region_id = request.form.get('region_id')
+
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM provincias WHERE id_region = %s', (region_id,))
+    rows = cur.fetchall()
+    provincias = []
+    print('rows: ', rows)
+    for row in rows:
+        provincia = {
+        'id_provincia' : row[0],
+        'provincia' : row[1],
+        'id_region' : row[2],
+        }
+        provincias.append(provincia)
+    cur.close()
+
+    return jsonify(provincias)
+
+@app.route('/obtener_comunas', methods=['POST'])
+def obtener_comunas():
+    provincia_id = request.form.get('provincia_id')
+
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT * FROM comunas WHERE id_provincia = %s', (provincia_id,))
+    rows = cur.fetchall()
+    comunas = []
+    print('rows: ', rows)
+    for row in rows:
+        comuna = {
+        'id_comuna' : row[0],
+        'comuna' : row[1],
+        'id_provincia' : row[2],
+        }
+        comunas.append(comuna)
+    cur.close()
+
+    return jsonify(comunas)
 
 ###### LOGIN #######
 
@@ -908,13 +1036,16 @@ def login():
             id_usuario = row['id_usuario']
             correo = row['correo_usuario']
             password = row['password_usuario']
+            nombre_usuario = row['nombre_usuario']
         
             # Verifica las credenciales (aquí puedes implementar tu lógica de autenticación)
             if password_login == password and username_login == correo:
                 session['username'] = username_login
                 session['id_usuario'] = id_usuario
+                session['nombre_usuario'] = nombre_usuario
                 response = make_response("Cookie set!")  # Crear una respuesta
-                response.set_cookie('correo', username_login) 
+                response.set_cookie('correo', username_login)
+
                 if 'username' in session:
                     # El usuario ha iniciado sesión
                     username_login = session['username']
@@ -968,6 +1099,7 @@ def lista_usuarios ():
 @app.route('/editar_usuario/<int:id>', methods=['GET', 'POST'])
 def editar_usuarios (id):
     if request.method == 'POST':
+        rut_usuario = request.form['rut_usuario']
         id_usuario = request.form['id_usuario']
         nombre_usuario = request.form['nombre_usuario']
         apellido_usuario = request.form['apellido_usuario']
@@ -975,22 +1107,74 @@ def editar_usuarios (id):
         password_usuario = request.form['password_usuario']
         telefono_usuario = request.form['telefono_usuario']
         direccion_usuario = request.form['direccion_usuario']
+        region_usuario = request.form['region_usuario_editar']
+        provincia_usuario = request.form['provincia_usuario_editar']
+        comuna_usuario = request.form['comuna_usuario_editar']
 
+        cur = mysql.connection.cursor()
+        cur.execute('SELECT region FROM regiones WHERE id_region = %s', (region_usuario,))
+        nombre_region = cur.fetchone()[0]
+        print("este es el select count id ", nombre_region)
+        cur.close()
+
+        cur = mysql.connection.cursor()
+        cur.execute('SELECT provincia FROM provincias WHERE id_provincia = %s', (provincia_usuario,))
+        nombre_provincia = cur.fetchone()[0]
+        print("este es el select count id ", nombre_provincia)
+        cur.close()
+
+        cur = mysql.connection.cursor()
+        cur.execute('SELECT comuna FROM comunas WHERE id_comuna = %s', (comuna_usuario,))
+        nombre_comuna = cur.fetchone()[0]
+        print("este es el select count id ", nombre_comuna)
+        cur.close()
         usuario = { 'id_usuario':id_usuario, 'nombre_usuario': nombre_usuario, 'apellido_usuario': apellido_usuario, 
-                'correo_usuario': correo_usuario, 'password_usuario': password_usuario, 
-                'telefono_usuario': telefono_usuario, 'direccion_usuario': direccion_usuario }
+                    'correo_usuario': correo_usuario, 'password_usuario': password_usuario, 
+                    'telefono_usuario': telefono_usuario, 'direccion_usuario': direccion_usuario,'rut_usuario':rut_usuario, 
+                    'region_usuario':nombre_region,'provincia_usuario':nombre_provincia,'comuna_usuario':nombre_comuna,}
         
         usuario_actualizado = usuario_dao['update'](usuario)
         print('Usuario actualizado correctamente', usuario_actualizado)
         inicio_sesion = True
         return render_template('registro/perfil_usuario.html', inicio_sesion=inicio_sesion, usuarios=usuario_actualizado, id_usuario=id_usuario)
     else:
+
+        region = region_dao['select_all']()
+        print("ESTAS SON LAS REGIONES: ", region)
+        regiones = []
+        for row in region:
+            regiones_array = {
+                    'id_region' : row['id_region'],
+                    'region' : row['region']
+                    }
+            regiones.append(regiones_array)
+
+        provincia = provincia_dao['select_all']()
+        print("ESTAS SON LAS provincias: ", provincia)
+        provincias = []
+        for row in provincia:
+            provincias_array = {
+                    'id_provincia' : row['id_provincia'],
+                    'provincia' : row['provincia']
+                    }
+            provincias.append(provincias_array)
+
+        comuna = comuna_dao['select_all']()
+        print("ESTAS SON LAS comuna: ", comuna)
+        comunas = []
+        for row in comuna:
+            comunas_array = {
+                    'id_comuna' : row['id_comuna'],
+                    'comuna' : row['comuna']
+                    }
+        comunas.append(comunas_array)
+
         print("ID del usuario:", id)
         usuario_2 = usuario_dao['select_by_id'](id)
         print("datos del usuario:", usuario_2)
         if usuario_2:
-            print("ENTRO AL IF")
-            return render_template('registro/editar_usuario.html', usuarios=usuario_2)
+            print("ENTRO AL IF" ,region,provincia,comuna)
+            return render_template('registro/editar_usuario.html', usuarios=usuario_2,regiones=regiones,provincias=provincias,comunas=comunas)
             
         else:
             return "Usuario no encontrado"
@@ -1007,7 +1191,7 @@ def perfil_usuario (id):
             if usuario_2:
                 print("ENTRO AL IF")
                 id_usuario = session.get('id_usuario')
-                print('id_usuario: ', id_usuario)
+                
                 cur = mysql.connection.cursor()
                 cur.execute('SELECT * FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
                 rows = cur.fetchall()
@@ -1052,7 +1236,8 @@ def perfil_usuario (id):
                     }
                     arriendos_historial.append(arriendo)
                 cur.close()
-    
+            
+   
                 if carro_compras:
                     return render_template('registro/perfil_usuario.html', inicio_sesion=inicio_sesion, usuarios=usuario_2, id_usuario=id_usuario,arriendos_historial=arriendos_historial,count_productos=count_productos)
                 else:
@@ -1104,11 +1289,15 @@ def transbank_commit_pay():
     # SE DEBE APLICAR ESTA DESCOMENTAR ESTA SECCIÓN Y AGREGAR LÓGICA PARA LA RESPUESTA RECIBIDA EN EL RESPONSE
     # DE SER CORRECTA SE DEBE CONFIRM
     correo=request.cookies.get('correo')
+ 
+
     print('aqui se va a enviar el correo: ', correo)
     # EN CASO CONTRARIO SE DEBE CANCELAR Y MOSTRAR ERROR 
 
     tokenws = request.args.get('token_ws')
+
     print('tokenws: ', tokenws)
+
     ## DEFINICIÓN DE URL DE TRANSBANK PARA CONFIRMAR UNA TRANSACCIÓN
     url = "https://webpay3gint.transbank.cl/rswebpaytransaction/api/webpay/v1.2/transactions/{0}".format(tokenws)
     ## CABECERA SOLICITADA POR TRANSBANK
@@ -1227,6 +1416,10 @@ def transbank_create():
     buy_order = request.form.get('buy_order')
     id_usuario = request.form.get('id_usuario')
     correo = request.form.get('correo')
+    session['transbank_correo'] =correo
+    session['transbank_id_usuario'] =id_usuario
+    print("id_usuario:" , id_usuario)
+    print("correo:" , correo)
     object_url = urlparse(request.base_url)
     return_url = '{0}://{1}/transbank/commit-pay'.format(object_url.scheme, object_url.netloc)
     print('return_url:', return_url)
