@@ -54,12 +54,13 @@ $(document).ready(function() {
           required:  "Por favor, ingresa tu direccion"
         }
       },
-      submitHandler: function(form) {
+      submitHandler: function(form) 
+      {
         // Verificar si los campos requeridos están llenos antes de enviar el formulario
         if ($('#rut_usuario').val() && $('#nombre_usuario').val() && $('#apellido_usuario').val() && $('#correo_usuario').val() && $('#password_usuario').val() && $('#telefono_usuario').val() && $('#direccion_usuario').val()) {
           // Si todos los campos requeridos están llenos, enviar el formulario
           form.submit();
-        } else {
+        }else{
           // Si falta algún campo requerido, mostrar un mensaje de error o realizar alguna otra acción
           alert('Por favor, completa todos los campos requeridos');
         }

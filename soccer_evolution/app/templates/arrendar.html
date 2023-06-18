@@ -99,11 +99,8 @@
 							</div>
 							<div class="modal-footer">
 							  <button type="button" class="btn btn-secondary" id="cancelar_btn"data-dismiss="modal">Cancelar</button>
-							  {% if mensaje %}
 							  <button type="button" class="btn btn-primary" id="confirmar-btn">Confirmar</button>
-							  {% else %}
-							  <button type="button" class="btn btn-primary" id="confirmar-btn">Confirmar</button>
-							  {% endif %}
+	
 							</div>
 						  </div>
 						</div>
@@ -142,10 +139,8 @@
 									<span aria-hidden="true">&times;</span>
 								  </a>
 								</div>
-								<div class="modal-body">
-									{% if mensaje %}
-									{{mensaje}}
-									{% endif %}
+								<div class="modal-body" id="mensaje_no_arriendo">
+			
 								</div>
 								<div class="modal-footer">
 								  <button type="button" class="btn btn-secondary" id="cancelar_btn"data-dismiss="modal">OK</button>
@@ -154,4 +149,12 @@
 							  </div>
 							</div>
 						</div>
+
+
+
+						<dialog id="miAlerta">
+							<p>¡Este es mi mensaje personalizado!</p>
+							<button onclick="cerrarAlerta()">Aceptar</button>
+						  </dialog>
+						  
 					{% endblock %}

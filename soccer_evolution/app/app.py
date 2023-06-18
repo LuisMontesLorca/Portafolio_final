@@ -809,43 +809,49 @@ def arrendar ():
                 count_productos = cur.fetchone()[0]
                 print("este es el select count id ", count_productos)
                 cur.close()
-
+            carro_arriendo = carro_compras_dao['select_all']()
+            horarios = horarios_dao['select_all']()
             arriendo_existente = False
-            for row in carro_compras:
+            for row in carro_arriendo:
                 if (row['fecha'] == fecha and row['hora_inicio'] == hora_inicio and row['hora_fin'] == hora_fin and row['nombre_producto'] == nombre_cancha ):
                     arriendo_existente = True
-                    break         
+                    
+                    break 
+            print ("ESTE ES EL VALOR DE ARRENDO EXISTENTE: ", arriendo_existente)        
             if arriendo_existente:
-                mensaje= "La hora seleccionada para el dia", fecha, "no esta disponible"
-                print (" NOOOOOOO  HICE EL INSERT !!!!!!!!!!!!!!!!!")
-                return render_template('arrendar.html',inicio_sesion=inicio_sesion, id_usuario=id_usuario,id_cancha=id_cancha,nombre_cancha=nombre_cancha, valor_cancha= valor_cancha, horarios=horarios, cc_vacio=cc_vacio,mensaje=mensaje)
+                bandera = 0
+                mensaje= "La hora seleccionada para el dia"+ fecha+"no esta disponible"
+                print (" NOOOOOOO  HICE EL INSERT !!!!!!!!!!!!!!!!!")     
+                return jsonify(mensaje=mensaje,bandera=bandera)
             else:
-                    arriendo_existente =False  
-                    new_arriendo = carro_compras_dao['insert'](arriendo)
-        
-            consulta_eliminar = "DROP TRIGGER IF EXISTS insertar_arriendo_historial"
-            with mysql.connection.cursor() as cursor:
-                cursor.execute(consulta_eliminar)
-                mysql.connection.commit()
+                bandera = 1
+                arriendo_existente =False  
+                new_arriendo = carro_compras_dao['insert'](arriendo)
+    
+                consulta_eliminar = "DROP TRIGGER IF EXISTS insertar_arriendo_historial"
+                with mysql.connection.cursor() as cursor:
+                    cursor.execute(consulta_eliminar)
+                    mysql.connection.commit()
 
-            cursor =  mysql.connection.cursor()
-            # Definir la consulta para crear el trigger
-            consulta = """
-                CREATE TRIGGER insertar_arriendo_historial
-            AFTER INSERT ON carro_compras
-            FOR EACH ROW
-            BEGIN
-                INSERT INTO arriendos_historial (fecha, hora, valor, cancha, id_cliente)
-                VALUES (NEW.fecha, CONCAT(NEW.hora_inicio, '-', NEW.hora_fin), NEW.valor_producto, NEW.nombre_producto, NEW.id_cliente);
-            END
-            """
+                cursor =  mysql.connection.cursor()
+                # Definir la consulta para crear el trigger
+                consulta = """
+                    CREATE TRIGGER insertar_arriendo_historial
+                AFTER INSERT ON carro_compras
+                FOR EACH ROW
+                BEGIN
+                    INSERT INTO arriendos_historial (fecha, hora, valor, cancha, id_cliente)
+                    VALUES (NEW.fecha, CONCAT(NEW.hora_inicio, '-', NEW.hora_fin), NEW.valor_producto, NEW.nombre_producto, NEW.id_cliente);
+                END
+                """
 
-            with mysql.connection.cursor() as cursor:
-                cursor.execute(consulta)
-                mysql.connection.commit()
-                        
-            print ("HICE EL INSERT !!!!!!!!!!!!!!!!!")
-            return redirect(url_for('carro_compras'))
+                with mysql.connection.cursor() as cursor:
+                    cursor.execute(consulta)
+                    mysql.connection.commit()
+                            
+                print ("HICE EL INSERT !!!!!!!!!!!!!!!!!")
+                mensaje =''
+                return jsonify(mensaje=mensaje,bandera=bandera)
         else:
             return render_template('registro/login.html')
     else:
