@@ -21,7 +21,7 @@ $(document).ready(function() {
           required: true,
           number: true,
           minlength: 9,
-          maxlenght: 9
+          maxlength: 9
           
         },
         direccion_usuario: {

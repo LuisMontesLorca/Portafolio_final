@@ -4261,12 +4261,13 @@ input, select, textarea {
 	  }
 
 	  dialog {
-		width: 300px;
+		width: 500px;
 		padding: 10px;
-		background-color: #f8d7da;
-		color: #721c24;
-		border: 1px solid #f5c6cb;
+		background-color: rgba(42, 47, 74, 0.975);
+		color: white;
+		border: 1px solid rgba(42, 47, 74, 0.975);;
 		border-radius: 4px;
+		text-align: center; 
 	  }
 	  
 	  button {

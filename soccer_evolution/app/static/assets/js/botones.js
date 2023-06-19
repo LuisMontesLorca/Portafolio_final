@@ -1,12 +1,4 @@
-function mostrarAlerta() {
-  var miAlerta = document.getElementById("miAlerta");
-  miAlerta.showModal();
-}
 
-function cerrarAlerta() {
-  var miAlerta = document.getElementById("miAlerta");
-  miAlerta.close();
-}
 /* AGREGAR PELOTAS */ 
 $(document).ready(function() {
   $('.agregar-pelota').on('click', function() {
@@ -164,9 +156,7 @@ $(document).ready(function() {
               // Cerrar la modal cuando se hace clic en el botón "OK" o en la "X" de cierre
               $('#modal_arriendo_no_disponible').on('click', '.close, .btn-secondary', function() {
                 $('#modal_arriendo_no_disponible').modal('hide');
-                document.querySelector('#hora_inicio').value = '';
-                document.querySelector('#hora_fin').value = '';
-                document.querySelector('#datepicker').value = '';
+
                 window.location.reload()
 
               });
