@@ -1,4 +1,5 @@
 
+from curses import flash
 from flask import Flask, make_response, render_template, jsonify, request, redirect, session, url_for
 from flask_cors import CORS
 # IMPORT MYSQL LIB CONNECTION
@@ -737,6 +738,10 @@ transaccion_dao = dao.dao_generic(app, mysql, tbl_transaccion, tbl_transaccion_c
 tbl_contacto = 'contacto'
 tbl_contacto_columnas = ['id_contacto', 'nombre_contacto', 'mensaje_contacto', 'correo_contacto', 'tipo_contacto','id_cliente']
 contacto_dao = dao.dao_generic(app, mysql, tbl_contacto, tbl_contacto_columnas)
+
+tbl_datos_transaccion_transbank = 'datos_transaccion_transbank'
+tbl_datos_transaccion_transbank_columnas = ['id_datos_transaccion', 'correo_cliente', 'id_cliente']
+datos_transaccion_transbank_dao = dao.dao_generic(app, mysql, tbl_datos_transaccion_transbank, tbl_datos_transaccion_transbank_columnas)
 #________________________________________________
 #se tienen los métodos:
 # BUSCAR TODOS
@@ -745,7 +750,7 @@ contacto_dao = dao.dao_generic(app, mysql, tbl_contacto, tbl_contacto_columnas)
 #________________________________________________
 # INSERTAR
 # comuna = {'comuna': 'nueva comuna', 'id_provincia': 1}
-# new_comuna = comuna_dao['insert'](comuna)
+# new_comuna = comuna_dao['insert'](comuna) 
 # print('new_comuna: ', new_comuna)
 #________________________________________________
 # UPDATE
@@ -941,11 +946,24 @@ def registro():
             nombre_region=0
             nombre_provincia=0
             nombre_comuna=0
+
+                # Validar si el correo ya existe
+        cur = mysql.connection.cursor()
+        cur.execute('SELECT correo_usuario FROM usuarios WHERE correo_usuario = %s', (correo_usuario,))
+        existe_correo = cur.fetchone()
+        cur.close()
+
+        if existe_correo:
+            # El correo ya existe, enviar mensaje de error
+            flash('El correo ya está registrado', 'error')
+            return redirect(url_for('index'))
+
         usuario = { 'nombre_usuario': nombre_usuario, 'apellido_usuario': apellido_usuario, 
                     'correo_usuario': correo_usuario, 'password_usuario': password_usuario, 
                     'telefono_usuario': telefono_usuario, 'direccion_usuario': direccion_usuario,
                     'rut_usuario': rut_usuario, 'region_usuario': nombre_region, 
                     'provincia_usuario': nombre_provincia, 'comuna_usuario': nombre_comuna }
+                    
         new_usuario = usuario_dao['insert'](usuario)
         to_list = correo_usuario
         email = 'soccer_evoution91@outlook.com'
@@ -953,7 +971,8 @@ def registro():
         send_outlook(to_list, email, password)
         print('new_usuario: ', new_usuario)
 
-        session['nombre_usuario'] = nombre_usuario  # Inicia sesión automáticamente después del registro
+        session['nombre_usuario'] = nombre_usuario 
+         # Inicia sesión automáticamente después del registro
         return redirect(url_for('index'))  # Redirige al usuario al panel de control después del registro
     else:
             region = region_dao['select_all']()
@@ -1291,18 +1310,15 @@ def agregar_trabajador():
 
 ###### CARRO COMPRAS ###############
 
-
-
+@app.route('/mail', methods=['GET', 'POST'])
+def mail():
+   return render_template('mail.html')
 ############## TRANSBANK ####################
 
 @app.route('/transbank/commit-pay', methods=['GET', 'POST'])
 def transbank_commit_pay():
     # SE DEBE APLICAR ESTA DESCOMENTAR ESTA SECCIÓN Y AGREGAR LÓGICA PARA LA RESPUESTA RECIBIDA EN EL RESPONSE
     # DE SER CORRECTA SE DEBE CONFIRM
-    correo=request.cookies.get('correo')
- 
-
-    print('aqui se va a enviar el correo: ', correo)
     # EN CASO CONTRARIO SE DEBE CANCELAR Y MOSTRAR ERROR 
 
     tokenws = request.args.get('token_ws')
@@ -1352,15 +1368,43 @@ def transbank_commit_pay():
 
             dataHTML ={'titulo': titulo, 'tarjeta': tarjeta, 'tipo_tarjeta': tipoTarjeta,'fecha': fecha,
                         'orden_de_compra': ordenCompra,'session': session,'monto': monto,'estado': status}
+         
+            correo=0
             id_usuario=0
-            to_list = correo
+            datos_usuario = datos_transaccion_transbank_dao['select_all']()
+            print(datos_usuario)
+            for row in datos_usuario:
+                correo_cliente = row['correo_cliente']
+                id_usuario = row['id_cliente']
+                print(correo_cliente)
+                print(id_usuario)
+                break
+            
+            to_list = correo_cliente
             email = 'soccer_evoution91@outlook.com'
             password = 'soccer_evolution'
             send_outlook(to_list, email, password)
+            print(type(to_list))
+            print(type(email))
+            print(type(password))
+            print(to_list)
+            print(email)
+            print(password)
             transaccion ={'tipo_tarjeta': tipoTarjeta, 'fecha_transaccion': fecha, 'orden_compra': ordenCompra, 'session': session, 'estado':status, 'id_cliente':id_usuario}
-            new_comuna = transaccion_dao['insert'](transaccion)
-            
-            return render_template('transbank/commit_pay.html', dataHTML=dataHTML, id_usuario=id_usuario)
+            new_transaccion = transaccion_dao['insert'](transaccion)
+            cur = mysql.connection.cursor()
+            if new_transaccion:
+                try:
+                    cur.execute("DELETE FROM datos_transaccion_transbank ")
+                    mysql.connection.commit()
+                    response = {'message': 'Carro eliminado exitosamente'}
+                except:
+                    mysql.connection.rollback()
+                    response = {'message': 'Error al eliminar el producto'}
+                finally:
+                    cur.close()
+                print("ELIMINE LOS DATOS DE USUARIO ")
+                return render_template('transbank/commit_pay.html', dataHTML=dataHTML)
 
         else:
             reversOrCancel(tokenws, monto)
@@ -1429,6 +1473,9 @@ def transbank_create():
     correo = request.form.get('correo')
     session['transbank_correo'] =correo
     session['transbank_id_usuario'] =id_usuario
+    datos_cliente = {'correo_cliente':correo, 'id_cliente':id_usuario }
+    new_datos_transaccioN = datos_transaccion_transbank_dao['insert'](datos_cliente) 
+
     print("id_usuario:" , id_usuario)
     print("correo:" , correo)
     object_url = urlparse(request.base_url)
@@ -1456,7 +1503,7 @@ def transbank_create():
     print('token: ', token)
     print('url: ', url)
     # RETORNO DE LA RESPUESTA DE TRANSBANK
-    return render_template('transbank/send_pay.html', url=url, token=token,id_usuario=id_usuario,correo=correo)
+    return render_template('transbank/send_pay.html', url=url, token=token)
 
 # DEFINICIÓN DE RUTA API REST CON UN PARAMETRO DE ENTRADA (tokenws) EN EL PATH, PERMITIENDO SOLO SER LLAMADO POR GET
 #@app.route('/api/v1/transbank/transaction/commit/<string:tokenws>', methods=['PUT'])
