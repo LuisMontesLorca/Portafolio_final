@@ -7,7 +7,7 @@
 					<section id="banner" class="style2">
 						<div class="inner">
 							<span class="image">
-								<img src="/soccer_evolution/app/static/images/campeonato-banner.jpg" alt="" />
+								<img src="{{ url_for('static', filename='images/banner-bebidas-dep.jpg') }}" alt="" />
 							</span>
 							<header class="major">
 								<h1>Servicio de Hidratación y Alimentación</h1>
@@ -28,7 +28,7 @@
 							{% for bebida in bebidas %}
 							<section>
 								<a class="image">
-									<img src="{{ url_for('static', filename= 'images/otros.jpg') }}" alt="" data-position="center center" />
+									<img src="{{ url_for('static', filename= bebida.imagen_bebida) }}" alt="" data-position="center center" />
 								</a>
 								<div class="content">
 									<div class="inner">
@@ -49,7 +49,7 @@
 							{% for bebida in bebidas %}
 							<section>
 								<a class="image">
-									<img src="{{ url_for('static', filename= 'images/otros.jpg') }}" alt="" data-position="center center" />
+									<img src="{{ url_for('static', filename= bebida.imagen_bebida) }}" alt="" data-position="center center" />
 								</a>
 								<div class="content">
 									<div class="inner">
