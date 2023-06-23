@@ -1,0 +1,20 @@
+'./layout.html' %}
+
+{% block body %}
+
+            {% if id_usuario %}
+            <!-- Banner -->
+                <section id="banner" class="major">
+                    <div class="inner">
+                        <header class="major">
+                            <h1>Soccer Evolution</h1>
+                        </header>
+                        <div class="content">
+                            <p>Somos el ultimo integrante de tu equipo. Jugamos una gran variedad de deportes, entre ellos, futbol, basketball, tenis y padel. Te sorprenderas!!, nos encontramos ubicados en Av.Ferrocarril 123, en la comuna de Santiago.</p>
+                            <ul class="actions">
+                                
+                                <li><a href="{{ url_for('canchas', id=id_usuario) }}" class="button next scrolly">Arrienda con nosotros</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
