@@ -120,7 +120,16 @@
 	{% block body %}
 
     {% endblock %}
-
+	<script>
+	setTimeout(function() 
+	{
+		var flashContainer = document.getElementById("flash-messages-container");
+		if (flashContainer) 
+		{
+		  flashContainer.style.display = "none";
+		}
+	}, 4000);
+	</script>
 	</body>
 				<!-- Footer -->
 				<footer id="footer">
@@ -156,6 +165,7 @@
 		<script src="{{url_for('static', filename='assets/js/carro_compras.js') }}"></script>
 		<script src="{{url_for('static', filename='assets/js/validation.js') }}"></script>
 		<script src="{{url_for('static', filename='assets/js/botones.js') }}"></script>
+		<script src="{{url_for('static', filename='assets/js/flash.js') }}"></script>
 		<script src="{{url_for('static', filename='assets/js/alerts.js') }}"></script>
 		<script src="{{url_for('static', filename='assets/js/registro.js') }}"></script>
 		<script src="{{url_for('static', filename='assets/js/jquery-validation/dist/jquery.validate.min.js') }}"></script>

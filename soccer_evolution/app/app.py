@@ -1,6 +1,5 @@
 
-from curses import flash
-from flask import Flask, make_response, render_template, jsonify, request, redirect, session, url_for
+from flask import Flask, make_response, render_template, jsonify, request, redirect, session, url_for, flash
 from flask_cors import CORS
 # IMPORT MYSQL LIB CONNECTION
 from flask_mysqldb import MySQL
@@ -14,7 +13,10 @@ from dao import dao
 import requests
 # URL DEFINED
 from urllib.parse import urlparse
+from mail_2 import send_outlook2
 from mail import send_outlook
+
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app =Flask(__name__)
 app.secret_key = 'Lion333' 
@@ -785,6 +787,7 @@ def arrendar ():
             id_cancha = session['id_cancha']
             nombre_cancha = session['nombre_cancha']
             valor_cancha = session['valor_cancha']
+            img_cancha = session['img_cancha']
             arriendo = {'nombre_producto': nombre_cancha, 'fecha': fecha, 'hora_inicio':hora_inicio, 
                         'hora_fin': hora_fin, 'valor_producto': valor_cancha, 'id_producto': id_cancha,'id_cliente':id_usuario}
             print('id_usuario: ', id_usuario)
@@ -825,7 +828,7 @@ def arrendar ():
             print ("ESTE ES EL VALOR DE ARRENDO EXISTENTE: ", arriendo_existente)        
             if arriendo_existente:
                 bandera = 0
-                mensaje= "La hora seleccionada para el dia"+ fecha+"no esta disponible"
+                mensaje= "La hora seleccionada (" + hora_inicio + "-" + hora_fin + ") para el dia "+ fecha+" no esta disponible"
                 print (" NOOOOOOO  HICE EL INSERT !!!!!!!!!!!!!!!!!")     
                 return jsonify(mensaje=mensaje,bandera=bandera)
             else:
@@ -866,9 +869,11 @@ def arrendar ():
             id_cancha = request.args.get('id_cancha')
             nombre_cancha = request.args.get('nombre_cancha')
             valor_cancha = request.args.get('valor_cancha')
+            img_cancha = request.args.get('img_cancha_basket')
             session['nombre_cancha'] = nombre_cancha
             session['valor_cancha'] = valor_cancha
             session['id_cancha'] = id_cancha
+            session['img_cancha'] = img_cancha
             horarios = horarios_dao['select_all']()
 
             print('id_usuario: ', id_usuario)
@@ -910,6 +915,23 @@ def arrendar ():
        
 #### FIN ARRENDAR CANCHA  ######
 
+#@app.route('/suspender_arriendo/<int:id_arriendos_historial>', methods=['DELETE'])
+#def suspender_arriendo(id_arriendos_historial):
+#
+#    cur = mysql.connection.cursor()
+#    try:
+#        cur.execute("DELETE FROM carro_compras WHERE id_carro = %s", (id_arriendos_historial,))
+#        mysql.connection.commit()
+#        response = {'message': 'Producto eliminado exitosamente'}
+#    except:
+#        mysql.connection.rollback()
+#        response = {'message': 'Error al eliminar el producto'}
+#    finally:
+#        cur.close()
+#
+#    return jsonify(response)
+#
+
 ###### REGISTER #######
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
@@ -919,6 +941,7 @@ def registro():
         apellido_usuario = request.form['apellido_usuario']
         correo_usuario = request.form['correo_usuario']
         password_usuario = request.form['password_usuario']
+        hashed_password = generate_password_hash(password_usuario)
         telefono_usuario = request.form['telefono_usuario']
         direccion_usuario = request.form['direccion_usuario']
         region_usuario = request.form['region_usuario']
@@ -949,7 +972,7 @@ def registro():
 
                 # Validar si el correo ya existe
         cur = mysql.connection.cursor()
-        cur.execute('SELECT correo_usuario FROM usuarios WHERE correo_usuario = %s', (correo_usuario,))
+        cur.execute('SELECT correo_usuario FROM usuario WHERE correo_usuario = %s', (correo_usuario,))
         existe_correo = cur.fetchone()
         cur.close()
 
@@ -959,7 +982,7 @@ def registro():
             return redirect(url_for('index'))
 
         usuario = { 'nombre_usuario': nombre_usuario, 'apellido_usuario': apellido_usuario, 
-                    'correo_usuario': correo_usuario, 'password_usuario': password_usuario, 
+                    'correo_usuario': correo_usuario, 'password_usuario': hashed_password, 
                     'telefono_usuario': telefono_usuario, 'direccion_usuario': direccion_usuario,
                     'rut_usuario': rut_usuario, 'region_usuario': nombre_region, 
                     'provincia_usuario': nombre_provincia, 'comuna_usuario': nombre_comuna }
@@ -1056,41 +1079,53 @@ def login():
         username_login = request.form['correo_login']
         password_login = request.form['contraseña_login']
 
-        usuario = usuario_dao['select_all']()  # Elimina los corchetes cuadrados para llamar al método select_all()
+        cur = mysql.connection.cursor()
+        cur.execute('SELECT password_usuario FROM usuario WHERE correo_usuario = %s', (username_login,))
+        password_bd = cur.fetchone()[0]
+        cur.close()
+
+
+
+        cur = mysql.connection.cursor()
+        cur.execute('SELECT id_usuario, nombre_usuario FROM usuario WHERE correo_usuario = %s', (username_login,))
+        rows = cur.fetchall()
+        usuarios_by_id = []
+        print('rows: ', rows)
+        for row in rows:
+            usuario_by_id = {
+            'id_usuario' : row[0],
+            'nombre_usuario' : row[1]
+            }
+            usuarios_by_id.append(usuario_by_id)
+        cur.close()
 
         id_usuario = None
-        correo = None
-        password = None
-
-        for row in usuario:
-            id_usuario = row['id_usuario']
-            correo = row['correo_usuario']
-            password = row['password_usuario']
-            nombre_usuario = row['nombre_usuario']
-        
-            # Verifica las credenciales (aquí puedes implementar tu lógica de autenticación)
-            if password_login == password and username_login == correo:
-                session['username'] = username_login
-                session['id_usuario'] = id_usuario
-                session['nombre_usuario'] = nombre_usuario
-                response = make_response("Cookie set!")  # Crear una respuesta
-                response.set_cookie('correo', username_login)
-
-                if 'username' in session:
-                    # El usuario ha iniciado sesión
-                    username_login = session['username']
-                    id_usuario_login = session['id_usuario']
-                    if username_login == 'admin@gmail.com':
-                        session['admin'] = username_login
-                        print ('INGRESO EL ADMIN;', username_login )
-                        admin = True
-                        return redirect(url_for('index', id_usuario=id_usuario_login, admin=admin))
-                    else:
-                        admin = False
-                        return redirect(url_for('index', id_usuario=id_usuario_login, admin=admin))
+        print("ESte es el usuario by id: ", usuarios_by_id )
+        if check_password_hash(password_bd,password_login):
+            
+            for row in usuarios_by_id:
+                id_usuario = row['id_usuario']
+                nombre_usuario = row['nombre_usuario']
+                break
+                    
+            session['username'] = username_login
+            session['id_usuario'] = id_usuario
+            session['nombre_usuario'] = nombre_usuario
+            if 'username' in session:
+                # El usuario ha iniciado sesión
+                username_login = session['username']
+                id_usuario_login = session['id_usuario']
+                if username_login == 'admin@gmail.com':
+                    session['admin'] = username_login
+                    print ('INGRESO EL ADMIN;', username_login )
+                    admin = True
+                    return redirect(url_for('index', id_usuario=id_usuario_login, admin=admin))
                 else:
-                    # El usuario no ha iniciado sesión
-                    return 'Inicia sesión para continuar'
+                    admin = False
+                    return redirect(url_for('index', id_usuario=id_usuario_login, nombre_usuario=nombre_usuario))
+            else:
+                # El usuario no ha iniciado sesión
+                return 'Inicia sesión para continuar'
         
         # return redirect(url_for('layout', usuario_incia=usuario_iniciado_sesion))
         return 'Credenciales inválidas'  # Mueve el retorno al final del bucle for
@@ -1111,6 +1146,7 @@ def dashboard():
 def logout():
     session.pop('username', None)
     session.pop('id_usuario', None)
+    session.clear()
     return redirect('/')
 
 ######FIN LOGIN#######
@@ -1134,7 +1170,6 @@ def editar_usuarios (id):
         nombre_usuario = request.form['nombre_usuario']
         apellido_usuario = request.form['apellido_usuario']
         correo_usuario = request.form['correo_usuario']
-        password_usuario = request.form['password_usuario']
         telefono_usuario = request.form['telefono_usuario']
         direccion_usuario = request.form['direccion_usuario']
         region_usuario = request.form['region_usuario_editar']
@@ -1158,8 +1193,14 @@ def editar_usuarios (id):
         nombre_comuna = cur.fetchone()[0]
         print("este es el select count id ", nombre_comuna)
         cur.close()
+
+        cur = mysql.connection.cursor()
+        cur.execute('SELECT password_usuario FROM usuario WHERE id_usuario = %s', (id_usuario,))
+        password = cur.fetchone()[0]
+        print("este es el select count id ", password)
+        cur.close()
         usuario = { 'id_usuario':id_usuario, 'nombre_usuario': nombre_usuario, 'apellido_usuario': apellido_usuario, 
-                    'correo_usuario': correo_usuario, 'password_usuario': password_usuario, 
+                    'correo_usuario': correo_usuario, 'password_usuario':password,
                     'telefono_usuario': telefono_usuario, 'direccion_usuario': direccion_usuario,'rut_usuario':rut_usuario, 
                     'region_usuario':nombre_region,'provincia_usuario':nombre_provincia,'comuna_usuario':nombre_comuna,}
         
@@ -1380,16 +1421,11 @@ def transbank_commit_pay():
                 print(id_usuario)
                 break
             
-            to_list = correo_cliente
-            email = 'soccer_evoution91@outlook.com'
-            password = 'soccer_evolution'
-            send_outlook(to_list, email, password)
-            print(type(to_list))
-            print(type(email))
-            print(type(password))
-            print(to_list)
-            print(email)
-            print(password)
+            to_list2 = correo_cliente
+            email2 = 'soccer_evoution91@outlook.com'
+            password2 = 'soccer_evolution'
+            send_outlook2(to_list2, email2, password2)
+
             transaccion ={'tipo_tarjeta': tipoTarjeta, 'fecha_transaccion': fecha, 'orden_compra': ordenCompra, 'session': session, 'estado':status, 'id_cliente':id_usuario}
             new_transaccion = transaccion_dao['insert'](transaccion)
             cur = mysql.connection.cursor()

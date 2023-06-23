@@ -4273,4 +4273,27 @@ input, select, textarea {
 	  button {
 		margin-top: 10px;
 	  }
-	  
+
+.flash-messages {
+  position: fixed;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  z-index: 9999;
+}
+
+.flash-message {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.alert {
+  background-color: rgba(42, 47, 74, 0.975);
+  color: white;
+  border: 1px solid rgba(42, 47, 74, 0.975);
+}
+

@@ -124,6 +124,22 @@
 								</article>
 							</section>
 							{% endif %}
+
+							<div id="flash-messages-container">
+								{% with messages = get_flashed_messages() %}
+								  {% if messages %}
+									<div class="flash-messages">
+									  {% for message in messages %}
+										<div class="flash-message alert">{{ message }}</div>
+									  {% endfor %}
+									</div>
+								  {% endif %}
+								{% endwith %}
+							  </div>
+							  
+
+
+
 						<!-- Two -->
 							<section id="two">
 								<div class="inner">
@@ -148,6 +164,9 @@
 					  </dialog>
 					  
 			
+
+
+				
 						{% endblock %}
 
 
