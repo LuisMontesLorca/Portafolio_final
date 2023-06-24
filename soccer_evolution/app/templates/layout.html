@@ -55,7 +55,7 @@
 					<nav>
 
 						{% if admin %}
-						<a href="{{ url_for('lista_canchas') }}" style="text-align: center;">ADMINISTRADOR</a>
+						<a href="{{ url_for('administrador') }}" style="text-align: center;">ADMINISTRADOR</a>
 						{% endif %}
 						{% if nombre_usuario %}
 						<a href="{{ url_for('perfil_usuario', id=id_usuario ) }}" style="text-align: center;">{{nombre_usuario}}</a>
@@ -70,7 +70,7 @@
 						{% else %}
 						<nav>
 							{% if admin %}
-							<a href="{{ url_for('lista_canchas') }} ">ADMINISTRADOR</a>
+							<a href="{{ url_for('administrador') }} ">ADMINISTRADOR</a>
 							{% endif %}
 							{% if nombre_usuario %}
 							<a href="{{ url_for('perfil_usuario', id=id_usuario ) }}">{{nombre_usuario}}</a>
