@@ -19,9 +19,7 @@
 									<div class="accordion-item">
 										<div class="accordion-header">
 										<h3>Canchas de Futbol</h3>
-										<div class="add-cancha">
-										<a href="{{ url_for('new_producto') }}"><strong> Agregar cancha </strong></a><i class="fas fa-solid fa-circle-plus"></i>
-									</div>
+										
 										</div>
 										<div class="accordion-content">
 										<div class="table-wrapper">
@@ -42,6 +40,7 @@
 												<td>{{ cancha.valor_cancha_futbol }}</td>
 												<td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
 												<td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a></td>
+												<td><a class= "agregar-cancha-futbol" data-toggle="tooltip" data-placement="top" data-original-title="Agregar"><i class="fas fa-solid fa-circle-plus"  style="cursor:pointer;"></i></a></td>
 												</tr>
 												{% endfor %}
 											</tbody>
@@ -57,9 +56,7 @@
 									<div class="accordion-item">
 										<div class="accordion-header">
 											<h3>Canchas de Basketball</h3>
-											<div class="add-cancha">
-												<a href=""><strong> Agregar cancha </strong></a><i class="fas fa-solid fa-circle-plus"></i>
-											</div>
+				
 										</div>
 										<div class="accordion-content">
 											<div class="table-wrapper">
@@ -80,6 +77,7 @@
 														<td>{{ cancha.valor_cancha_basket }}</td>
 														<td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
 														<td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a></td>
+														<td><a class= "agregar-cancha-basket" data-toggle="tooltip" data-placement="top" data-original-title="Agregar"><i class="fas fa-solid fa-circle-plus"  style="cursor:pointer;"></i></a></td>
 													</tr>
 													{% endfor %}
 													</tbody>
@@ -94,9 +92,6 @@
 										<div class="accordion-item">
 										<div class="accordion-header">
 											<h3>Canchas Tenis y Padel</h3>
-											<div class="add-cancha">
-												<a href=""><strong> Agregar cancha </strong></a><i class="fas fa-solid fa-circle-plus"></i>
-											</div>
 										</div>
 										<div class="accordion-content">
 											<div class="table-wrapper">
@@ -117,6 +112,7 @@
 														<td>{{ cancha.valor_cancha_tenis }}</td>
 														<td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
 														<td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a></td>
+														<td><a class= "agregar-cancha-tenis" data-toggle="tooltip" data-placement="top" data-original-title="Agregar"><i class="fas fa-solid fa-circle-plus"  style="cursor:pointer;"></i></a></td>
 													</tr>
 													{% endfor %}
 													</tbody>
@@ -131,9 +127,6 @@
 										<div class="accordion-item">
 										<div class="accordion-header">
 											<h3>Camiseta</h3>
-											<div class="add-cancha">
-												<a href=""><strong> Agregar camiseta </strong></a><i class="fas fa-solid fa-circle-plus"></i>
-											</div>
 										</div>
 										<div class="accordion-content">
 											<div class="table-wrapper">
@@ -154,6 +147,7 @@
 														<td>{{ camiseta.valor_cancha_camiseta }}</td>
 														<td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
 														<td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a></td>
+														<td><a class= "agregar-camiseta" data-toggle="tooltip" data-placement="top" data-original-title="Agregar"><i class="fas fa-solid fa-circle-plus"  style="cursor:pointer;"></i></a></td>
 													</tr>
 													{% endfor %}
 													</tbody>
@@ -168,9 +162,6 @@
 										<div class="accordion-item">
 										<div class="accordion-header">
 											<h3>Pelota</h3>
-											<div class="add-cancha">
-												<a href=""><strong> Agregar pelota </strong></a><i class="fas fa-solid fa-circle-plus"></i>
-											</div>
 										</div>
 										<div class="accordion-content">
 											<div class="table-wrapper">
@@ -191,6 +182,7 @@
 														<td>{{ pelota.valor_pelota }}</td>
 														<td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
 														<td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a></td>
+														<td><a class= "agregar-pelota" data-toggle="tooltip" data-placement="top" data-original-title="Agregar"><i class="fas fa-solid fa-circle-plus"  style="cursor:pointer;"></i></a></td>
 													</tr>
 													{% endfor %}
 													</tbody>
@@ -205,9 +197,6 @@
 										<div class="accordion-item">
 										<div class="accordion-header">
 											<h3>Bebida</h3>
-											<div class="add-cancha">
-												<a href=""><strong> Agregar producto </strong></a><i class="fas fa-solid fa-circle-plus"></i>
-											</div>
 										</div>
 										<div class="accordion-content">
 											<div class="table-wrapper">
@@ -228,6 +217,7 @@
 														<td>{{ bebida.valor_bebida }}</td>
 														<td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
 														<td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a></td>
+														<td><a class= "agregar-bebida" data-toggle="tooltip" data-placement="top" data-original-title="Agregar"><i class="fas fa-solid fa-circle-plus"  style="cursor:pointer;"></i></a></td>
 													</tr>
 													{% endfor %}
 													</tbody>
@@ -252,6 +242,149 @@
 
 							
 					
+					<!-- MODAL AGREGAR CANCHA FUTBOL -->
+					<div id="modal_agregar_cancha" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+						  <div class="modal-content">
+							<div class="modal-header">
+							  <h2 class="modal-title " id="confirmar-modal-label">¿Desea agregar una nueva cancha?</h2>
+							  <a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							  </a>
+							</div>
+							<div class="modal-body">
+							  <input type="text" id="nombre_cancha" placeholder="nombre_cancha">
+							  <br>
+							  <input type="text" id="descripcion" placeholder="descripcion">
+							  <br>
+							  <input type="text" id="valor" placeholder="valor">
+							</div>
+							<div class="modal-footer">
+							  <button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">OK</button>
+							</div>
+						  </div>
+						</div>
+					  </div>
+
+					  <!-- MODAL AGREGAR CANCHA BASKET -->
+					<div id="modal_agregar_cancha" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+						  <div class="modal-content">
+							<div class="modal-header">
+							  <h2 class="modal-title " id="confirmar-modal-label">¿Desea agregar una nueva cancha?</h2>
+							  <a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							  </a>
+							</div>
+							<div class="modal-body">
+							  <input type="text" id="nombre_cancha" placeholder="nombre_cancha">
+							  <br>
+							  <input type="text" id="descripcion" placeholder="descripcion">
+							  <br>
+							  <input type="text" id="valor" placeholder="valor">
+							</div>
+							<div class="modal-footer">
+							  <button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">OK</button>
+							</div>
+						  </div>
+						</div>
+					  </div>
+
+					  <!-- MODAL AGREGAR CANCHA TENIS PADEL -->
+					<div id="modal_agregar_cancha" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+						  <div class="modal-content">
+							<div class="modal-header">
+							  <h2 class="modal-title " id="confirmar-modal-label">¿Desea agregar una nueva cancha?</h2>
+							  <a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							  </a>
+							</div>
+							<div class="modal-body">
+							  <input type="text" id="nombre_cancha" placeholder="nombre_cancha">
+							  <br>
+							  <input type="text" id="descripcion" placeholder="descripcion">
+							  <br>
+							  <input type="text" id="valor" placeholder="valor">
+							</div>
+							<div class="modal-footer">
+							  <button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">OK</button>
+							</div>
+						  </div>
+						</div>
+					  </div>
+
+					  <!-- MODAL AGREGAR CAMISETA -->
+					<div id="modal_agregar_cancha" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+						  <div class="modal-content">
+							<div class="modal-header">
+							  <h2 class="modal-title " id="confirmar-modal-label">¿Desea agregar una nueva camiseta?</h2>
+							  <a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							  </a>
+							</div>
+							<div class="modal-body">
+							  <input type="text" id="nombre_cancha" placeholder="nombre_cancha">
+							  <br>
+							  <input type="text" id="descripcion" placeholder="descripcion">
+							  <br>
+							  <input type="text" id="valor" placeholder="valor">
+							</div>
+							<div class="modal-footer">
+							  <button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">OK</button>
+							</div>
+						  </div>
+						</div>
+					  </div>
+
+					  <!-- MODAL AGREGAR PELOTA -->
+					<div id="modal_agregar_cancha" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+						  <div class="modal-content">
+							<div class="modal-header">
+							  <h2 class="modal-title " id="confirmar-modal-label">¿Desea agregar una nueva cancha?</h2>
+							  <a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							  </a>
+							</div>
+							<div class="modal-body">
+							  <input type="text" id="nombre_cancha" placeholder="nombre_cancha">
+							  <br>
+							  <input type="text" id="descripcion" placeholder="descripcion">
+							  <br>
+							  <input type="text" id="valor" placeholder="valor">
+							</div>
+							<div class="modal-footer">
+							  <button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">OK</button>
+							</div>
+						  </div>
+						</div>
+					  </div>
+					  
+					  <!-- MODAL AGREGAR BEBIDA -->
+					<div id="modal_agregar_bebida" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+						  <div class="modal-content">
+							<div class="modal-header">
+							  <h2 class="modal-title " id="confirmar-modal-label">¿Desea agregar una nueva cancha?</h2>
+							  <a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							  </a>
+							</div>
+							<div class="modal-body">
+							  <input type="text" id="nombre_bebida" placeholder="nombre_bebida">
+							  <br>
+							  <input type="text" id="descripcion_bebida" placeholder="descripcion_bebida">
+							  <br>
+							  <input type="text" id="valor" placeholder="valor">
+							</div>
+							<div class="modal-footer">
+							  <button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">OK</button>
+							</div>
+						  </div>
+						</div>
+					  </div>
 
 	
 	
