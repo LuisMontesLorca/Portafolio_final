@@ -1,0 +1,104 @@
+{% extends './layout.html' %}
+
+        {% block body %}
+
+                    <div class=" box">
+
+
+					<h2 id="content">Cambio de contraseña</h2>
+					<p>Aqui podrás restablecer tu contraseña: </p>
+										
+                    <form method="POST" id="form_cambio_contraseña">
+                        <div class="row gtr-uniform">
+                            <div class="col-6 col-12-xsmall">
+                                <input type="email" name="correo_login_cambio" id="correo_login_cambio" value="" placeholder="Correo" />
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                <input type="password" name="contraseña_login_cambio" id="contraseña_login_cambio" value="" placeholder="Contraseña" />
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                <input type="password" name="contraseña_login_confirm" id="contraseña_login_confirm" value="" placeholder="Repita su contraseña" />
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                               
+                            </div>
+                            <div class="col-6 col-12-xsmall">
+                                <a type="button"  id="btn_modal_contraseña" class="btn_modal_contraseña ">Actualizar contraseña</a>
+                                
+                            </div>
+
+                            
+                            </div>
+                    </form>
+                    </div>
+                            <!-- Break -->
+                    
+
+							<div id="flash-messages-container">
+								{% with messages = get_flashed_messages() %}
+								  {% if messages %}
+									<div class="flash-messages">
+									  {% for message in messages %}
+										<div class="flash-message alert">{{ message }}</div>
+									  {% endfor %}
+									</div>
+								  {% endif %}
+								{% endwith %}
+							  </div>
+
+
+
+                <!-- MODAL OLVIDO CONTRASEÑA-->
+
+                <div id="modal_cambio_contraseña" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h2 class="modal-title" id="confirmar-modal-label">Cambio de contraseña!!</h2>
+                              <a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                              </a>
+                          </div>
+                          <div class="modal-body">
+                              <p>Esta a punto de actualizar su contraseña. ¿Está seguro?</p>
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" id="recuperar_contraseña_btn"  data-dismiss="modal">Sí</button>
+                              <button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">No</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              
+              
+              <div id="modal_contraseña_cambiada" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title" id="confirmar-modal-label">Su contraseña ha sido cambiada con éxito</h2>
+                            <a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </a>
+                        </div>
+                        <div class="modal-body">
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" id="btn_continuar" data-dismiss="modal">Continuar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+              <dialog id="alerta_contraseña_no_compatible">
+                <p>Las contraseñas no coinciden.</p>
+                <button onclick="cerrarContraseñaNoCompatible()">Aceptar</button>
+                </dialog>
+                
+
+                <dialog id="alerta_recuperacion_password_error">
+                  <p>El correo ingresado no se encuentra registrado.</p>
+                  <button onclick="cerrarRecuperarContraseñaError()">Aceptar</button>
+                  </dialog>
+ {% endblock %}

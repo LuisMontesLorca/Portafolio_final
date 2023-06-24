@@ -12,6 +12,7 @@
                         <div class="row gtr-uniform">
                             <div class="col-6 col-12-xsmall">
                                 <input type="email" name="correo_login" id="correo_login" value="" placeholder="Correo" />
+                                <p class="small-text"><a href="#" class="modal_olvido">¿Olvidaste tu contraseña?</a></p>
                             </div>
                             <div class="col-6 col-12-xsmall">
                                 <input type="password" name="contraseña_login" id="contraseña_login" value="" placeholder="Contraseña" />
@@ -28,4 +29,54 @@
                     </div>
                             <!-- Break -->
                     
+
+							<div id="flash-messages-container">
+								{% with messages = get_flashed_messages() %}
+								  {% if messages %}
+									<div class="flash-messages">
+									  {% for message in messages %}
+										<div class="flash-message alert">{{ message }}</div>
+									  {% endfor %}
+									</div>
+								  {% endif %}
+								{% endwith %}
+							  </div>
+
+
+
+                <!-- MODAL OLVIDO CONTRASEÑA-->
+
+                <div id="modal_olvido_contraseña" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h2 class="modal-title" id="confirmar-modal-label">Ha olvidado su contraseña?</h2>
+                              <a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                              </a>
+                          </div>
+                          <div class="modal-body">
+                              <p>Si desea recuperar su contraseña, deberá validar su correo electrónico de registro, una vez validado, se le enviará un correo en el cual podrá restablecer su contraseña. ¿Está de acuerdo?</p>
+                              <input type="email" name="correo_recuperacion" id="correo_recuperacion" placeholder="Escriba su correo electrónico" />
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" id="recuperar_btn"  data-dismiss="modal">Sí</button>
+                              <button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">No</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              
+
+
+              <dialog id="alerta_recuperacion_password">
+                <p>El correo ha sido enviado con éxito.</p>
+                <button onclick="cerrarRecuperarContraseña()">Aceptar</button>
+                </dialog>
+                
+
+                <dialog id="alerta_recuperacion_password_error">
+                  <p>El correo ingresado no se encuentra registrado.</p>
+                  <button onclick="cerrarRecuperarContraseñaError()">Aceptar</button>
+                  </dialog>
  {% endblock %}

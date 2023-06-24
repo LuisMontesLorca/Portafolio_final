@@ -15,7 +15,8 @@ $(document).ready(function() {
           required: true
         },
         password_usuario: {
-          required: true
+          required: true,
+          minlength: 6
         },
         telefono_usuario: {
           required: true,
@@ -42,7 +43,8 @@ $(document).ready(function() {
           required:  "Por favor, ingresa tu correo"
         },
         password_usuario: {
-          required:  "Por favor, ingresa tu contraseña"
+          required:  "Por favor, ingresa tu contraseña",
+          minlength: "Debe tener un mínimo de 6 caracteres"
         },
         telefono_usuario: {
           required:  "Por favor, ingresa tu telefono",
@@ -172,3 +174,4 @@ $(document).ready(function() {
       }
     });
   });
+

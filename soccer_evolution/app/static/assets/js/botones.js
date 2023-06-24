@@ -34,11 +34,13 @@ $(document).ready(function() {
         success: function(response) {
           // Manejar la respuesta del servidor
           console.log('Envío exitoso');
+          mostrarAlerta(); 
           // Puedes realizar acciones adicionales después de enviar los datos del formulario
         },
         error: function(error) {
           // Manejar los errores del servidor
           console.log('Error en el envío: ', error);
+          
         }
       });
     });

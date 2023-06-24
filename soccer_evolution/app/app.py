@@ -13,6 +13,7 @@ from dao import dao
 import requests
 # URL DEFINED
 from urllib.parse import urlparse
+from mail_3 import send_outlook3
 from mail_2 import send_outlook2
 from mail import send_outlook
 
@@ -1110,55 +1111,71 @@ def login():
         password_login = request.form['contraseña_login']
 
         cur = mysql.connection.cursor()
-        cur.execute('SELECT password_usuario FROM usuario WHERE correo_usuario = %s', (username_login,))
-        password_bd = cur.fetchone()[0]
-        cur.close()
-
-
-
-        cur = mysql.connection.cursor()
-        cur.execute('SELECT id_usuario, nombre_usuario FROM usuario WHERE correo_usuario = %s', (username_login,))
+        cur.execute('SELECT correo_usuario FROM usuario')
         rows = cur.fetchall()
-        usuarios_by_id = []
+        validacion_login = []
         print('rows: ', rows)
         for row in rows:
-            usuario_by_id = {
-            'id_usuario' : row[0],
-            'nombre_usuario' : row[1]
+            usuario_correo = {
+            'correo_usuario' : row[0]
             }
-            usuarios_by_id.append(usuario_by_id)
+            validacion_login.append(usuario_correo)
         cur.close()
 
-        id_usuario = None
-        print("ESte es el usuario by id: ", usuarios_by_id )
-        if check_password_hash(password_bd,password_login):
-            
-            for row in usuarios_by_id:
-                id_usuario = row['id_usuario']
-                nombre_usuario = row['nombre_usuario']
-                break
-                    
-            session['username'] = username_login
-            session['id_usuario'] = id_usuario
-            session['nombre_usuario'] = nombre_usuario
-            if 'username' in session:
-                # El usuario ha iniciado sesión
-                username_login = session['username']
-                id_usuario_login = session['id_usuario']
-                if username_login == 'admin@gmail.com':
-                    session['admin'] = username_login
-                    print ('INGRESO EL ADMIN;', username_login )
-                    admin = True
-                    return redirect(url_for('index', id_usuario=id_usuario_login, admin=admin))
-                else:
-                    admin = False
-                    return redirect(url_for('index', id_usuario=id_usuario_login, nombre_usuario=nombre_usuario))
-            else:
-                # El usuario no ha iniciado sesión
-                return 'Inicia sesión para continuar'
-        
-        # return redirect(url_for('layout', usuario_incia=usuario_iniciado_sesion))
-        return 'Credenciales inválidas'  # Mueve el retorno al final del bucle for
+
+        for row in validacion_login:
+            correo_login=row['correo_usuario']
+            if correo_login == username_login:
+                
+                #print("Este es el nombre de la persona que se esta buscando
+                cur = mysql.connection.cursor()
+                cur.execute('SELECT password_usuario FROM usuario WHERE correo_usuario = %s', (username_login,))
+                password_bd = cur.fetchone()[0]
+                cur.close()
+                
+                cur = mysql.connection.cursor()
+                cur.execute('SELECT id_usuario, nombre_usuario FROM usuario WHERE correo_usuario = %s', (username_login,))
+                rows = cur.fetchall()
+                usuarios_by_id = []
+                print('rows: ', rows)
+                for row in rows:
+                    usuario_by_id = {
+                    'id_usuario' : row[0],
+                    'nombre_usuario' : row[1]
+                    }
+                    usuarios_by_id.append(usuario_by_id)
+                cur.close()
+
+                id_usuario = None
+                if password_bd is not None:
+                    print("ESte es el usuario by id: ", usuarios_by_id )
+                    if check_password_hash(password_bd,password_login):
+                        
+                        for row in usuarios_by_id:
+                            id_usuario = row['id_usuario']
+                            nombre_usuario = row['nombre_usuario']
+                            break
+                                
+                        session['username'] = username_login
+                        session['id_usuario'] = id_usuario
+                        session['nombre_usuario'] = nombre_usuario
+                        if 'username' in session:
+                            # El usuario ha iniciado sesión
+                            username_login = session['username']
+                            id_usuario_login = session['id_usuario']
+                            if username_login == 'admin@gmail.com':
+                                session['admin'] = username_login
+                                print ('INGRESO EL ADMIN;', username_login )
+                                admin = True
+                                return redirect(url_for('index', id_usuario=id_usuario_login, admin=admin))
+                            else:
+                                admin = False
+                                return redirect(url_for('index', id_usuario=id_usuario_login, nombre_usuario=nombre_usuario))
+                        else:
+                            # El usuario no ha iniciado sesión
+                            return 'Inicia sesión para continuar'
+        else:
+            flash( 'Credenciales inválidas')
 
     return render_template('registro/login.html')
 
@@ -1179,7 +1196,59 @@ def logout():
     session.clear()
     return redirect('/')
 
+@app.route('/recuperar_correo', methods=['GET', 'POST'])
+def recuperar_correo():
+    data = request.get_json()  # Obtener los datos enviados en formato JSON
+    correo = data['correo']
+    cur = mysql.connection.cursor()
+    cur.execute('SELECT correo_usuario FROM usuario')
+    rows = cur.fetchall()
+    correos_usuarios = []
+    print('rows: ', rows)
+    for row in rows:
+        correos = {
+        'correo_usuario' : row[0]
+        }
+        correos_usuarios.append(correos)
+    cur.close()
+    correo_existe = 0
+    for row in correos_usuarios:
+        correo_bd = row['correo_usuario']
+        if correo_bd == correo:
+            correo_existe = 1
+            to_list3 = correo_bd
+            email3 ='soccer_evoution91@outlook.com'
+            password3 = 'soccer_evolution'
+            send_outlook3(to_list3, email3, password3)
+            break
+
+        else:
+            correo_existe = 0
+    return jsonify(correo_existe)
+
+
+
+@app.route('/cambio_contrasena', methods=['GET', 'POST'])
+def cambio_contraseña():
+        return render_template('registro/cambio_contraseña.html')
+    
+@app.route('/cambio_contraseña_ajax', methods=['GET', 'POST'])
+def cambio_contraseña_ajax():
+    data = request.get_json()  # Obtener los datos enviados en formato JSON
+    correo_login_cambio = data['correo_login_cambio']
+    contraseña_login_cambio = data['contraseña_login_cambio']
+    hashed_password = generate_password_hash(contraseña_login_cambio)
+
+    print ("contraseña hashed: " + hashed_password)
+    cur = mysql.connection.cursor()
+    cur.execute('UPDATE usuario SET password_usuario = %s WHERE correo_usuario = %s', (hashed_password, correo_login_cambio))
+    mysql.connection.commit()
+    cur.close()
+    update=1
+    return jsonify(update)
+
 ######FIN LOGIN#######
+
 
 ######LISTA USUARIO#######
 
@@ -1400,6 +1469,7 @@ def transbank_commit_pay():
     url = "https://webpay3gint.transbank.cl/rswebpaytransaction/api/webpay/v1.2/transactions/{0}".format(tokenws)
     ## CABECERA SOLICITADA POR TRANSBANK
     headers = header_request_transbank()
+  
     ## INVOCACIÓN POR GET A API REST QUE CONFIRMA UNA TRANSACCIÓN EN TRANSBANK   
 
     try:
@@ -1450,13 +1520,11 @@ def transbank_commit_pay():
                 print(correo_cliente)
                 print(id_usuario)
                 break
-            
+            transaccion ={'tipo_tarjeta': tipoTarjeta, 'fecha_transaccion': fecha, 'orden_compra': ordenCompra, 'session': session, 'estado':status, 'id_cliente':id_usuario}
             to_list2 = correo_cliente
             email2 = 'soccer_evoution91@outlook.com'
             password2 = 'soccer_evolution'
-            send_outlook2(to_list2, email2, password2)
-
-            transaccion ={'tipo_tarjeta': tipoTarjeta, 'fecha_transaccion': fecha, 'orden_compra': ordenCompra, 'session': session, 'estado':status, 'id_cliente':id_usuario}
+            send_outlook2(to_list2, email2, password2,transaccion)
             new_transaccion = transaccion_dao['insert'](transaccion)
             cur = mysql.connection.cursor()
             if new_transaccion:
@@ -1470,6 +1538,7 @@ def transbank_commit_pay():
                 finally:
                     cur.close()
                 print("ELIMINE LOS DATOS DE USUARIO ")
+                
                 return render_template('transbank/commit_pay.html', dataHTML=dataHTML)
 
         else:
@@ -1512,6 +1581,7 @@ def reversOrCancel(tokenws, amount):
         return render_template('transbank/payment_error.html', dataHTML='')
 
 # MÉTODO QUE CREA LA CABECERA SOLICITADA POR TRANSBANK EN UN REQUEST (SOLICITUD)
+
 def header_request_transbank():
     headers = { # DEFINICIÓN TIPO DE AUTORIZACIÓN Y AUTENTICACIÓN
                 "Authorization": "Token",
