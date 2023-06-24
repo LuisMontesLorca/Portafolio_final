@@ -1,20 +1,203 @@
-'./layout.html' %}
+{% extends './layout.html' %}
+
 
 {% block body %}
 
-            {% if id_usuario %}
-            <!-- Banner -->
-                <section id="banner" class="major">
-                    <div class="inner">
-                        <header class="major">
-                            <h1>Soccer Evolution</h1>
-                        </header>
-                        <div class="content">
-                            <p>Somos el ultimo integrante de tu equipo. Jugamos una gran variedad de deportes, entre ellos, futbol, basketball, tenis y padel. Te sorprenderas!!, nos encontramos ubicados en Av.Ferrocarril 123, en la comuna de Santiago.</p>
-                            <ul class="actions">
-                                
-                                <li><a href="{{ url_for('canchas', id=id_usuario) }}" class="button next scrolly">Arrienda con nosotros</a></li>
-                            </ul>
-                        </div>
+<section id="banner" class="major">
+    <div class="inner">
+        <header class="major">
+            <h1>Administrador Negocio</h1>
+        </header>
+        <div class="content">
+            <p>Nómina de trabjadores, registro de mantención a canchas, reportes y más.</p>
+        </div>
+    </div>
+</section>
+
+<section id="one">
+    <div class="inner">
+<div class="accordion">
+    <div class="accordion-item">
+        <div class="accordion-header">
+        <h3>Trabajador</h3>
+        <div class="add-cancha">
+        <a href="{{ url_for('new_producto') }}"><strong> Agregar Trabajador </strong></a><i class="fas fa-solid fa-circle-plus"></i>
+    </div>
+        </div>
+        <div class="accordion-content">
+        <div class="table-wrapper">
+            <table>
+            <thead>
+                <tr>
+                <th>id trabajador</th>  
+                <th>Nombre trabajador</th>
+                <th>Apellido trabajador</th>
+                <th>Comuna trabajador</th>
+                <th>Sueldo trabajador</th>
+                <th>fecha contratacion trabajador</th>
+                <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for trabajador in trabajadores %}
+                <tr>
+                <td>{{ trabajador.id_trabajador }}</td>
+                <td>{{ trabajador.nombre_trabajador }}</td>
+                <td>{{ trabajador.apellido_trabajador }}</td>
+                <td>{{ trabajador.comuna_trabajador }}</td>
+                <td>{{ trabajador.sueldo_trabajador }}</td>
+                <td>{{ trabajador.fecha_contratacion_trabajador }}</td>
+                <td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
+                <td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                
+    
+            </tfoot>
+            </table>
+        </div>
+        </div>
+    </div>
+
+    <!-- Mantención canchas -->
+
+    <div class="accordion-item">
+        <div class="accordion-header">
+            <h3>Mantención Canchas </h3>
+            <div class="add-cancha">
+                <a href=""><strong>Agregar mantencion </strong></a><i class="fas fa-solid fa-circle-plus"></i>
+            </div>
+        </div>
+        <div class="accordion-content">
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Id Mantencion</th>
+                        <th>Id Trabajdor</th>
+                        <th>Nombre Cancha</th>
+                        <th>Nombre Trabajador</th>
+                        <th>Fecha Mantención</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for mantencion in mantenciones %}
+                    <tr>
+                        <td>{{ mantencion.id_mantencion }}</td>
+                        <td>{{ mantencion.id_trabajador }}</td>
+                        <td>{{ mantencion.nombre_cancha }}</td>
+                        <td>{{ mantencion.nombre_trabajdor }}</td>
+                        <td>{{ mantencion.fecha_mantencion }}</td>
+                        <td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
+                        <td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a></td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+            
+                    </tfoot>
+                </table>
+                </div>
+        </div>
+        </div>
+        
+        <!--Pagos Servicios -->
+
+        <div class="accordion-item">
+        <div class="accordion-header">
+            <h3>Pago Servicios</h3>
+            <div class="add-cancha">
+                <a href=""><strong> Agregar Servicio </strong></a><i class="fas fa-solid fa-circle-plus"></i>
+            </div>
+        </div>
+        <div class="accordion-content">
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Id Servicio</th>
+                        <th>Nombre Servicio</th>
+                        <th>Monto Pago</th>
+                        <th>Numero Cliente</th>
+                        <th>Fecha Ultimo pago</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for servicio in servicios %}
+                    <tr>
+                        <td>{{ servicio.id_servicio }}</td>
+                        <td>{{ servicio.nombre_servicio }}</td>
+                        <td>{{ servicio.monto_pago }}</td>
+                        <td>{{ servicio.numero_cliente }}</td>
+                        <td>{{ servicio.fecha_ulpago }}</td>
+                        <td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
+                        <td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a></td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+            
+                    </tfoot>
+                </table>
+                </div>
+        </div>
+        </div>
+        <!--Liquidaciones de Pago -->
+        <div class="accordion-item">
+            <div class="accordion-header">
+                <h3>Liquidaciones de Pago</h3>
+                <div class="add-cancha">
+                    <a href=""><strong> Agregar Liquidación </strong></a><i class="fas fa-solid fa-circle-plus"></i>
+                </div>
+            </div>
+            <div class="accordion-content">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Id Liquidacion</th>
+                            <th>Id Trabajador</th>
+                            <th>Nombre Trabajador</th>
+                            <th>Mes Pago</th>
+                            <th>Año</th>
+                            <th>Monto Liquido</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for liquidacion in liquidaciones %}
+                        <tr>
+                            <td>{{ liquidacion.id_liquidacion }}</td>
+                            <td>{{ liquidacion.id_trabajador }}</td>
+                            <td>{{ liquidacion.nombre_trabajador }}</td>
+                            <td>{{ liquidacion.mes_pago }}</td>
+                            <td>{{ liquidacion.anno }}</td>
+                            <td>{{ liquidacion.monto_liquido }}</td>
+                            <td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
+                            <td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a></td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                        <tfoot>
+                
+                        </tfoot>
+                    </table>
                     </div>
-                </section>
+            </div>
+            
+            </div>
+
+
+</div>
+    
+    </div>
+</section>
+<div id= "contenedor-button">
+    <div id= "button-div">    <a href="{{ url_for('administrador') }}" class="button primary">Atras</a></div>
+</div>
+
+{% endblock %}

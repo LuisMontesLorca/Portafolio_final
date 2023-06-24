@@ -564,6 +564,18 @@ def estacionamientos ():
 def new_producto ():
     return render_template('admin/new_producto.html')
 
+@app.route('/administrador')
+def administrador ():
+    return render_template('admin/administrador.html')
+
+@app.route('/trabajador')
+def trabajador ():
+    trabajadores = trabajadores_dao['select_all']()
+    mantenciones = mantenciones_dao['select_all']()
+    servicios = servicios_dao['select_all']()
+    liquidaciones = liquidaciones_dao['select_all']()
+    return render_template('admin/trabajador.html', trabajadores = trabajadores, mantenciones = mantenciones, servicios = servicios, liquidaciones = liquidaciones)
+
 @app.route('/carro_compras')
 def carro_compras():
     if 'username' in session:
@@ -741,9 +753,27 @@ tbl_contacto = 'contacto'
 tbl_contacto_columnas = ['id_contacto', 'nombre_contacto', 'mensaje_contacto', 'correo_contacto', 'tipo_contacto','id_cliente']
 contacto_dao = dao.dao_generic(app, mysql, tbl_contacto, tbl_contacto_columnas)
 
+tbl_trabajadores = 'trabajador'
+tbl_trabajadores_columnas = ['id_trabajador','nombre_trabajador', 'apellido_trabajador', 'fecha_nacimiento_trabajador', 'direccion_trabajador', 'comuna_trabajador', 'provincia_trabajador', 'region_trabajador', 'sueldo_trabajador', 'fecha_contratacion_trabajador']
+trabajadores_dao = dao.dao_generic(app, mysql, tbl_trabajadores, tbl_trabajadores_columnas)
+
+tbl_mantenciones = 'mantencion'
+tbl_mantenciones_columnas = ['id_mantencion','id_trabajador', 'nombre_cancha', 'nombre_trabajador','fecha_mantencion']
+mantenciones_dao = dao.dao_generic(app, mysql, tbl_mantenciones, tbl_mantenciones_columnas)
+
+tbl_servicios = 'servicio'
+tbl_servicios_columnas = ['id_servicio','nombre_servicio', 'monto_pago', 'numero_cliente','fecha_ulpago']
+servicios_dao = dao.dao_generic(app, mysql, tbl_servicios, tbl_servicios_columnas)
+
+tbl_liquidaciones = 'liquidacion'
+tbl_liquidaciones_columnas = ['id_liquidacion','id_trabajador', 'nombre_trabajador', 'mes_pago','monto_liquido']
+liquidaciones_dao = dao.dao_generic(app, mysql, tbl_liquidaciones, tbl_liquidaciones_columnas)
+
 tbl_datos_transaccion_transbank = 'datos_transaccion_transbank'
 tbl_datos_transaccion_transbank_columnas = ['id_datos_transaccion', 'correo_cliente', 'id_cliente']
 datos_transaccion_transbank_dao = dao.dao_generic(app, mysql, tbl_datos_transaccion_transbank, tbl_datos_transaccion_transbank_columnas)
+
+
 #________________________________________________
 #se tienen los métodos:
 # BUSCAR TODOS

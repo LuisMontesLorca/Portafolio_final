@@ -1,0 +1,107 @@
+
+{% extends './layout.html' %}
+
+        {% block body %}
+
+					{% if id_usuario %}
+					<!-- Banner -->
+						<section id="banner" class="major">
+							<div class="inner">
+								<span class="image">
+									<img src="{{ url_for('static', filename='images/admin.jpg') }}" alt="" />
+								</span>
+								<header class="major">
+									<h1>Soccer Evolution</h1>
+								</header>
+								<div class="content">
+									<p>Administración</p>
+								</div>
+							</div>
+						</section>
+	
+					<!-- Main -->
+					<div id="main">
+	
+						<!-- One -->
+							<section id="one" class="tiles">
+								<article>
+									<span class="image">
+										<img src="{{ url_for('static', filename='images/admin-general.jpg') }}" alt="" />
+									</span>
+									<header class="major">
+										<h3><a href="{{ url_for('lista_canchas') }}" class="link">Administracion Canchas</a></h3>
+										<p>Canchas, stock productos y más </p>
+									</header>
+								</article>
+								<article>
+									<span class="image">
+										<img src="{{ url_for('static', filename='images/contabilidad.jpg') }}" alt="" />
+									</span>
+									<header class="major">
+										<h3><a href="{{ url_for('trabajador') }}" class="link">Administracion general</a> </h3>
+										<p>Nómina trabajadores, liquidaciones de pago</p>
+									</header>
+								</article>
+								
+							</section>
+							
+					{% else %}
+					<!-- Banner -->
+						<section id="banner" class="major">
+							<div class="inner">
+								<span class="image">
+									<img src="{{ url_for('static', filename='images/admin.jpg') }}" alt="" />
+								</span>
+								<header class="major">
+									<h1>Soccer Evolution</h1>
+								</header>
+								<div class="content">
+									<p>Administración </p>
+									
+								</div>
+							</div>
+						</section>
+	
+					<!-- Main -->
+					<div id="main">
+	
+						<!-- One -->
+							<section id="one" class="tiles">
+								<article>
+									<span class="image">
+										<img src="{{ url_for('static', filename='images/admin-general.jpg') }}" alt="" />
+									</span>
+									<header class="major">
+										<h3><a href="{{ url_for('lista_canchas') }}" class="link">Administracion Canchas</a></h3>
+										<p>Canchas, stock productos y más </p>
+									</header>
+								</article>
+								<article>
+									<span class="image">
+										<img src="{{ url_for('static', filename='images/contabilidad.jpg') }}" alt="" />
+									</span>
+									<header class="major">
+										<h3><a href="{{ url_for('trabajador') }}" class="link">Administracion general</a> </h3>
+										<p>Nómina trabajadores, liquidaciones de pago</p>
+									</header>
+								</article>
+							</section>
+							{% endif %}
+
+							<div id="flash-messages-container">
+								{% with messages = get_flashed_messages() %}
+								  {% if messages %}
+									<div class="flash-messages">
+									  {% for message in messages %}
+										<div class="flash-message alert">{{ message }}</div>
+									  {% endfor %}
+									</div>
+								  {% endif %}
+								{% endwith %}
+							  </div>
+								
+					</div>
+					{% endblock %}
+
+
+
