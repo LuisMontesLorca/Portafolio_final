@@ -200,4 +200,102 @@
     <div id= "button-div">    <a href="{{ url_for('administrador') }}" class="button primary">Atras</a></div>
 </div>
 
+<!-- MODAL AGREGAR TRABAJADOR -->
+<div id="modal_agregar_trabajador" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title " id="confirmar-modal-label">¿Desea agregar un nuevo trabajador?</h2>
+          <a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </a>
+        </div>
+        <div class="modal-body">
+          <input type="text" id="nombre_cancha" placeholder="nombre_cancha">
+          <br>
+          <input type="text" id="descripcion" placeholder="descripcion">
+          <br>
+          <input type="text" id="valor" placeholder="valor">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL AGREGAR MANTENCION CANCHA -->
+<div id="modal_agregar_cancha" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title " id="confirmar-modal-label">¿Desea agregar una nueva cancha?</h2>
+          <a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </a>
+        </div>
+        <div class="modal-body">
+          <input type="text" id="nombre_cancha" placeholder="nombre_cancha">
+          <br>
+          <input type="text" id="descripcion" placeholder="descripcion">
+          <br>
+          <input type="text" id="valor" placeholder="valor">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL AGREGAR PAGO SERVICIOS -->
+<div id="modal_agregar_cancha" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title " id="confirmar-modal-label">¿Desea agregar una nueva cancha?</h2>
+          <a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </a>
+        </div>
+        <div class="modal-body">
+          <input type="text" id="nombre_cancha" placeholder="nombre_cancha">
+          <br>
+          <input type="text" id="descripcion" placeholder="descripcion">
+          <br>
+          <input type="text" id="valor" placeholder="valor">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL AGREGAR LIQUIDACION DE PAGO -->
+<div id="modal_agregar_cancha" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title " id="confirmar-modal-label">¿Desea agregar una nueva camiseta?</h2>
+          <a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </a>
+        </div>
+        <div class="modal-body">
+          <input type="text" id="nombre_cancha" placeholder="nombre_cancha">
+          <br>
+          <input type="text" id="descripcion" placeholder="descripcion">
+          <br>
+          <input type="text" id="valor" placeholder="valor">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+
 {% endblock %}

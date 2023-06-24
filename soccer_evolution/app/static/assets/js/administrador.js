@@ -64,4 +64,19 @@ $(document).ready(function() {
     });
 });
 
+/* modal administracion general*/ 
+
+$(document).ready(function() {
+    $('.modal_agregar_trabajador').on('click', function() {
+        $('#modal_agregar_trabajador').modal('show');
+
+    $('#modal_agregar_trabajador').on('click', '.close, .btn-secondary',function() {
+        // Cerrar la modal
+        $('#modal_agregar_trabajador').modal('hide');
+})
+    });
+});
+
+
+
 
