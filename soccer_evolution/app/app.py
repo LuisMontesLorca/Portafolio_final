@@ -819,8 +819,11 @@ def arrendar ():
             nombre_cancha = session['nombre_cancha']
             valor_cancha = session['valor_cancha']
             img_cancha = session['img_cancha']
+
+            hora_final= hora_inicio + "-" + hora_fin
             arriendo = {'nombre_producto': nombre_cancha, 'fecha': fecha, 'hora_inicio':hora_inicio, 
                         'hora_fin': hora_fin, 'valor_producto': valor_cancha, 'id_producto': id_cancha,'id_cliente':id_usuario}
+            arriendo_2 = { 'fecha': fecha, 'hora_arriendo':hora_final, 'valor_producto': valor_cancha,'id_cliente':id_usuario, 'id_producto': id_cancha}
             print('id_usuario: ', id_usuario)
             cur = mysql.connection.cursor()
             cur.execute('SELECT * FROM carro_compras WHERE id_cliente = %s', (id_usuario,))
@@ -866,7 +869,8 @@ def arrendar ():
                 bandera = 1
                 arriendo_existente =False  
                 new_arriendo = carro_compras_dao['insert'](arriendo)
-    
+                new_arriendo = arriendo_dao['insert'](arriendo_2)
+                print ("HICE EL INSERT !!!!!!!!!!!!!!!!!", new_arriendo)
                 consulta_eliminar = "DROP TRIGGER IF EXISTS insertar_arriendo_historial"
                 with mysql.connection.cursor() as cursor:
                     cursor.execute(consulta_eliminar)
@@ -876,11 +880,11 @@ def arrendar ():
                 # Definir la consulta para crear el trigger
                 consulta = """
                     CREATE TRIGGER insertar_arriendo_historial
-                AFTER INSERT ON carro_compras
+                AFTER INSERT ON arriendo
                 FOR EACH ROW
                 BEGIN
                     INSERT INTO arriendos_historial (fecha, hora, valor, cancha, id_cliente)
-                    VALUES (NEW.fecha, CONCAT(NEW.hora_inicio, '-', NEW.hora_fin), NEW.valor_producto, NEW.nombre_producto, NEW.id_cliente);
+                    VALUES (NEW.fecha_arriendo, NEW.hora_arriendo, NEW.valor_arriendo, NEW.id_cancha, NEW.id_cliente);
                 END
                 """
 
@@ -888,7 +892,7 @@ def arrendar ():
                     cursor.execute(consulta)
                     mysql.connection.commit()
                             
-                print ("HICE EL INSERT !!!!!!!!!!!!!!!!!")
+
                 mensaje =''
                 return jsonify(mensaje=mensaje,bandera=bandera)
         else:
