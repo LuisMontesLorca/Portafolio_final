@@ -38,10 +38,13 @@
 												<td>{{ cancha.nombre_cancha_futbol }}</td>
 												<td>{{ cancha.descripcion_cancha_futbol }}</td>
 												<td>{{ cancha.valor_cancha_futbol }}</td>
-												<td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
-												<td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a></td>
+												<td><input type="hidden" id="id_cancha_futbol_{{ cancha.id_cancha_futbol }}" name="id_cancha_futbol" value="{{ cancha.id_cancha_futbol }}"></td>
+												<td><a class="editar-cancha-futbol-admin" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
+												<td><a class="eliminar-canchafut-admin" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a></td>
 												<td><a class= "agregar-cancha-futbol" data-toggle="tooltip" data-placement="top" data-original-title="Agregar"><i class="fas fa-solid fa-circle-plus"  style="cursor:pointer;"></i></a></td>
 												</tr>
+												
+
 												{% endfor %}
 											</tbody>
 											<tfoot>
@@ -75,8 +78,9 @@
 														<td>{{ cancha.nombre_cancha_basket }}</td>
 														<td>{{ cancha.descripcion_cancha_basket }}</td>
 														<td>{{ cancha.valor_cancha_basket }}</td>
-														<td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
-														<td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a></td>
+														<input type="hidden" id="id_cancha_basket" name="id_cancha_basket" value="{{cancha.id_cancha_basket}} ">
+														<td><a class="editar-cancha-basket-admin" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
+														<td><a class="eliminar-canchabasket-admin" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a=></td>
 														<td><a class= "agregar-cancha-basket" data-toggle="tooltip" data-placement="top" data-original-title="Agregar"><i class="fas fa-solid fa-circle-plus"  style="cursor:pointer;"></i></a></td>
 													</tr>
 													{% endfor %}
@@ -110,8 +114,9 @@
 														<td>{{ cancha.nombre_cancha_tenis }}</td>
 														<td>{{ cancha.descripcion_cancha_tenis }}</td>
 														<td>{{ cancha.valor_cancha_tenis }}</td>
-														<td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
-														<td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a></td>
+														<input type="hidden" id="id_cancha_tenis" name="id_cancha_tenis" value="{{cancha.id_cancha_tenis}} ">
+														<td><a class="editar-cancha-tenis-admin" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
+														<td><a class="eliminar-canchatenis-admin" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a></td>
 														<td><a class= "agregar-cancha-tenis" data-toggle="tooltip" data-placement="top" data-original-title="Agregar"><i class="fas fa-solid fa-circle-plus"  style="cursor:pointer;"></i></a></td>
 													</tr>
 													{% endfor %}
@@ -145,9 +150,10 @@
 														<td>{{ camiseta.nombre_camiseta }}</td>
 														<td>{{ camiseta.descripcion_camiseta }}</td>
 														<td>{{ camiseta.valor_cancha_camiseta }}</td>
-														<td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
-														<td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a></td>
-														<td><a class= "agregar-camiseta" data-toggle="tooltip" data-placement="top" data-original-title="Agregar"><i class="fas fa-solid fa-circle-plus"  style="cursor:pointer;"></i></a></td>
+														<input type="hidden" id="id_camiseta" name="id_camiseta" value="{{camiseta.id_camiseta}} ">
+														<td><a class="editar-camiseta-admin" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
+														<td><a class="eliminar-camiseta-admin" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a></td>
+														<td><a class= "agregar-camiseta-admin" data-toggle="tooltip" data-placement="top" data-original-title="Agregar"><i class="fas fa-solid fa-circle-plus"  style="cursor:pointer;"></i></a></td>
 													</tr>
 													{% endfor %}
 													</tbody>
@@ -180,9 +186,10 @@
 														<td>{{ pelota.nombre_pelota }}</td>
 														<td>{{ pelota.descripcion_pelota }}</td>
 														<td>{{ pelota.valor_pelota }}</td>
-														<td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
-														<td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a></td>
-														<td><a class= "agregar-pelota" data-toggle="tooltip" data-placement="top" data-original-title="Agregar"><i class="fas fa-solid fa-circle-plus"  style="cursor:pointer;"></i></a></td>
+														<input type="hidden" id="id_pelota" name="id_pelota" value="{{pelota.id_pelota}} ">
+														<td><a class="editar-camiseta-admin" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
+														<td><a class="eliminar-pelota-admin" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a></td>
+														<td><a class= "agregar-pelota-admin" data-toggle="tooltip" data-placement="top" data-original-title="Agregar"><i class="fas fa-solid fa-circle-plus"  style="cursor:pointer;"></i></a></td>
 													</tr>
 													{% endfor %}
 													</tbody>
@@ -215,9 +222,10 @@
 														<td>{{ bebida.nombre_bebida }}</td>
 														<td>{{ bebida.descripcion_bebida }}</td>
 														<td>{{ bebida.valor_bebida }}</td>
-														<td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
-														<td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a></td>
-														<td><a class= "agregar-bebida" data-toggle="tooltip" data-placement="top" data-original-title="Agregar"><i class="fas fa-solid fa-circle-plus"  style="cursor:pointer;"></i></a></td>
+														<input type="hidden" id="id_bebida" name="id_bebida" value="{{bebida.id_bebida}} ">
+														<td><a class="editar-bebida-admin" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
+														<td><a class="eliminar-bebida-admin" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a></td>
+														<td><a class= "agregar-bebida-admin" data-toggle="tooltip" data-placement="top" data-original-title="Agregar"><i class="fas fa-solid fa-circle-plus"  style="cursor:pointer;"></i></a></td>
 													</tr>
 													{% endfor %}
 													</tbody>
@@ -238,153 +246,334 @@
 							<div id= "contenedor-button">
                                 <div id= "button-div">    <a href="{{ url_for('administrador') }}" class="button primary">Atras</a></div>
                             </div>
-								  
-
-							
 					
 					<!-- MODAL AGREGAR CANCHA FUTBOL -->
-					<div id="modal_agregar_cancha" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+					<div id="modal_agregar_cancha_futbol" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
 						<div class="modal-dialog" role="document">
-						  <div class="modal-content">
-							<div class="modal-header">
-							  <h2 class="modal-title " id="confirmar-modal-label">¿Desea agregar una nueva cancha?</h2>
-							  <a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							  </a>
+							<div class="modal-content">
+								<div class="modal-header">
+									<h2 class="modal-title" id="confirmar-modal-label">¿Desea agregar una nueva cancha?</h2>
+									<a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</a>
+								</div>
+								<div class="modal-body">
+									<input type="text" id="nombre_cancha_futbol" placeholder="nombre_cancha_futbol" required>
+									<br>
+									<input type="text" id="descripcion_cancha_futbol" placeholder="descripcion" required>
+									<br>
+									<input type="text" id="valor_cancha_futbol" placeholder="valor" required>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">Cancelar</button>
+									<button type="button" class="btn btn-primary" id="btn_agregar_futbol">Agregar</button>
+								</div>
 							</div>
-							<div class="modal-body">
-							  <input type="text" id="nombre_cancha" placeholder="nombre_cancha">
-							  <br>
-							  <input type="text" id="descripcion" placeholder="descripcion">
-							  <br>
-							  <input type="text" id="valor" placeholder="valor">
-							</div>
-							<div class="modal-footer">
-							  <button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">OK</button>
-							</div>
-						  </div>
 						</div>
-					  </div>
+					</div>
+					
+					<!-- MODAL ELIMINAR CANCHA FUTBOL -->
 
-					  <!-- MODAL AGREGAR CANCHA BASKET -->
-					<div id="modal_agregar_cancha" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+					<div id="modal_eliminar_cancha_futbol" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
 						<div class="modal-dialog" role="document">
-						  <div class="modal-content">
-							<div class="modal-header">
-							  <h2 class="modal-title " id="confirmar-modal-label">¿Desea agregar una nueva cancha?</h2>
-							  <a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							  </a>
+							<div class="modal-content">
+								<div class="modal-header">
+									<h2 class="modal-title" id="confirmar-modal-label">¿Seguro desea ELIMINAR la cancha?</h2>
+									<a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</a>
+								</div>
+								
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">Cancelar</button>
+									<button type="button" class="btn btn-primary" id="eliminar_canfut_btn">ELIMINAR</button>
+								</div>
 							</div>
-							<div class="modal-body">
-							  <input type="text" id="nombre_cancha" placeholder="nombre_cancha">
-							  <br>
-							  <input type="text" id="descripcion" placeholder="descripcion">
-							  <br>
-							  <input type="text" id="valor" placeholder="valor">
-							</div>
-							<div class="modal-footer">
-							  <button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">OK</button>
-							</div>
-						  </div>
 						</div>
-					  </div>
+					</div>
 
-					  <!-- MODAL AGREGAR CANCHA TENIS PADEL -->
-					<div id="modal_agregar_cancha" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
-						<div class="modal-dialog" role="document">
-						  <div class="modal-content">
-							<div class="modal-header">
-							  <h2 class="modal-title " id="confirmar-modal-label">¿Desea agregar una nueva cancha?</h2>
-							  <a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							  </a>
-							</div>
-							<div class="modal-body">
-							  <input type="text" id="nombre_cancha" placeholder="nombre_cancha">
-							  <br>
-							  <input type="text" id="descripcion" placeholder="descripcion">
-							  <br>
-							  <input type="text" id="valor" placeholder="valor">
-							</div>
-							<div class="modal-footer">
-							  <button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">OK</button>
-							</div>
-						  </div>
-						</div>
-					  </div>
+					<!-- MODAL EDITAR CANCHA FUTBOL -->
 
-					  <!-- MODAL AGREGAR CAMISETA -->
-					<div id="modal_agregar_cancha" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+					<div id="modal_editar_cancha_futbol" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
 						<div class="modal-dialog" role="document">
-						  <div class="modal-content">
-							<div class="modal-header">
-							  <h2 class="modal-title " id="confirmar-modal-label">¿Desea agregar una nueva camiseta?</h2>
-							  <a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							  </a>
+							<div class="modal-content">
+								<div class="modal-header">
+									<h2 class="modal-title" id="confirmar-modal-label">¿Seguro desea editar la cancha?</h2>
+									<a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</a>
+								</div>
+								
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">Cancelar</button>
+									<button type="button" class="btn btn-primary" id="editar_canfut_btn">Editar</button>
+								</div>
 							</div>
-							<div class="modal-body">
-							  <input type="text" id="nombre_cancha" placeholder="nombre_cancha">
-							  <br>
-							  <input type="text" id="descripcion" placeholder="descripcion">
-							  <br>
-							  <input type="text" id="valor" placeholder="valor">
-							</div>
-							<div class="modal-footer">
-							  <button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">OK</button>
-							</div>
-						  </div>
 						</div>
-					  </div>
+					</div>
 
-					  <!-- MODAL AGREGAR PELOTA -->
-					<div id="modal_agregar_cancha" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+					<div id="modal_editar_futbol" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
 						<div class="modal-dialog" role="document">
-						  <div class="modal-content">
-							<div class="modal-header">
-							  <h2 class="modal-title " id="confirmar-modal-label">¿Desea agregar una nueva pelota?</h2>
-							  <a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							  </a>
+							<div class="modal-content">
+								<div class="modal-header">
+									<h2 class="modal-title" id="confirmar-modal-label">¿Desea editar la cancha?</h2>
+									<a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</a>
+								</div>
+								<div class="modal-body">
+									<input type="text" id="nombre_cancha_futbol" placeholder="nombre_cancha_futbol" required>
+									<br>
+									<input type="text" id="descripcion_cancha_futbol" placeholder="descripcion" required>
+									<br>
+									<input type="text" id="valor_cancha_futbol" placeholder="valor" required>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">Cancelar</button>
+									<button type="button" class="btn btn-primary" id="btn_editar_futbol">Editar</button>
+								</div>
 							</div>
-							<div class="modal-body">
-							  <input type="text" id="nombre_cancha" placeholder="nombre_cancha">
-							  <br>
-							  <input type="text" id="descripcion" placeholder="descripcion">
-							  <br>
-							  <input type="text" id="valor" placeholder="valor">
-							</div>
-							<div class="modal-footer">
-							  <button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">OK</button>
-							</div>
-						  </div>
 						</div>
-					  </div>
-					  
-					  <!-- MODAL AGREGAR BEBIDA -->
+					</div>
+
+					
+
+
+					<!-- MODAL AGREGAR CANCHA BASKET -->
+					<div id="modal_agregar_cancha_basket" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h2 class="modal-title" id="confirmar-modal-label">¿Desea agregar una nueva cancha?</h2>
+									<a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</a>
+								</div>
+								<div class="modal-body">
+									<input type="text" id="nombre_cancha_basket" placeholder="nombre_cancha_basket" required>
+									<br>
+									<input type="text" id="descripcion_cancha_basket" placeholder="descripcion" required>
+									<br>
+									<input type="text" id="valor_cancha_basket" placeholder="valor" required>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">Cancelar</button>
+									<button type="button" class="btn btn-primary" id="btn_agregar_basket">Agregar</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+
+					<!-- MODAL ELIMINAR CANCHA BASKET -->
+
+					<div id="modal_eliminar_cancha_basket" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h2 class="modal-title" id="confirmar-modal-label">¿Seguro desea ELIMINAR la cancha?</h2>
+									<a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</a>
+								</div>
+								
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">Cancelar</button>
+									<button type="button" class="btn btn-primary" id="eliminar_canbasket_btn">ELIMINAR</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+
+					<!-- MODAL AGREGAR CANCHA TENIS -->
+					<div id="modal_agregar_cancha_tenis" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h2 class="modal-title" id="confirmar-modal-label">¿Desea agregar una nueva cancha?</h2>
+									<a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</a>
+								</div>
+								<div class="modal-body">
+									<input type="text" id="nombre_cancha_tenis" placeholder="nombre_cancha_tenis" required>
+									<br>
+									<input type="text" id="descripcion_cancha_tenis" placeholder="descripcion" required>
+									<br>
+									<input type="text" id="valor_cancha_tenis" placeholder="valor" required>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">Cancelar</button>
+									<button type="button" class="btn btn-primary" id="btn_agregar_tenis">Agregar</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- MODAL ELIMINAR CANCHA TENIS PADEL -->
+					<div id="modal_eliminar_cancha_tenis" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h2 class="modal-title" id="confirmar-modal-label">¿Seguro desea ELIMINAR la cancha?</h2>
+									<a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</a>
+								</div>
+								
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">Cancelar</button>
+									<button type="button" class="btn btn-primary" id="eliminar_cantenis_btn">ELIMINAR</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- MODAL AGREGAR CAMISETA -->
+
+					<div id="modal_agregar_camiseta" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h2 class="modal-title" id="confirmar-modal-label">¿Desea agregar una nueva camiseta?</h2>
+									<a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</a>
+								</div>
+								<div class="modal-body">
+									<input type="text" id="sku_camiseta" placeholder="sku_camiseta" required>
+									<br>
+									<input type="text" id="nombre_camiseta" placeholder="nombre_camiseta" required>
+									<br>
+									<input type="text" id="descripcion_camiseta" placeholder="descripcion" required>
+									<br>
+									<input type="text" id="valor_camiseta" placeholder="valor" required>
+									
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">Cancelar</button>
+									<button type="button" class="btn btn-primary" id="btn_agregar_camiseta">Agregar</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- MODAL ELIMINAR CAMISETA -->
+					<div id="modal_eliminar_camiseta_admin" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h2 class="modal-title" id="confirmar-modal-label">¿Seguro desea ELIMINAR la camiseta?</h2>
+									<a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</a>
+								</div>
+								
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">Cancelar</button>
+									<button type="button" class="btn btn-primary" id="eliminar_camiseta_btn">ELIMINAR</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<!-- MODAL AGREGAR PELOTA -->
+					<div id="modal_agregar_pelota" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h2 class="modal-title" id="confirmar-modal-label">¿Desea agregar una nueva pelota?</h2>
+									<a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</a>
+								</div>
+								<div class="modal-body">
+									<input type="text" id="sku_pelota" placeholder="sku_pelota" required>
+									<br>
+									<input type="text" id="nombre_pelota" placeholder="nombre_pelota" required>
+									<br>
+									<input type="text" id="descripcion_pelota" placeholder="descripcion" required>
+									<br>
+									<input type="text" id="valor_pelota" placeholder="valor" required>
+									
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">Cancelar</button>
+									<button type="button" class="btn btn-primary" id="btn_agregar_pelota">Agregar</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- MODAL ELIMINAR pelota -->
+					<div id="modal_eliminar_pelota_admin" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h2 class="modal-title" id="confirmar-modal-label">¿Seguro desea ELIMINAR la pelota?</h2>
+									<a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</a>
+								</div>
+								
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">Cancelar</button>
+									<button type="button" class="btn btn-primary" id="eliminar_pelota_btn">ELIMINAR</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					
+					<!-- MODAL AGREGAR BEBIDA -->
 					<div id="modal_agregar_bebida" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
 						<div class="modal-dialog" role="document">
-						  <div class="modal-content">
-							<div class="modal-header">
-							  <h2 class="modal-title " id="confirmar-modal-label">¿Desea agregar otra bebida?</h2>
-							  <a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							  </a>
+							<div class="modal-content">
+								<div class="modal-header">
+									<h2 class="modal-title" id="confirmar-modal-label">¿Desea agregar una nueva bebida?</h2>
+									<a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</a>
+								</div>
+								<div class="modal-body">
+									<input type="text" id="sku_bebida" placeholder="sku_bebida" required>
+									<br>
+									<input type="text" id="nombre_bebida" placeholder="nombre_bebida" required>
+									<br>
+									<input type="text" id="descripcion_bebida" placeholder="descripcion" required>
+									<br>
+									<input type="text" id="valor_bebida" placeholder="valor" required>
+									
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">Cancelar</button>
+									<button type="button" class="btn btn-primary" id="btn_agregar_bebida">Agregar</button>
+								</div>
 							</div>
-							<div class="modal-body">
-							  <input type="text" id="nombre_bebida" placeholder="nombre_bebida">
-							  <br>
-							  <input type="text" id="descripcion_bebida" placeholder="descripcion_bebida">
-							  <br>
-							  <input type="text" id="valor" placeholder="valor">
-							</div>
-							<div class="modal-footer">
-							  <button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">OK</button>
-							</div>
-						  </div>
 						</div>
-					  </div>
+					</div>
+
+					<!-- MODAL ELIMINAR bebida -->
+					<div id="modal_eliminar_bebida_admin" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h2 class="modal-title" id="confirmar-modal-label">¿Seguro desea ELIMINAR la bebida?</h2>
+									<a type="text" id="cerrar_modal" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</a>
+								</div>
+								
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" id="cancelar_btn" data-dismiss="modal">Cancelar</button>
+									<button type="button" class="btn btn-primary" id="eliminar_bebida_btn">ELIMINAR</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					
 
 	
 	

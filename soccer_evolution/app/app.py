@@ -1680,6 +1680,242 @@ def transbank_create():
 ################# FIN TRANSBANK ###################
 
 
+######### AGREGAR CANCHA PERFIL ADMIN ###########
+
+@app.route('/agregar_futbol', methods=['GET', 'POST'])
+def agregar_futbol():
+    data = request.get_json()  # Obtener los datos enviados en formato JSON
+    nombre_cancha_futbol = data['nombre_cancha_futbol']
+    descripcion_cancha_futbol = data['descripcion_cancha_futbol']
+    valor_cancha_futbol = data['valor_cancha_futbol']
+    img_cancha_futbol = 1
+    datos_cancha = {'nombre_cancha_futbol':nombre_cancha_futbol, 'descripcion_cancha_futbol':descripcion_cancha_futbol, 'valor_cancha_futbol':valor_cancha_futbol, 'img_cancha_futbol':img_cancha_futbol }
+    new_futbol = cancha_futbol_dao['insert'](datos_cancha)
+    if new_futbol:
+        bandera=1
+        return jsonify(bandera=bandera)
+    else:
+        bandera=0
+        return jsonify(bandera=bandera)
+    
+##### ELIMINAR CANCHA FUTBOL ADMIN #####
+
+@app.route('/eliminar_canfut_admin/<id_cancha_futbol>', methods=['DELETE'])
+def eliminar_canfut_admin(id_cancha_futbol):
+    cur = mysql.connection.cursor()
+    try:
+        cur.execute("DELETE FROM cancha_futbol WHERE id_cancha_futbol = %s", (id_cancha_futbol,))
+        mysql.connection.commit()
+        response = {'message': 'Cancha eliminada exitosamente'}
+    except:
+        mysql.connection.rollback()
+        response = {'message': 'Error al eliminar la cancha'}
+    finally:
+        cur.close()
+
+    return jsonify(response)
+
+#### EDITAR CANCHA FUTBOL ####
+@app.route('/editar_cancha_futbol_admin/<id_cancha_futbol>', methods=['PUT'])
+def editar_cancha_futbol_admin(id_cancha_futbol):
+    nombre_cancha_futbol = request.values.get('nombre_cancha_futbol')
+    descripcion_cancha_futbol = request.values.get('descripcion_cancha_futbol')
+    valor_cancha_futbol = request.values.get('valor_cancha_futbol')
+
+    cur = mysql.connection.cursor()
+    try:
+        cur.execute("UPDATE cancha_futbol SET nombre_cancha_futbol = %s, descripcion_cancha_futbol = %s, valor_cancha_futbol = %s WHERE id_cancha_futbol = %s", (nombre_cancha_futbol, descripcion_cancha_futbol, valor_cancha_futbol, id_cancha_futbol))
+        mysql.connection.commit()
+        response = {'message': 'Cancha de fútbol editada exitosamente'}
+    except Exception as e:
+        mysql.connection.rollback()
+        response = {'message': 'Error al editar la cancha de fútbol', 'error': str(e)}
+
+    return jsonify(response)
+
+
+
+
+
+
+
+
+##### AGREGAR CANCHA BASKET#####        
+
+@app.route('/agregar_basket', methods=['GET', 'POST'])
+def agregar_basket():
+    data = request.get_json()  # Obtener los datos enviados en formato JSON
+    nombre_cancha_basket = data['nombre_cancha_basket']
+    descripcion_cancha_basket = data['descripcion_cancha_basket']
+    valor_cancha_basket = data['valor_cancha_basket']
+    img_cancha_basket = 1
+    datos_cancha = {'nombre_cancha_basket':nombre_cancha_basket, 'descripcion_cancha_basket':descripcion_cancha_basket, 'valor_cancha_basket':valor_cancha_basket, 'img_cancha_basket':img_cancha_basket }
+    new_basket = cancha_basket_dao['insert'](datos_cancha)
+    if new_basket:
+        bandera=1
+        return jsonify(bandera=bandera)
+    else:
+        bandera=0
+        return jsonify(bandera=bandera)   
+    
+    ##### ELIMINAR CANCHA BASKET ADMIN #####
+@app.route('/eliminar_canbasket_admin/<id_cancha_basket>', methods=['DELETE'])
+def eliminar_canbasket_admin(id_cancha_basket):
+    cur = mysql.connection.cursor()
+    try:
+        cur.execute("DELETE FROM cancha_basket WHERE id_cancha_basket = %s", (id_cancha_basket,))
+        mysql.connection.commit()
+        response = {'message': 'Cancha eliminada exitosamente'}
+    except:
+        mysql.connection.rollback()
+        response = {'message': 'Error al eliminar la cancha'}
+    finally:
+        cur.close()
+
+    return jsonify(response)
+
+
+##### AGREGAR CANCHA TENIS#####      
+
+@app.route('/agregar_tenis', methods=['GET', 'POST'])
+def agregar_tenis():
+    data = request.get_json()  # Obtener los datos enviados en formato JSON
+    nombre_cancha_tenis = data['nombre_cancha_tenis']
+    descripcion_cancha_tenis = data['descripcion_cancha_tenis']
+    valor_cancha_tenis = data['valor_cancha_tenis']
+    img_cancha_tenis = 1
+    datos_cancha = {'nombre_cancha_tenis':nombre_cancha_tenis, 'descripcion_cancha_tenis':descripcion_cancha_tenis, 'valor_cancha_tenis':valor_cancha_tenis, 'img_cancha_tenis':img_cancha_tenis }
+    new_tenis = cancha_tenis_dao['insert'](datos_cancha)
+    if new_tenis:
+        bandera=1
+        return jsonify(bandera=bandera)
+    else:
+        bandera=0
+        return jsonify(bandera=bandera)  
+##### ELIMINAR CANCHA TENIS#####         
+@app.route('/eliminar_cantenis_admin/<id_cancha_tenis>', methods=['DELETE'])
+def eliminar_cantenis_admin(id_cancha_tenis):
+    cur = mysql.connection.cursor()
+    try:
+        cur.execute("DELETE FROM cancha_tenis WHERE id_cancha_tenis = %s", (id_cancha_tenis,))
+        mysql.connection.commit()
+        response = {'message': 'Cancha eliminada exitosamente'}
+    except:
+        mysql.connection.rollback()
+        response = {'message': 'Error al eliminar la cancha'}
+    finally:
+        cur.close()
+
+    return jsonify(response)    
+    
+#########  FIN AGREGAR CANCHS PERFIL ADMIN ###########
+
+##### AGREGAR CAMISETA##### 
+
+@app.route('/agregar_camiseta', methods=['GET', 'POST'])
+def agregar_camiseta():
+    data = request.get_json()  # Obtener los datos enviados en formato JSON
+    sku_camiseta = data ['sku_camiseta']
+    nombre_camiseta = data['nombre_camiseta']
+    descripcion_camiseta = data['descripcion_camiseta']
+    valor_camiseta = data['valor_camiseta']
+    img_camiseta = 1
+    datos_camiseta = {'sku_camiseta':sku_camiseta,'nombre_camiseta':nombre_camiseta, 'img_camiseta':img_camiseta, 'valor_camiseta':valor_camiseta, 'descripcion_camiseta':descripcion_camiseta }
+    new_camiseta = camisetas_dao['insert'](datos_camiseta)
+    if new_camiseta:
+        bandera=1
+        return jsonify(bandera=bandera)
+    else:
+        bandera=0
+        return jsonify(bandera=bandera)  
+    
+#### ELIMINAR CAMISETA    
+@app.route('/eliminar_camiseta_admin/<id_camiseta>', methods=['DELETE'])
+def eliminar_camiseta_admin(id_camiseta):
+    cur = mysql.connection.cursor()
+    try:
+        cur.execute("DELETE FROM camiseta WHERE id_camiseta = %s", (id_camiseta,))
+        mysql.connection.commit()
+        response = {'message': 'Camiseta eliminada exitosamente'}
+    except:
+        mysql.connection.rollback()
+        response = {'message': 'Error al eliminar la camiseta'}
+    finally:
+        cur.close()
+
+    return jsonify(response)      
+    
+##### AGREGAR PELOTA##### 
+@app.route('/agregar_pelota', methods=['GET', 'POST'])
+def agregar_pelota():
+    data = request.get_json()  # Obtener los datos enviados en formato JSON
+    sku_pelota = data ['sku_pelota']
+    nombre_pelota = data['nombre_pelota']
+    descripcion_pelota = data['descripcion_pelota']
+    valor_pelota = data['valor_pelota']
+    img_pelota = 1
+    datos_pelota = {'sku_pelota':sku_pelota,'nombre_pelota':nombre_pelota, 'img_pelota':img_pelota, 'valor_pelota':valor_pelota, 'descripcion_pelota':descripcion_pelota }
+    new_pelota = pelotas_dao['insert'](datos_pelota)
+    if new_pelota:
+        bandera=1
+        bandera2=2
+        return jsonify(bandera=bandera, bandera2=bandera2)
+    else:
+        bandera=0
+        bandera2 =3
+        return jsonify(bandera=bandera, bandera2=bandera2)  
+#### ELIMINAR PELOTA ####
+@app.route('/eliminar_pelota_admin/<id_pelota>', methods=['DELETE'])
+def eliminar_pelota_admin(id_pelota):
+    cur = mysql.connection.cursor()
+    try:
+        cur.execute("DELETE FROM pelota WHERE id_pelota = %s", (id_pelota,))
+        mysql.connection.commit()
+        response = {'message': 'Pelota eliminada exitosamente'}
+    except:
+        mysql.connection.rollback()
+        response = {'message': 'Error al eliminar la pelota'}
+    finally:
+        cur.close()
+
+    return jsonify(response)              
+
+##### AGREGAR BEBIDA##### 
+@app.route('/agregar_bebida', methods=['GET', 'POST'])
+def agregar_bebida():
+    data = request.get_json()  # Obtener los datos enviados en formato JSON
+    sku_bebida = data ['sku_bebida']
+    nombre_bebida = data['nombre_bebida']
+    descripcion_bebida = data['descripcion_bebida']
+    valor_bebida = data['valor_bebida']
+    img_bebida = 1
+    datos_bebida = {'sku_bebida':sku_bebida,'nombre_bebida':nombre_bebida, 'img_bebida':img_bebida, 'valor_bebida':valor_bebida, 'descripcion_bebida':descripcion_bebida }
+    new_bebida = bebidas_dao['insert'](datos_bebida)
+    if new_bebida:
+        bandera=1
+        return jsonify(bandera=bandera)
+    else:
+        bandera=0
+        return jsonify(bandera=bandera)  
+    
+#### ELIMINAR BEBIDA
+@app.route('/eliminar_bebida_admin/<id_bebida>', methods=['DELETE'])
+def eliminar_bebida_admin(id_bebida):
+    cur = mysql.connection.cursor()
+    try:
+        cur.execute("DELETE FROM bebida WHERE id_bebida = %s", (id_bebida,))
+        mysql.connection.commit()
+        response = {'message': 'Bebida eliminada exitosamente'}
+    except:
+        mysql.connection.rollback()
+        response = {'message': 'Error al eliminar la bebida'}
+    finally:
+        cur.close()
+
+    return jsonify(response)  
+
+
+
 if __name__=='__main__':
     app.register_error_handler(404, pagina_no_encontrada)
     app.run(debug=True, port=os.getenv('APP_PORT'))
