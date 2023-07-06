@@ -86,7 +86,7 @@ $(document).ready(function() {
 
 
 $(document).ready(function() {
-    $('.btn_modal_contraseña').on('click', function() {
+    $('#btn_modal_contraseña').on('click', function() {
         $('#modal_cambio_contraseña').modal('show');
 
     $('#modal_cambio_contraseña').on('click', '.close, .btn-secondary', function() {
