@@ -550,8 +550,12 @@ def new_producto ():
 
 @app.route('/administrador')
 def administrador ():
-    return render_template('admin/administrador.html')
-
+    if 'admin'in session:
+        administrador =  session['admin']
+        return render_template('admin/administrador.html', administrador=administrador)
+    else:
+        return render_template('404.html'), 404
+    
 @app.route('/trabajador')
 def trabajador ():
     trabajadores = trabajadores_dao['select_all']()

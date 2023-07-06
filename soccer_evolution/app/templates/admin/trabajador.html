@@ -5,6 +5,7 @@
 
 <section id="banner" class="major">
     <div class="inner">
+      <a href="{{ url_for('administrador') }}" class="back-arrow" style="text-decoration: none; border-bottom: none;"><i class="fas fa-light fa-arrow-left"></i></a>
         <header class="major">
             <h1>Administrador Negocio</h1>
         </header>
@@ -21,7 +22,7 @@
         <div class="accordion-header">
         <h3>Trabajador</h3>
         <div class="add-cancha">
-        <a href="{{ url_for('new_producto') }}"><strong> Agregar Trabajador </strong></a><i class="fas fa-solid fa-circle-plus"></i>
+    
     </div>
         </div>
         <div class="accordion-content">
@@ -51,6 +52,11 @@
                 <td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a></td>
                 </tr>
                 {% endfor %}
+                <td></td>
+                <td></td>
+                <td></td>
+								<td style="text-align: center;"><a class="agregar-trabajador" data-toggle="tooltip" data-placement="top" data-original-title="Agregar"><i class="fas fa-solid fa-circle-plus" style="cursor:pointer; text-decoration: none;"></i></a></td>
+
             </tbody>
             <tfoot>
                 
@@ -66,9 +72,6 @@
     <div class="accordion-item">
         <div class="accordion-header">
             <h3>Mantención Canchas </h3>
-            <div class="add-cancha">
-                <a href=""><strong>Agregar mantencion </strong></a><i class="fas fa-solid fa-circle-plus"></i>
-            </div>
         </div>
         <div class="accordion-content">
             <div class="table-wrapper">
@@ -95,6 +98,10 @@
                         <td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a></td>
                     </tr>
                     {% endfor %}
+                    <td></td>
+                    <td></td>
+             
+                    <td style="text-align: right;"><a class="agregar-mantencion" data-toggle="tooltip" data-placement="top" data-original-title="Agregar"><i class="fas fa-solid fa-circle-plus" style="cursor:pointer; text-decoration: none;"></i></a></td>
                     </tbody>
                     <tfoot>
             
@@ -109,9 +116,7 @@
         <div class="accordion-item">
         <div class="accordion-header">
             <h3>Pago Servicios</h3>
-            <div class="add-cancha">
-                <a href=""><strong> Agregar Servicio </strong></a><i class="fas fa-solid fa-circle-plus"></i>
-            </div>
+
         </div>
         <div class="accordion-content">
             <div class="table-wrapper">
@@ -138,6 +143,10 @@
                         <td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a></td>
                     </tr>
                     {% endfor %}
+                    <td></td>
+                <td></td>
+                <td></td>
+								<td style="text-align: left;"><a class="agregar-servicio" data-toggle="tooltip" data-placement="top" data-original-title="Agregar"><i class="fas fa-solid fa-circle-plus" style="cursor:pointer; text-decoration: none;"></i></a></td>
                     </tbody>
                     <tfoot>
             
@@ -150,9 +159,7 @@
         <div class="accordion-item">
             <div class="accordion-header">
                 <h3>Liquidaciones de Pago</h3>
-                <div class="add-cancha">
-                    <a href=""><strong> Agregar Liquidación </strong></a><i class="fas fa-solid fa-circle-plus"></i>
-                </div>
+               
             </div>
             <div class="accordion-content">
                 <div class="table-wrapper">
@@ -181,6 +188,11 @@
                             <td><a href="" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a></td>
                         </tr>
                         {% endfor %}
+
+                        <td></td>
+                        <td></td>
+           
+                        <td style="text-align: right;"><a class="agregar-liquidacion" data-toggle="tooltip" data-placement="top" data-original-title="Agregar"><i class="fas fa-solid fa-circle-plus" style="cursor:pointer; text-decoration: none;"></i></a></td>
                         </tbody>
                         <tfoot>
                 
@@ -196,9 +208,7 @@
     
     </div>
 </section>
-<div id= "contenedor-button">
-    <div id= "button-div">    <a href="{{ url_for('administrador') }}" class="button primary">Atras</a></div>
-</div>
+
 
 <!-- MODAL AGREGAR TRABAJADOR -->
 <div id="modal_agregar_trabajador" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">

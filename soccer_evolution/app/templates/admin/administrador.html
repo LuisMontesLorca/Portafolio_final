@@ -3,21 +3,23 @@
 
         {% block body %}
 
-					{% if id_usuario %}
+					{% if administrador %}
 					<!-- Banner -->
-						<section id="banner" class="major">
-							<div class="inner">
-								<span class="image">
-									<img src="{{ url_for('static', filename='images/admin.jpg') }}" alt="" />
-								</span>
-								<header class="major">
-									<h1>Soccer Evolution</h1>
-								</header>
-								<div class="content">
-									<p>Administración</p>
-								</div>
+					<section id="banner" class="major">
+						<div class="inner">
+							<a href="{{ url_for('index') }}" class="back-arrow" style="text-decoration: none; border-bottom: none;"><i class="fas fa-light fa-arrow-left"></i></a>
+							<span class="image">
+								<img src="{{ url_for('static', filename='images/admin.jpg') }}" alt="" />
+							</span>
+							<header class="major">
+								<h1>Soccer Evolution</h1>
+							</header>
+							<div class="content">
+								<p>Administración</p>
 							</div>
-						</section>
+						</div>
+					</section>
+					
 	
 					<!-- Main -->
 					<div id="main">

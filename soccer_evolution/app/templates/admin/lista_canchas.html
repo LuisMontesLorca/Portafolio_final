@@ -5,6 +5,7 @@
 						<!-- One -->
 						<section id="banner" class="major">
 							<div class="inner">
+								<a href="{{ url_for('administrador') }}" class="back-arrow" style="text-decoration: none; border-bottom: none;"><i class="fas fa-light fa-arrow-left"></i></a>
 								<header class="major">
 									<h1>Administrador Canchas</h1>
 								</header>
@@ -41,11 +42,14 @@
 												<td><input type="hidden" id="id_cancha_futbol_{{ cancha.id_cancha_futbol }}" name="id_cancha_futbol" value="{{ cancha.id_cancha_futbol }}"></td>
 												<td><a class="editar-cancha-futbol-admin" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
 												<td><a class="eliminar-canchafut-admin" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a></td>
-												<td><a class= "agregar-cancha-futbol" data-toggle="tooltip" data-placement="top" data-original-title="Agregar"><i class="fas fa-solid fa-circle-plus"  style="cursor:pointer;"></i></a></td>
+												
 												</tr>
 												
 
 												{% endfor %}
+												<td></td>
+												<td style="text-align: center;"><a class="agregar-cancha-futbol" data-toggle="tooltip" data-placement="top" data-original-title="Agregar"><i class="fas fa-solid fa-circle-plus" style="cursor:pointer; text-decoration: none;"></i></a></td>
+
 											</tbody>
 											<tfoot>
 												
@@ -81,9 +85,12 @@
 														<input type="hidden" id="id_cancha_basket" name="id_cancha_basket" value="{{cancha.id_cancha_basket}} ">
 														<td><a class="editar-cancha-basket-admin" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
 														<td><a class="eliminar-canchabasket-admin" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a=></td>
-														<td><a class= "agregar-cancha-basket" data-toggle="tooltip" data-placement="top" data-original-title="Agregar"><i class="fas fa-solid fa-circle-plus"  style="cursor:pointer;"></i></a></td>
+														
 													</tr>
 													{% endfor %}
+													<td></td>
+													<td style="text-align: center;"><a class="agregar-cancha-basket" data-toggle="tooltip" data-placement="top" data-original-title="Agregar"><i class="fas fa-solid fa-circle-plus" style="cursor:pointer; text-decoration: none;"></i></a></td>
+	
 													</tbody>
 													<tfoot>
 											
@@ -117,10 +124,13 @@
 														<input type="hidden" id="id_cancha_tenis" name="id_cancha_tenis" value="{{cancha.id_cancha_tenis}} ">
 														<td><a class="editar-cancha-tenis-admin" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
 														<td><a class="eliminar-canchatenis-admin" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a></td>
-														<td><a class= "agregar-cancha-tenis" data-toggle="tooltip" data-placement="top" data-original-title="Agregar"><i class="fas fa-solid fa-circle-plus"  style="cursor:pointer;"></i></a></td>
+													
 													</tr>
 													{% endfor %}
-													</tbody>
+													<td></td>
+													<td style="text-align: center;"><a class="agregar-cancha-tenis" data-toggle="tooltip" data-placement="top" data-original-title="Agregar"><i class="fas fa-solid fa-circle-plus" style="cursor:pointer; text-decoration: none;"></i></a></td>
+												
+												</tbody>
 													<tfoot>
 											
 													</tfoot>
@@ -153,10 +163,14 @@
 														<input type="hidden" id="id_camiseta" name="id_camiseta" value="{{camiseta.id_camiseta}} ">
 														<td><a class="editar-camiseta-admin" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
 														<td><a class="eliminar-camiseta-admin" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a></td>
-														<td><a class= "agregar-camiseta-admin" data-toggle="tooltip" data-placement="top" data-original-title="Agregar"><i class="fas fa-solid fa-circle-plus"  style="cursor:pointer;"></i></a></td>
+														
 													</tr>
 													{% endfor %}
-													</tbody>
+													<td></td>
+													<td style="text-align: center;"><a class="agregar-cancha-tenis" data-toggle="tooltip" data-placement="top" data-original-title="Agregar"><i class="fas fa-solid fa-circle-plus" style="cursor:pointer; text-decoration: none;"></i></a></td>
+													<td></td>
+													<td></td>	
+												</tbody>
 													<tfoot>
 											
 													</tfoot>
@@ -187,11 +201,13 @@
 														<td>{{ pelota.descripcion_pelota }}</td>
 														<td>{{ pelota.valor_pelota }}</td>
 														<input type="hidden" id="id_pelota" name="id_pelota" value="{{pelota.id_pelota}} ">
-														<td><a class="editar-camiseta-admin" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
+														<td><a class="editar-pelota-admin" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
 														<td><a class="eliminar-pelota-admin" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a></td>
-														<td><a class= "agregar-pelota-admin" data-toggle="tooltip" data-placement="top" data-original-title="Agregar"><i class="fas fa-solid fa-circle-plus"  style="cursor:pointer;"></i></a></td>
+														
 													</tr>
 													{% endfor %}
+													<td></td>
+													<td style="text-align: center;"><a class="agregar-pelota-admin" data-toggle="tooltip" data-placement="top" data-original-title="Agregar"><i class="fas fa-solid fa-circle-plus" style="cursor:pointer; text-decoration: none;"></i></a></td>
 													</tbody>
 													<tfoot>
 											
@@ -225,10 +241,15 @@
 														<input type="hidden" id="id_bebida" name="id_bebida" value="{{bebida.id_bebida}} ">
 														<td><a class="editar-bebida-admin" data-toggle="tooltip" data-placement="top" data-original-title="Editar"><i class="fas fa-solid fa-user-pen" style="cursor:pointer;"></i></a></td>
 														<td><a class="eliminar-bebida-admin" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar"><i class="fas fa-solid fa-trash" style="cursor:pointer;"></i></a></td>
-														<td><a class= "agregar-bebida-admin" data-toggle="tooltip" data-placement="top" data-original-title="Agregar"><i class="fas fa-solid fa-circle-plus"  style="cursor:pointer;"></i></a></td>
+													
 													</tr>
 													{% endfor %}
-													</tbody>
+													<td></td>
+													<td style="text-align: center;"><a class="agregar-bebida-admin" data-toggle="tooltip" data-placement="top" data-original-title="Agregar"><i class="fas fa-solid fa-circle-plus" style="cursor:pointer; text-decoration: none;"></i></a></td>
+													<td></td>
+													<td></td>
+													<td></td>
+												</tbody>
 													<tfoot>
 											
 													</tfoot>
@@ -243,9 +264,7 @@
 								</div>
 							</section>
 						</div>
-							<div id= "contenedor-button">
-                                <div id= "button-div">    <a href="{{ url_for('administrador') }}" class="button primary">Atras</a></div>
-                            </div>
+
 					
 					<!-- MODAL AGREGAR CANCHA FUTBOL -->
 					<div id="modal_agregar_cancha_futbol" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
