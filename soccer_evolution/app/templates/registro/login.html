@@ -57,7 +57,7 @@
                           </div>
                           <div class="modal-body">
                               <p>Si desea recuperar su contraseña, deberá validar su correo electrónico de registro, una vez validado, se le enviará un correo en el cual podrá restablecer su contraseña. ¿Está de acuerdo?</p>
-                              <input type="email" name="correo_recuperacion" id="correo_recuperacion" placeholder="Escriba su correo electrónico" />
+                              <input type="email" name="correo_recuperacion" id="correo_recuperacion" placeholder="Escriba su correo electrónico" required />
                           </div>
                           <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" id="recuperar_btn"  data-dismiss="modal">Sí</button>
@@ -67,16 +67,21 @@
                   </div>
               </div>
               
-
-
-              <dialog id="alerta_recuperacion_password">
-                <p>El correo ha sido enviado con éxito.</p>
+     
+            
+              <dialog id="alerta_recuperacion_password"  class="alerta-ampliada">
+                <h3>El correo ha sido enviado con éxito.</h3>
                 <button onclick="cerrarRecuperarContraseña()">Aceptar</button>
                 </dialog>
                 
 
-                <dialog id="alerta_recuperacion_password_error">
-                  <p>El correo ingresado no se encuentra registrado.</p>
+                <dialog id="alerta_recuperacion_password_error" class="alerta-ampliada">
+                  <h3>El correo ingresado no se encuentra registrado.</h3>
                   <button onclick="cerrarRecuperarContraseñaError()">Aceptar</button>
                   </dialog>
+
+                  <dialog id="alerta_correo_vacio" class="alerta-ampliada">
+                    <h3>Por favor, ingrese un correo electrónico</h3>
+                    <button onclick="cerrarAlertaCorreoVacio()">Aceptar</button>
+                    </dialog>
  {% endblock %}

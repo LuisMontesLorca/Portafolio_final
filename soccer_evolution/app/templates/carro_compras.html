@@ -2,13 +2,18 @@
 
 {% block body %}
 <div class="box">
+    <header class="major">
+        <h1>Carro de compras</h1>
+    </header>
     <div class="container m-4 m-auto">
         <form action="api/v1/transbank/transaction/create" method="POST">
             <div class="mb-3">
                 <div class="m-5">
+                    <div class="box">
                     <table>
                         <thead>
                             <tr>
+                                <th>Imagen producto</th>
                                 <th>Nombre producto</th>
                                 <th>Fecha</th>
                                 <th>Inicio</th>
@@ -18,22 +23,51 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {% if productos %}
                             {% for producto in productos %}
                             <tr>
-                                <td>{{ producto.nombre_producto }}</td>
-                                <td>{{ producto.fecha }}</td>
-                                <td>{{ producto.hora_inicio }}</td>
-                                <td>{{ producto.hora_fin }}</td>
-                                <td>{{ producto.valor_producto }}</td>
-                                <td>
-                                    <a class="eliminar-btn" style="text-decoration: none;"
-                                        data-id="{{ producto.id_carro }}" data-fecha="{{ producto.fecha }}" ><i class="fas fa-trash"></i></a>
+                                <td style=" vertical-align: middle;"><img src="{{ url_for('static', filename= producto.img_producto ) }}" alt="" style="width: 150px; height: 100px; border: 2px solid rgba(42, 47, 74, 0.975); box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);" /></td>
+                                <td style=" vertical-align: middle;">{{ producto.nombre_producto }}</td>
+                                <td style=" vertical-align: middle;">{{ producto.fecha }}</td>
+                                <td style=" vertical-align: middle;">{{ producto.hora_inicio }}</td>
+                                <td style=" vertical-align: middle;">{{ producto.hora_fin }}</td>
+                                <td style=" vertical-align: middle;">{{ producto.valor_producto }}</td>
+                                <input type="hidden" name="id_carro" value="{{ producto.id_carro }}">
+                                <td style="text-align: center; vertical-align: middle;">
+                                    <a class="eliminar-btn" style="text-decoration: none;" data-id="{{ producto.id_carro }}" data-fecha="{{ producto.fecha }}"><i class="fas fa-trash"></i></a>
                                 </td>
                             </tr>
+                            
+                            
                             {% endfor %}
+                            {% else %}
+    
+                            <tr>
+                                <td></td>
+                                <td><strong>EL CARRO DE COMPRAS ESTA VACÍO</strong></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                
+                            {% endif %}
                         </tbody>
                     </table>
                 </div>
+                </div>
+                <div class="button-container">
+                    <a href="{{ url_for('canchas') }}" class="primary_button_2" id="btn_volver_cancha">Volver a canchas</a>
+                    {% if productos %}
+                    <button type="button" class="btn btn-primary" id="btn_vaciar_carro">Vaciar carro</button>
+                    {% else %}
+                    {% endif %}
+                  </div>
+                  
+                  
+                  
+                  
+            <div class="box">
                 {% if valor_total %}
                 <div>
                     <label for="txt-amount" class="form-label">TOTAL A PAGAR</label>
@@ -53,12 +87,66 @@
                         {% endif %}
                 </div>
             </div>
-            <div id="btn" class="mt-4 d-grid gap-2 d-md-flex justify-content-md-end">
+            {% if productos %}
+            <div id="btn" class="mt-4">
                 <button type="submit" class="btn mt-3">
-                    <img src="{{ url_for('static', filename='images/webpay-desktop-logo_color.svg') }}" alt="" />
+                  <img src="{{ url_for('static', filename='images/webpay-desktop-logo_color.svg') }}" alt="" />
                 </button>
-            </div>
+              </div>
+              {% else %}
+              {% endif %}
+              
+        </div>
+        
         </form>
     </div>
 </div>
+
+                                    <!-- MODAL ELIMINAR CARRITO DE COMPRAS -->
+
+        <div  id="modal_eliminar_producto" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="confirmar-modal-label">Confirmar acción</h5>
+                <a type="text" id="cerrar_modal"class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+                </div>
+                <div class="modal-body">
+                ¿Desea elimninar este producto del carrito?
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="cancelar_btn"data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btn_confirmar_eliminar">Confirmar</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+                                    <!-- MODAL VACIAR CARRITO DE COMPRAS -->
+        <div  id="modal_vaciar_carro" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="confirmar-modal-label">Confirmar acción</h5>
+                <a type="text" id="cerrar_modal"class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+                </div>
+                <div class="modal-body">
+                ¿Desea vaciar su carro de compras?
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="cancelar_btn"data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btn_confirmar_vaciar">Confirmar</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+          <dialog id="alerta_producto_eliminado"  class="alerta-ampliada">
+            <h3>Su producto ha sido eliminado del carro de compras!! </h3>
+            <button onclick="cerrarAlertaProductoEliminado()">Aceptar</button>
+          </dialog>
 {% endblock %}

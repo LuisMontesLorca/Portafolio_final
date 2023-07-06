@@ -56,19 +56,13 @@ $(document).ready(function() {
           required:  "Por favor, ingresa tu direccion"
         }
       },
-      submitHandler: function(form) 
-      {
-        // Verificar si los campos requeridos están llenos antes de enviar el formulario
-        if ($('#rut_usuario').val() && $('#nombre_usuario').val() && $('#apellido_usuario').val() && $('#correo_usuario').val() && $('#password_usuario').val() && $('#telefono_usuario').val() && $('#direccion_usuario').val()) {
-          // Si todos los campos requeridos están llenos, enviar el formulario
-          form.submit();
-        }else{
-          // Si falta algún campo requerido, mostrar un mensaje de error o realizar alguna otra acción
-          alert('Por favor, completa todos los campos requeridos');
-        }
-      }
+    });
+    $('#btn_registrarse').click(function() {
+      // Validar el formulario de registro
+      $('#form_registro').valid();
     });
   });
+
   
 
 
@@ -134,6 +128,15 @@ $(document).ready(function() {
         },
         direccion_usuario: {
           required: true
+        },
+        region_usuario: {
+          required: true
+        },
+        provincia_usuario: {
+          required: true
+        },
+        comuna_usuario: {
+          required: true
         }
       },
       messages: {
@@ -160,17 +163,26 @@ $(document).ready(function() {
         },
         direccion_usuario: {
           required:  "Por favor, ingresa tu direccion"
+        },
+        region_usuario: {
+          required:  "Por favor, ingresa tu direccion"
+        },
+        provincia_usuario: {
+          required:  "Por favor, ingresa tu direccion"
+        },
+        comuna_usuario: {
+          required:  "Por favor, ingresa tu direccion"
         }
       },
-      submitHandler: function(form) {
-        // Verificar si los campos requeridos están llenos antes de enviar el formulario
-        if ($('#rut_usuario').val() && $('#nombre_usuario').val() && $('#apellido_usuario').val() && $('#correo_usuario').val() && $('#password_usuario').val() && $('#telefono_usuario').val() && $('#direccion_usuario').val()) {
-          // Si todos los campos requeridos están llenos, enviar el formulario
-          form.submit();
-        } else {
-          // Si falta algún campo requerido, mostrar un mensaje de error o realizar alguna otra acción
-          alert('Por favor, completa todos los campos requeridos');
-        }
+     
+    });
+    $('#form_editar').submit(function(event) {
+      // Verificar si el formulario es válido
+      if (!$('#form_editar').valid()) {
+        // Si la validación no es exitosa, cancelar el envío del formulario
+        event.preventDefault();
+        // Mostrar un mensaje de error o realizar alguna otra acción
+        alert('Por favor, completa todos los campos requeridos');
       }
     });
   });

@@ -2,7 +2,7 @@ $(document).ready(function() {
     $('.modal_olvido').on('click', function() {
         $('#modal_olvido_contraseña').modal('show');
 
-    $('#modal_olvido').on('click', '.close, .btn-secondary',function() {
+    $('#modal_olvido_contraseña').on('click', '.close, .btn-secondary',function() {
         // Cerrar la modal
         $('#modal_olvido_contraseña').modal('hide');
 })
@@ -16,40 +16,70 @@ $(document).ready(function() {
     
         var correo = document.getElementById('correo_recuperacion').value;
         console.log('correo_recuperacion', correo);
-        var formData = {
-            correo: correo
-          };
-          console.log ("ESTA ES LA DATA: " + formData)
-          $.ajax({
-            url: '/recuperar_correo',
-            type: 'POST',
-            contentType: 'application/json', // Configura el tipo de contenido como JSON
-            data: JSON.stringify(formData),
-            success: function(response){
-                if (response == 1)
-                {
-                    console.log(response)
-                    // Manejar la respuesta del servidor
-                    console.log('Envío exitoso');
-                    $('#modal_olvido_contraseña').modal('hide');
-                    mostrarRecuperarContraseña()
-                    document.getElementById('correo_recuperacion').value = '';
+        if (correo !='' )
+        {
+            var formData = {
+                correo: correo
+              };
+              console.log ("ESTA ES LA DATA: " + formData)
+              let timerInterval
+              Swal.fire({
+                title: 'Enviando correo de verificación',
+                html: 'Esto puede tardar unos segundos.',
+                background: 'rgba(42, 47, 74, 0.975)',
+    
+                timer: 4200,
+                timerProgressBar: true,
+                didOpen: () => {
+                  Swal.showLoading()
+                  const b = Swal.getHtmlContainer().querySelector('b')
+                  timerInterval = setInterval(() => {
+                    b.textContent = Swal.getTimerLeft()
+                  }, 100)
+                },
+                willClose: () => {
+                  clearInterval(timerInterval)
                 }
-                else
-                {
-                    $('#modal_olvido_contraseña').modal('hide');
-                    mostrarRecuperarContraseñaError()
-                    document.getElementById('correo_recuperacion').value = '';
+              }).then((result) => {
+                /* Read more about handling dismissals below */
+                if (result.dismiss === Swal.DismissReason.timer) {
+                  console.log('I was closed by the timer')
                 }
-     
-              // Puedes realizar acciones adicionales después de enviar los datos del formulario
-            },
-            error: function(error) {
-              // Manejar los errores del servidor
-              console.log('Error en el envío: ', error);
-              
-            }
-          });
+              })
+              $.ajax({
+                url: '/recuperar_correo',
+                type: 'POST',
+                contentType: 'application/json', // Configura el tipo de contenido como JSON
+                data: JSON.stringify(formData),
+                success: function(response){
+                    if (response == 1)
+                    {
+                        console.log(response)
+                        // Manejar la respuesta del servidor
+                        console.log('Envío exitoso');
+                        $('#modal_olvido_contraseña').modal('hide');
+                        mostrarRecuperarContraseña()
+                        document.getElementById('correo_recuperacion').value = '';
+                    }
+                    else
+                    {
+                        $('#modal_olvido_contraseña').modal('hide');
+                        mostrarRecuperarContraseñaError()
+                        document.getElementById('correo_recuperacion').value = '';
+                    }
+         
+                  // Puedes realizar acciones adicionales después de enviar los datos del formulario
+                },
+                error: function(error) {
+                  // Manejar los errores del servidor
+                  console.log('Error en el envío: ', error);
+                  
+                }
+              });
+        }else{
+            mostrarAlertaCorreoVacio();
+        }
+        
  
     });
 });
@@ -84,6 +114,7 @@ $(document).ready(function() {
                 contraseña_login_cambio:contraseña_login_cambio,
                 contraseña_login_confirm:contraseña_login_confirm
               };
+   
               console.log ("ESTA ES LA DATA: " + formData)
               $.ajax({
                 url: '/cambio_contraseña_ajax',

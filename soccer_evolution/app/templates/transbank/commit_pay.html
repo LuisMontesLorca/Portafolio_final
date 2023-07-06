@@ -1,28 +1,84 @@
-{% extends './layout.html' %}
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Soccer Evolution</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
 
-{% block body %}
+	
+		<script src="https://kit.fontawesome.com/8a340e4015.js" crossorigin="anonymous"></script>
+		<!-- Incluye jQuery -->
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	
+		<!-- jQuery UI -->
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+		<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+		<!-- Sweet Alert-->
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+		<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css" rel="stylesheet">
 
-{% if dataHTML %}
-<div class="box">
-    <h1>Detalle de la transacción:</h1>
-    <div class="col-12">
-        <div class="box2">
-        <ul class=" alt list-unstyled centered-list">
-            <img src="{{ url_for('static', filename='images/webpay-desktop-logo_color.svg') }}">
-            <li><strong>Título:</strong> {{ dataHTML.titulo }}</li>
-            <li><strong>Tarjeta:</strong> XXXX-XXXX-XXXX-{{ dataHTML.tarjeta }}</li>
-            <li><strong>Tipo de Tarjeta:</strong> {{ dataHTML.tipo_tarjeta }}</li>
-            <li><strong>Fecha:</strong> {{ dataHTML.fecha }}</li>
-            <li><strong>Orden de Compra:</strong> {{ dataHTML.orden_de_compra }}</li>
-            <li><strong>Session:</strong> {{ dataHTML.session }}</li>
-            <li><strong>Monto:</strong> {{ dataHTML.monto }}</li>
-            <li><strong>Estado:</strong> {{ dataHTML.estado }}</li>
-        </ul>
-    </div>
-    <div class="centered-button">
-        <a href="{{ url_for('index') }}" class="vaciar-btn">Continuar</a>
-    </div>
-    </div>
-</div>
-{% endif %}
-{% endblock %}
+
+		<noscript><link rel="stylesheet" href="{{ url_for('static', filename='assets/css/noscript.css') }}" /></noscript>
+
+        <div class="box">
+            <h1>Detalle de la transacción:</h1>
+            <div class="col-12">
+                <div class="box2">
+                <ul class=" alt list-unstyled centered-list">
+                    <img src="{{ url_for('static', filename='images/webpay-desktop-logo_color.svg') }}">
+                    <li><strong>Título:</strong> {{ dataHTML.titulo }}</li>
+                    <li><strong>Tarjeta:</strong> XXXX-XXXX-XXXX-{{ dataHTML.tarjeta }}</li>
+                    <li><strong>Tipo de Tarjeta:</strong> {{ dataHTML.tipo_tarjeta }}</li>
+                    <li><strong>Fecha:</strong> {{ dataHTML.fecha }}</li>
+                    <li><strong>Orden de Compra:</strong> {{ dataHTML.orden_de_compra }}</li>
+                    <li><strong>Session:</strong> {{ dataHTML.session }}</li>
+                    <li><strong>Monto:</strong> {{ dataHTML.monto }}</li>
+                    <li><strong>Estado:</strong> {{ dataHTML.estado }}</li>
+                </ul>
+            </div>
+            <div class="centered-button">
+                <a  class="primary_button_2" id="btn_vaciar_carro">Continuar</a>
+            </div>
+            </div>
+        </div>
+ 
+
+
+            <!-- Menu -->
+	
+
+	
+	
+
+		
+
+	<!-- Scripts -->
+		<script src="{{url_for('static', filename='assets/js/jquery.ui.datepicker-es.js') }}"></script>
+		<script src="{{url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+		<script src="{{url_for('static', filename='assets/js/jquery.scrolly.min.js') }}"></script>
+		<script src="{{url_for('static', filename='assets/js/jquery.scrollex.min.js') }}"></script>
+		<script src="{{url_for('static', filename='assets/js/browser.min.js') }}"></script>
+		<script src="{{url_for('static', filename='assets/js/breakpoints.min.js') }}"></script>
+		<script src="{{url_for('static', filename='assets/js/util.js') }}"></script>
+		<script src="{{url_for('static', filename='assets/js/main.js') }}"></script>
+		<script src="{{url_for('static', filename='assets/js/carrusel.js') }}"></script>
+		<script src="{{url_for('static', filename='assets/js/hora.js') }}"></script>
+		<script src="{{url_for('static', filename='assets/js/select.js') }}"></script>
+		<script src="{{url_for('static', filename='assets/js/select_editar.js') }}"></script>
+		<script src="{{url_for('static', filename='assets/js/carro_compras.js') }}"></script>
+		<script src="{{url_for('static', filename='assets/js/validation.js') }}"></script>
+		<script src="{{url_for('static', filename='assets/js/botones.js') }}"></script>
+		<script src="{{url_for('static', filename='assets/js/flash.js') }}"></script>
+		<script src="{{url_for('static', filename='assets/js/alerts.js') }}"></script>
+		<script src="{{url_for('static', filename='assets/js/registro.js') }}"></script>
+		<script src="{{url_for('static', filename='assets/js/administrador.js') }}"></script>
+		<script src="{{url_for('static', filename='assets/js/contraseña.js') }}"></script>
+		<script src="{{url_for('static', filename='assets/js/horario.js') }}"></script>
+		<script src="{{url_for('static', filename='assets/js/vaciar_transbank.js') }}"></script>
+		<script src="{{url_for('static', filename='assets/js/jquery-validation/dist/jquery.validate.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+		
+		
+
+</html>

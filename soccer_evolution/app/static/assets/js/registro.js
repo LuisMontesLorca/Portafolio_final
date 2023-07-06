@@ -1,5 +1,6 @@
 $(document).ready(function() {
     $('#btn_registrarse').on('click', function() {
+       if ($('#form_registro').valid()) {
         console.log("click")
         rut_usuario= document.getElementById("rut_usuario").value
         nombre_usuario= document.getElementById("nombre_usuario").value
@@ -25,6 +26,30 @@ $(document).ready(function() {
             provincia_usuario:provincia_usuario,
             comuna_usuario:comuna_usuario
           };
+          let timerInterval
+          Swal.fire({
+            title: 'Enviando correo de bienvenida',
+            html: 'Esto puede tardar unos segundos.',
+            background: 'rgba(42, 47, 74, 0.975)',
+
+            timer: 4500,
+            timerProgressBar: true,
+            didOpen: () => {
+              Swal.showLoading()
+              const b = Swal.getHtmlContainer().querySelector('b')
+              timerInterval = setInterval(() => {
+                b.textContent = Swal.getTimerLeft()
+              }, 100)
+            },
+            willClose: () => {
+              clearInterval(timerInterval)
+            }
+          }).then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === Swal.DismissReason.timer) {
+              console.log('I was closed by the timer')
+            }
+          })
         $.ajax({
           url: '/registro',
           type: 'POST',
@@ -34,14 +59,14 @@ $(document).ready(function() {
             console.log(response);
             if(response.bandera==0)
             {
-                console.log("EL CORREO EXISTE")
-                mostrarAlertaRegistro
+                console.log("Registro no hechos")
+               
             }
             else{
                 
-                mostrarAlertaBienvenido
-                console.log("EL CORREO NO EXISTE")
-              
+                
+                console.log("Registro hecho")
+                window.location.href = "/"
             }
 
           },
@@ -49,5 +74,7 @@ $(document).ready(function() {
             console.log('Error en el envío: ', error);
           }
         });
+       }
+    
       });
     })

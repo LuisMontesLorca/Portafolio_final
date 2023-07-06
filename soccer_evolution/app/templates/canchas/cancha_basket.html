@@ -6,6 +6,7 @@
 				<!-- Note: The "styleN" class below should match that of the header element. -->
 				<section id="banner" class="style2">
 					<div class="inner">
+						<a href="{{ url_for('canchas') }}" class="back-arrow" style="text-decoration: none; border-bottom: none;"><i class="fas fa-light fa-arrow-left"></i></a>
 						<span class="image">
 							<img src="{{ url_for('static', filename='images/banner-basket.jpg') }}" alt="" />
 						</span>
@@ -36,8 +37,10 @@
 												<h3>{{cancha.nombre_cancha_basket}}</h3>
 											</header>
 											<p>{{cancha.descripcion_cancha_basket}}</p>
+											<p> <strong>${{cancha.valor_cancha_basket}}</strong></p>
+									
 											<ul class="actions">
-												<li><a href="{{ url_for('arrendar', id_cancha= cancha.id_cancha_basket, nombre_cancha=cancha.nombre_cancha_basket, valor_cancha=cancha.valor_cancha_basket) }}" class="button">Arrendar</a></li>
+												<li><a href="{{ url_for('arrendar', id_cancha= cancha.id_cancha_basket, nombre_cancha=cancha.nombre_cancha_basket, valor_cancha=cancha.valor_cancha_basket, img_cancha=cancha.img_cancha_basket) }}" class="button">Arrendar</a></li>
 											</ul>
 										</div>
 									</div>

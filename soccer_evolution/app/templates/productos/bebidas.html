@@ -6,6 +6,7 @@
 				<!-- Note: The "styleN" class below should match that of the header element. -->
 					<section id="banner" class="style2">
 						<div class="inner">
+							<a href="{{ url_for('otros') }}" class="back-arrow" style="text-decoration: none; border-bottom: none;"><i class="fas fa-light fa-arrow-left"></i></a>
 							<span class="image">
 								<img src="{{ url_for('static', filename='images/banner-bebidas-dep.jpg') }}" alt="" />
 							</span>
@@ -36,8 +37,9 @@
 											<h3>{{bebida.nombre_bebida}}</h3>
 										</header>
 										<p>{{bebida.descripcion_bebida}}</p>
+										<p> <strong>${{ bebida.valor_bebida }}</strong></p>
 										<ul class="actions">
-											<li><a href="" class="button">Agregar al carro</a></li>
+											<li><button type="button" class="btn btn-primary agregar-bebida" data-id_bebida="{{ bebida.id_bebida }}" data-nombre_bebida="{{ bebida.nombre_bebida }}" data-valor_bebida="{{ bebida.valor_bebida }}" data-img_bebida="{{ bebida.imagen_bebida }}">Agregar al carrito</button></li>
 										</ul>
 									</div>
 								</div>
@@ -49,14 +51,17 @@
 							{% for bebida in bebidas %}
 							<section>
 								<a class="image">
-									<img src="{{ url_for('static', filename= bebida.imagen_bebida) }}" alt="" data-position="center center" />
+									<img src="{{ url_for('static', filename=bebida.imagen_bebida) }}" alt="" >
 								</a>
+								
+								
 								<div class="content">
 									<div class="inner">
 										<header class="major">
 											<h3>{{bebida.nombre_bebida}}</h3>
 										</header>
 										<p>{{bebida.descripcion_bebida}}</p>
+										<p> <strong>${{ bebida.valor_bebida }}</strong></p>
 										<ul class="actions">
 											<li><a href="{{ url_for('login') }}" class="button">Agregar al carro</a></li>
 										</ul>
@@ -66,5 +71,32 @@
 							{% endfor %}
 						</section>
 						{% endif %}
-					
+									
+						<div  id="modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+							  <div class="modal-content">
+								<div class="modal-header">
+								  <h5 class="modal-title" id="confirmar-modal-label">Confirmar acción</h5>
+								  <a type="text" id="cerrar_modal"class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								  </a>
+								</div>
+								<div class="modal-body">
+								  ¿Desea agregar este producto al carrito?
+								</div>
+								<div class="modal-footer">
+								  <button type="button" class="btn btn-secondary" id="cancelar_btn"data-dismiss="modal">Cancelar</button>
+								  <button type="button" class="btn btn-primary" id="confirmar-btn">Confirmar</button>
+								</div>
+							  </div>
+							</div>
+						</div>
+
+
+
+						<dialog id="alerta_bebidas"  class="alerta-ampliada">
+							<h3>Su producto se ha añadido al carrito de compras!! </h3>
+							<button onclick="cerrarAlertaBebidas()">Aceptar</button>
+							<a class="primary_button_2"href="{{ url_for('carro_compras') }}">Ir al pago</a>
+						  </dialog>
 					{% endblock %}

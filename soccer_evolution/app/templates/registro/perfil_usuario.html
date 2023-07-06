@@ -8,8 +8,12 @@
                     {% if (usuarios) %}
                     <div class=" box">
                         <form method="POST" action="/perfil_usuario/{{ usuarios.id_usuario }}">
-                            <div class= "col-6 col-12-xsmall">
-                            <span class="image left"><img src="{{ url_for('static', filename='images/imagen_perfil.jpg') }}" alt=""  /></span></div>
+                            <div class="col-6 col-12-xsmall">
+                                <span class="image left">
+                                  <img src="{{ url_for('static', filename='images/imagen_perfil.jpg') }}" alt="" style="width: 400px; height: 400px;" />
+                                </span>
+                              </div>
+                              
                         <div class="row gtr-uniform">
                             <input type="hidden" name="id_usuario" id="id_usuario" value="{{ usuarios.id_usuario }}">
                             <div class="col-6 col-12-xsmall">
@@ -72,10 +76,10 @@
                                 {% if arriendos_historial %}
                                 {% for arriendos in arriendos_historial %}
                                 <tr>
-                                    <td>{{arriendos.fecha}}</td>
-                                    <td>{{arriendos.hora}}</td>
-                                    <td>{{arriendos.valor}}</td>
-                                    <td>{{arriendos.cancha}}</td>
+                                    <td>{{arriendos.fecha_arriendo}}</td>
+                                    <td>{{arriendos.hora_arriendo}}</td>
+                                    <td>{{arriendos.valor_arriendo}}</td>
+                                    <td>{{arriendos.nombre_producto}}</td>
                                 </tr>
                                 {% endfor %}
                                 {% else %}

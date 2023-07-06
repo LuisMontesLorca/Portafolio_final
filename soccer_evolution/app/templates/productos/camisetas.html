@@ -6,6 +6,8 @@
 				<!-- Note: The "styleN" class below should match that of the header element. -->
 					<section id="banner" class="style2">
 						<div class="inner">
+							<a href="{{ url_for('otros') }}" class="back-arrow" style="text-decoration: none; border-bottom: none;"><i class="fas fa-light fa-arrow-left"></i></a>
+
 							<span class="image">
 								<img src="{{ url_for('static', filename='images/fut-banner.jpg') }}" alt="" />
 							</span>
@@ -28,7 +30,7 @@
 							{% for camiseta in camisetas %}
 							<section> 
 								<a class="image">
-									<img src="{{ url_for('static', filename= camiseta.imagen_camiseta) }} " alt="" data-position="center center" />
+									<img src="{{ url_for('static', filename= camiseta.imagen_camiseta) }} " alt="" data-position="center center"  style="height: 365px;"/>
 								</a>
 								<div class="content">
 									<div class="inner">
@@ -36,8 +38,9 @@
 											<h3>{{ camiseta.nombre_camiseta }}</h3>
 										</header>
 										<p>{{ camiseta.descripcion_camiseta }}</p>
+										<p> <strong>${{ camiseta.valor_camiseta }}</strong></p>
 										<ul class="actions">
-											<li><button type="button" class="btn btn-primary agregar-camiseta" data-id_camiseta="{{ camiseta.id_camiseta }}" data-nombre_camiseta="{{ camiseta.nombre_camiseta }}" data-valor_camiseta="{{ camiseta.valor_camiseta }}">Agregar al carrito</button></li>
+											<li><button type="button" class="btn btn-primary agregar-camiseta" data-id_camiseta="{{ camiseta.id_camiseta }}" data-nombre_camiseta="{{ camiseta.nombre_camiseta }}" data-valor_camiseta="{{ camiseta.valor_camiseta }}"  data-img_camiseta="{{ camiseta.imagen_camiseta }}">Agregar al carrito</button></li>
 											<input type="hidden" name="id_camiseta" value="{{ camiseta.id_camiseta }}">
 											<input type="hidden" name="nombre_camiseta" value="{{ camiseta.nombre_camiseta }}">
 											<input type="hidden" name="valor_camiseta" value="{{ camiseta.valor_camiseta }}">
@@ -62,6 +65,7 @@
 											<h3>{{ camiseta.nombre_camiseta }}</h3>
 										</header>
 										<p>{{ camiseta.descripcion_camiseta }}</p>
+										<p> <strong>${{ camiseta.valor_camiseta }}</strong></p>
 										<ul class="actions">
 											<li> <a href="{{ url_for('login') }}" class="button">Agregar al carro</a></li>
 										</ul>
@@ -72,7 +76,7 @@
 						</section>
 						{% endif %}
 					
-						
+					
 
 						<div  id="modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmar-modal-label" aria-hidden="true">
 							<div class="modal-dialog" role="document">
@@ -94,7 +98,11 @@
 							</div>
 						</div>
 
-
+						<dialog id="alerta_camisetas"  class="alerta-ampliada">
+							<h3>Su producto se ha añadido al carrito de compras!! </h3>
+							<button onclick="cerrarAlertaCamisetas()">Aceptar</button>
+							<a class="primary_button_2"href="{{ url_for('carro_compras') }}">Ir al pago</a>
+						  </dialog>
 						
 
 					{% endblock %}

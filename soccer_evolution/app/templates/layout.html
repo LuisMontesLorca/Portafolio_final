@@ -14,7 +14,9 @@
 		<!-- jQuery UI -->
 		<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 		<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
-
+		<!-- Sweet Alert-->
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+		<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css" rel="stylesheet">
 
 
 		<noscript><link rel="stylesheet" href="{{ url_for('static', filename='assets/css/noscript.css') }}" /></noscript>
@@ -44,6 +46,30 @@
 				});
 			});
 		</script>
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+		  const registerBtn = document.getElementById('registerBtn');
+		  registerBtn.addEventListener('click', () => {
+			Swal.fire({
+			  title: 'Procesando...',
+			  text: 'El proceso se está realizando. Por favor, espera...',
+			  icon: 'info',
+			  allowOutsideClick: false,
+			  showCancelButton: false,
+			  showConfirmButton: false,
+			  didOpen: () => {
+				Swal.showLoading();
+				// Simula el proceso de registro
+				setTimeout(() => {
+				  Swal.close();
+				  document.getElementById('registerForm').submit(); // Envía el formulario después de simular el proceso
+				}, 2000); // Simula una pausa de 2 segundos antes de enviar el formulario
+			  }
+			});
+		  });
+		});
+		</script>
+
 	</head>
 
     <body class="is-preload">
@@ -134,18 +160,19 @@
 				<!-- Footer -->
 				<footer id="footer">
 					<div class="inner">
-						<ul class="icons">
-							<li><a href="https://twitter.com/soccer_evol" class="icon brands alt fa-twitter" target="_blank"><span class="label" >Twitter</span></a></li>
-							<li><a href="https://www.facebook.com/" class="icon brands alt fa-facebook-f" target="_blank"><span class="label">Facebook</span></a></li>
-							<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-							<li><a href="https://github.com/LuisMontesLorca/Portafolio_final" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-							<li><a href="#" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
-						</ul>
-						<ul class="copyright">
-							<li>&copy; DuocUC</li></li>
-						</ul>
+					  <ul class="icons centered-icons"> <!-- Agrega la clase 'centered-icons' -->
+						<li><a href="https://twitter.com/soccer_evol" class="icon brands alt fa-twitter" target="_blank"><span class="label">Twitter</span></a></li>
+						<li><a href="https://www.facebook.com/" class="icon brands alt fa-facebook-f" target="_blank"><span class="label">Facebook</span></a></li>
+						<li><a href="https://www.instagram.com/" class="icon brands alt fa-instagram" target="_blank"><span class="label" >Instagram</span></a></li>
+						<li><a href="https://github.com/LuisMontesLorca/Portafolio_final" class="icon brands alt fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+						<li><a href="https://www.linkedin.com/" class="icon brands alt fa-linkedin-in" target="_blank"><span class="label" >LinkedIn</span></a></li>
+					  </ul>
+					  <ul class="copyright">
+						<li>&copy; DuocUC</li></li>
+					  </ul>
 					</div>
-				</footer>
+				  </footer>
+				  
 
 		
 
@@ -170,6 +197,7 @@
 		<script src="{{url_for('static', filename='assets/js/registro.js') }}"></script>
 		<script src="{{url_for('static', filename='assets/js/administrador.js') }}"></script>
 		<script src="{{url_for('static', filename='assets/js/contraseña.js') }}"></script>
+		<script src="{{url_for('static', filename='assets/js/horario.js') }}"></script>
 		<script src="{{url_for('static', filename='assets/js/jquery-validation/dist/jquery.validate.min.js') }}"></script>
 		<script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
 		
